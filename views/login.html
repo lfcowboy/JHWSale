@@ -28,7 +28,7 @@
                                 <h2 class="n-login-title-version-light">Version 0.0.1 beta</h2>
                             </div>
                             <div class="panel-section n-login-panel-fields">
-                                <form class="form-horizontal" action="a.jsp" method="post">
+                                <form class="form-horizontal" action="/login" method="post">
                                     <!--
                                     above you need to replace "a.jsp" with valid action based on your system
                                     -->
@@ -37,14 +37,16 @@
                                     </div>
                                     <div class="form-group has-feedback n-login-textfields">
                                         <div class="col-sm-6 input-required">
-                                            <input name="username" type="text" tabindex="110" class="form-control n-inputfield"
+                                            <input id="username" name="username" type="text" tabindex="110"
+                                                   class="form-control n-inputfield"
                                                    id="applicationLoginUsername"
                                                    placeholder="Username">
                                             <a class="form-control-feedback">
                                                 <span class="icon icon-mandatory"></span></a>
                                         </div>
                                         <div class="col-sm-6 input-required">
-                                            <input name="password" type="password" tabindex="120" class="form-control n-inputfield"
+                                            <input id="password" name="password" type="password" tabindex="120"
+                                                   class="form-control n-inputfield"
                                                    id="applicationLoginPassword"
                                                    placeholder="Password">
                                             <a class="form-control-feedback form-control-feedback">
@@ -52,12 +54,8 @@
                                         </div>
                                     </div>
                                     <div tabindex="130">
-                                        <button type="submit" class="btn btn-action btn-standard n-login-button" id="applicationLoginButton"
-                                                disabled="true">Log In
+                                        <button type="submit" class="btn btn-action btn-standard n-login-button" id="applicationLoginButton">Log In
                                         </button>
-                                        <!-- you could use also this kind of input statement instead of the button statement above
-                                        <input class="btn btn-action btn-standard n-login-button" type="submit" value="Log In">
-                                        -->
                                     </div>
                                 </form>
                             </div>

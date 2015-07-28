@@ -3,5 +3,5 @@
  */
 var path = require('path');
 exports.index = function (req, res) {
-    res.render('index',{'userName':'周芸丽'});
+    res.render('index',{'userName':'未登录'});
 };
