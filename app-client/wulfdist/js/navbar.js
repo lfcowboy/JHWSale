@@ -5,16 +5,16 @@
     var KEY = {up: 38, down: 40, right: 39, left: 37};
 
     /*---------------------- bind actions ----------------------*/
-    $(".n-banner-tabs").on("mouseover", ".n-dropdown-menu-item-has-child", function () {
+    $(".n-banner").on("mouseover", ".n-dropdown-menu-item-has-child", function () {
         showSubMenu($(this));
     });
 
-    $(".n-banner-tabs").on("mouseleave", ".n-dropdown-menu-item-has-child", function () {
+    $(".n-banner").on("mouseleave", ".n-dropdown-menu-item-has-child", function () {
         hideSubMenu($(this).children(".n-dropdown-sub-menu"));
     });
 
     // add key event to show or close sub menu
-    $(".n-banner-tabs").on("keydown", ".n-dropdown-menu-item-has-child", function (event) {
+    $(".n-banner").on("keydown", ".n-dropdown-menu-item-has-child", function (event) {
         // click right arrow, open sub menu;
         if (event.keyCode == KEY.right) {
             var $subMenu = $(this).children(".n-dropdown-sub-menu");
@@ -26,7 +26,7 @@
         }
     });
 
-    $(".n-banner-tabs").on("click",".n-banner-dropdown-toggle",function(){
+    $(".n-banner").on("click",".n-banner-dropdown-toggle",function(){
         if ($(".n-dropdown-sub-menu.open").length !== 0) {
             $(".n-dropdown-sub-menu.open").removeClass("open");
         }
@@ -63,11 +63,17 @@
     var showSubMenu = function ($parent) {
         var parentMenuWidth = $parent.parent("ul").innerWidth();
         var $subMenu = $parent.children(".n-dropdown-sub-menu");
-        $subMenu.css("left", parentMenuWidth + "px");
+        if( parentMenuWidth < ($parent.closest(".n-banner").width() - $parent.offset().left)){
+            $subMenu.css("left", parentMenuWidth  + "px");
+        }else{
+            $subMenu.css("left", "-" + $subMenu.innerWidth()  + "px");
+        }
+
         $subMenu.addClass("open");
     };
 
     var hideSubMenu = function ($subMenu) {
+        $subMenu.css("left", "auto");
         $subMenu.removeClass("open");
     };
 

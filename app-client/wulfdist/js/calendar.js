@@ -12,6 +12,13 @@
             }
         });
 
+        $(".fuelux .n-calendar .form-control").blur(function () {
+            if (!$('.fuelux .n-calendar .input-group-btn').is(".open")) {
+                $(selector + " .fuelux .n-calendar .form-control").css("border-bottom-left-radius", '7pt');
+                $(".fuelux .n-calendar .dropdown-toggle").attr("aria-expanded", 'false');
+            }
+        });
+
         $(selector +" .fuelux .n-calendar .dropdown-toggle").click(function(){
             $(" .fuelux .n-calendar .form-control").css("border-bottom-left-radius",'7pt');
             $(selector + " .fuelux .n-calendar .form-control").css("border-bottom-left-radius",0);

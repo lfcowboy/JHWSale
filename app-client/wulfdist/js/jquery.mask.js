@@ -41,7 +41,7 @@
 (function (factory) {
 
     if (typeof define === 'function' && define.amd) {
-        define(['jquery.min'], factory);
+        define(['jquery'], factory);
     } else if (typeof exports === 'object') {
         module.exports = factory(require('jquery'));
     } else {

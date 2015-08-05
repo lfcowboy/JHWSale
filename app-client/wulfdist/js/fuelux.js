@@ -1,14 +1,17 @@
 /*!
- * Fuel UX v3.6.4
+ * Fuel UX v3.10.0 
  * Copyright 2012-2015 ExactTarget
  * Licensed under the BSD-3-Clause license (https://github.com/ExactTarget/fuelux/blob/master/LICENSE)
  */
 
+/*
+ update from 3.7.1 to 3.10.0
+ */
 
 // For more information on UMD visit: https://github.com/umdjs/umd/
 ( function( factory ) {
 	if ( typeof define === 'function' && define.amd ) {
-		define( [ 'jquery.min', 'bootstrap' ], factory );
+		define( [ 'jquery', 'bootstrap' ], factory );
 	} else {
 		factory( jQuery );
 	}
@@ -43,191 +46,130 @@
 		var Checkbox = function( element, options ) {
 			this.options = $.extend( {}, $.fn.checkbox.defaults, options );
 
+			if ( element.tagName.toLowerCase() !== 'label' ) {
+				//console.log('initialize checkbox on the label that wraps the checkbox');
+				return;
+			}
+
 			// cache elements
-			this.$element = $( element ).is( 'input[type="checkbox"]' ) ? $( element ) : $( element ).find( 'input[type="checkbox"]:first' );
-			this.$label = this.$element.parent();
-			this.$parent = this.$label.parent( '.checkbox' );
-			this.$toggleContainer = this.$element.attr( 'data-toggle' );
-			this.state = {
-				disabled: false,
-				checked: false
-			};
+			this.$label = $( element );
+			this.$chk = this.$label.find( 'input[type="checkbox"]' );
+			this.$container = $( element ).parent( '.checkbox' ); // the container div
 
-			if ( this.$parent.length === 0 ) {
-				this.$parent = null;
-			}
+			// determine if a toggle container is specified
+			var containerSelector = this.$chk.attr( 'data-toggle' );
+			this.$toggleContainer = $( containerSelector );
 
-			if ( Boolean( this.$toggleContainer ) ) {
-				this.$toggleContainer = $( this.$toggleContainer );
-			} else {
-				this.$toggleContainer = null;
-			}
-
-			// handle events
-			this.$element.on( 'change.fu.checkbox', $.proxy( this.itemchecked, this ) );
-			this.$label.unbind( 'click', $.proxy( this.toggle, this ) ); //unbind previous binds so that double clickage doesn't happen (thus making checkbox appear to not work)
-			this.$label.on( 'click', $.proxy( this.toggle, this ) ); //make repeated label clicks work
+			// handle internal events
+			this.$chk.on( 'change', $.proxy( this.itemchecked, this ) );
 
 			// set default state
-			this.setState();
+			this.setInitialState();
 		};
 
 		Checkbox.prototype = {
 
 			constructor: Checkbox,
 
-			setState: function( $chk ) {
-				$chk = $chk || this.$element;
+			setInitialState: function() {
+				var $chk = this.$chk;
+				var $lbl = this.$label;
 
-				this.state.disabled = Boolean( $chk.prop( 'disabled' ) );
-				this.state.checked = Boolean( $chk.is( ':checked' ) );
+				// get current state of input
+				var checked = $chk.prop( 'checked' );
+				var disabled = $chk.prop( 'disabled' );
 
-				this._resetClasses();
-
-				// set state of checkbox
-				this._toggleCheckedState();
-				this._toggleDisabledState();
-
-				//toggle container
-				this.toggleContainer();
+				// sync label class with input state
+				this.setCheckedState( $chk, checked );
+				this.setDisabledState( $chk, disabled );
 			},
 
-			enable: function() {
-				this.state.disabled = false;
-				this.$element.removeAttr( 'disabled' );
-				this.$element.prop( 'disabled', false );
-				this._resetClasses();
-				this.$element.trigger( 'enabled.fu.checkbox' );
+			setCheckedState: function( element, checked ) {
+				var $chk = element;
+				var $lbl = this.$label;
+				var $container = this.$container;
+				var $containerToggle = this.$toggleContainer;
+
+				// set class on outer container too...to support highlighting
+				// TODO: verify inline checkboxes, also test with MCTheme
+
+				if ( checked ) {
+					$chk.prop( 'checked', true );
+					$lbl.addClass( 'checked' );
+					//$container.addClass('checked');
+					$containerToggle.removeClass( 'hide hidden' );
+					$lbl.trigger( 'checked.fu.checkbox' );
+				} else {
+					$chk.prop( 'checked', false );
+					$lbl.removeClass( 'checked' );
+					//$container.removeClass('checked');
+					$containerToggle.addClass( 'hidden' );
+					$lbl.trigger( 'unchecked.fu.checkbox' );
+				}
+
+				$lbl.trigger( 'changed.fu.checkbox', checked );
 			},
 
-			disable: function() {
-				this.state.disabled = true;
-				this.$element.prop( 'disabled', true );
-				this.$element.attr( 'disabled', 'disabled' );
-				this._setDisabledClass();
-				this.$element.trigger( 'disabled.fu.checkbox' );
+			setDisabledState: function( element, disabled ) {
+				var $chk = element;
+				var $lbl = this.$label;
+
+				if ( disabled ) {
+					this.$chk.prop( 'disabled', true );
+					$lbl.addClass( 'disabled' );
+					$lbl.trigger( 'disabled.fu.checkbox' );
+				} else {
+					this.$chk.prop( 'disabled', false );
+					$lbl.removeClass( 'disabled' );
+					$lbl.trigger( 'enabled.fu.checkbox' );
+				}
+			},
+
+			itemchecked: function( evt ) {
+				var $chk = $( evt.target );
+				var checked = $chk.prop( 'checked' );
+
+				this.setCheckedState( $chk, checked );
+			},
+
+			toggle: function() {
+				var checked = this.isChecked();
+
+				if ( checked ) {
+					this.uncheck();
+				} else {
+					this.check();
+				}
 			},
 
 			check: function() {
-				this.state.checked = true;
-				this.$element.prop( 'checked', true );
-				this.$element.attr( 'checked', 'checked' );
-				this._setCheckedClass();
-				this.$element.trigger( 'checked.fu.checkbox' );
+				this.setCheckedState( this.$chk, true );
 			},
 
 			uncheck: function() {
-				this.state.checked = false;
-				this.$element.prop( 'checked', false );
-				this.$element.removeAttr( 'checked' );
-				this._resetClasses();
-				this.$element.trigger( 'unchecked.fu.checkbox' );
+				this.setCheckedState( this.$chk, false );
 			},
 
 			isChecked: function() {
-				return this.state.checked;
+				var checked = this.$chk.prop( 'checked' );
+				return checked;
 			},
 
-			toggle: function( e ) {
-				//keep checkbox from being used if it is disabled. You can't rely on this.state.disabled, because on bind time it might not be disabled, but, state.disabled may be set to true after bind time (and this.state.disabled won't be updated for this bound instance)
-				//To see how this works, uncomment the next line of code and go to http://0.0.0.0:8000/index.html click the "disable #myCustomCheckbox1" and then click on the first checkbox and see the disparity in the output between this.state and this.$element.attr
-				//console.log('is disabled? this.state says, "' + this.state.disabled + '"; this.$element.attr says, "' + this.$element.attr('disabled') + '"');
-				if ( /* do not change this to this.state.disabled. It will break edge cases */ this.$element.prop( 'disabled' ) ) {
-					return;
-				}
-
-				//keep event from firing twice in Chrome
-				if ( !e || ( e.target === e.originalEvent.target ) ) {
-					this.state.checked = !this.state.checked;
-
-					this._toggleCheckedState();
-
-					if ( Boolean( e ) ) {
-						//stop bubbling, otherwise event fires twice in Firefox.
-						e.preventDefault();
-						//make change event still fire (prevented by preventDefault to avoid firefox bug, see preceeding line)
-						this.$element.trigger( 'change', e );
-					}
-
-				}
+			enable: function() {
+				this.setDisabledState( this.$chk, false );
 			},
 
-			toggleContainer: function() {
-				if ( Boolean( this.$toggleContainer ) ) {
-					if ( this.state.checked ) {
-						this.$toggleContainer.removeClass( 'hide hidden' );
-						this.$toggleContainer.attr( 'aria-hidden', 'false' );
-					} else {
-						this.$toggleContainer.addClass( 'hidden' );
-						this.$toggleContainer.attr( 'aria-hidden', 'true' );
-					}
-
-				}
-			},
-
-			itemchecked: function( element ) {
-				this.setState( $( element.target ) );
+			disable: function() {
+				this.setDisabledState( this.$chk, true );
 			},
 
 			destroy: function() {
-				this.$parent.remove();
+				this.$label.remove();
 				// remove any external bindings
 				// [none]
 				// empty elements to return to original markup
 				// [none]
-				return this.$parent[ 0 ].outerHTML;
-			},
-
-			_resetClasses: function() {
-				var classesToRemove = [];
-
-				if ( !this.state.checked ) {
-					classesToRemove.push( 'checked' );
-				}
-
-				if ( !this.state.disabled ) {
-					classesToRemove.push( 'disabled' );
-				}
-
-				classesToRemove = classesToRemove.join( ' ' );
-
-				this.$label.removeClass( classesToRemove );
-
-				if ( this.$parent ) {
-					this.$parent.removeClass( classesToRemove );
-				}
-			},
-
-			_toggleCheckedState: function() {
-				if ( this.state.checked ) {
-					this.check();
-				} else {
-					this.uncheck();
-				}
-			},
-
-			_toggleDisabledState: function() {
-				if ( this.state.disabled ) {
-					this.disable();
-				} else {
-					this.enable();
-				}
-			},
-
-			_setCheckedClass: function() {
-				this.$label.addClass( 'checked' );
-
-				if ( this.$parent ) {
-					this.$parent.addClass( 'checked' );
-				}
-			},
-
-			_setDisabledClass: function() {
-				this.$label.addClass( 'disabled' );
-
-				if ( this.$parent ) {
-					this.$parent.addClass( 'disabled' );
-				}
+				return this.$label[ 0 ].outerHTML;
 			}
 		};
 
@@ -267,7 +209,7 @@
 		// DATA-API
 
 		$( document ).on( 'mouseover.fu.checkbox.data-api', '[data-initialize=checkbox]', function( e ) {
-			var $control = $( e.target ).closest( '.checkbox' ).find( '[type=checkbox]' );
+			var $control = $( e.target );
 			if ( !$control.data( 'fu.checkbox' ) ) {
 				$control.checkbox( $control.data() );
 			}
@@ -275,7 +217,7 @@
 
 		// Must be domReady for AMD compatibility
 		$( function() {
-			$( '[data-initialize=checkbox] [type=checkbox]' ).each( function() {
+			$( '[data-initialize=checkbox]' ).each( function() {
 				var $this = $( this );
 				if ( !$this.data( 'fu.checkbox' ) ) {
 					$this.checkbox( $this.data() );
@@ -321,6 +263,13 @@
 
 			// set default selection
 			this.setDefaultSelection();
+
+			// if dropdown is empty, disable it
+			var items = this.$dropMenu.children( 'li' );
+			if ( items.length === 0 ) {
+				this.$button.addClass( 'disabled' );
+			}
+
 		};
 
 		Combobox.prototype = {
@@ -684,7 +633,7 @@
 				if (
 					( $.isFunction( window.moment ) || ( typeof moment !== 'undefined' && $.isFunction( moment ) ) ) &&
 					$.isPlainObject( this.options.momentConfig ) &&
-					this.options.momentConfig.culture && this.options.momentConfig.format
+					( typeof this.options.momentConfig.culture === 'string' && typeof this.options.momentConfig.format === 'string' )
 				) {
 					return true;
 				} else {
@@ -994,7 +943,7 @@
 				var selected = this.selectedDate;
 				var $tbody = this.$days.find( 'tbody' );
 				var year = date.getFullYear();
-				var curDate, curMonth, curYear, i, j, rows, stage, $td, $tr;
+				var curDate, curMonth, curYear, i, j, rows, stage, previousStage, lastStage, $td, $tr;
 
 				if ( selected ) {
 					selected = {
@@ -1012,6 +961,7 @@
 					'data-year': year
 				} );
 
+
 				$tbody.empty();
 				if ( firstDay !== 0 ) {
 					curDate = lastMonthDate - firstDay + 1;
@@ -1028,8 +978,14 @@
 						$td = $( '<td></td>' );
 						if ( stage === -1 ) {
 							$td.addClass( 'last-month' );
+							if ( previousStage !== stage ) {
+								$td.addClass( 'first' );
+							}
 						} else if ( stage === 1 ) {
 							$td.addClass( 'next-month' );
+							if ( previousStage !== stage ) {
+								$td.addClass( 'first' );
+							}
 						}
 
 						curMonth = month + stage;
@@ -1073,12 +1029,23 @@
 						}
 
 						curDate++;
+						lastStage = previousStage;
+						previousStage = stage;
 						if ( stage === -1 && curDate > lastMonthDate ) {
 							curDate = 1;
 							stage = 0;
+							if ( lastStage !== stage ) {
+								$td.addClass( 'last' );
+							}
 						} else if ( stage === 0 && curDate > lastDate ) {
 							curDate = 1;
 							stage = 1;
+							if ( lastStage !== stage ) {
+								$td.addClass( 'last' );
+							}
+						}
+						if ( i === ( rows - 1 ) && j === 6 ) {
+							$td.addClass( 'last' );
 						}
 
 						$tr.append( $td );
@@ -1096,10 +1063,10 @@
 
 				if ( this.sameYearOnly ) {
 					this.$wheelsMonth.addClass( 'full' );
-					this.$wheelsYear.addClass( 'hide' );
+					this.$wheelsYear.addClass( 'hidden' );
 				} else {
 					this.$wheelsMonth.removeClass( 'full' );
-					this.$wheelsYear.removeClass( 'hide' );
+					this.$wheelsYear.removeClass( 'hide hidden' ); // .hide is deprecated
 				}
 
 				$monthUl.find( '.selected' ).removeClass( 'selected' );
@@ -1470,6 +1437,8 @@
 			constructor: Loader,
 
 			destroy: function() {
+				this.pause();
+
 				this.$element.remove();
 				// any external bindings
 				// [none]
@@ -1598,6 +1567,10 @@
 		// -- BEGIN MODULE CODE HERE --
 
 		var old = $.fn.placard;
+		var EVENT_CALLBACK_MAP = {
+			'accepted': 'onAccept',
+			'cancelled': 'onCancel'
+		};
 
 		// PLACARD CONSTRUCTOR AND PROTOTYPE
 
@@ -1624,10 +1597,10 @@
 
 			this.$field.on( 'focus.fu.placard', $.proxy( this.show, this ) );
 			this.$field.on( 'keydown.fu.placard', $.proxy( this.keyComplete, this ) );
-			this.$accept.on( 'click.fu.placard', $.proxy( this.complete, this, 'accept' ) );
+			this.$accept.on( 'click.fu.placard', $.proxy( this.complete, this, 'accepted' ) );
 			this.$cancel.on( 'click.fu.placard', function( e ) {
 				e.preventDefault();
-				self.complete( 'cancel' );
+				self.complete( 'cancelled' );
 			} );
 
 			this.ellipsis();
@@ -1637,30 +1610,31 @@
 			constructor: Placard,
 
 			complete: function( action ) {
-				var func = this.options[ 'on' + action[ 0 ].toUpperCase() + action.substring( 1 ) ];
+				var func = this.options[ EVENT_CALLBACK_MAP[ action ] ];
+
 				var obj = {
 					previousValue: this.previousValue,
 					value: this.$field.val()
 				};
 				if ( func ) {
 					func( obj );
-					this.$element.trigger( action, obj );
+					this.$element.trigger( action + '.fu.placard', obj );
 				} else {
-					if ( action === 'cancel' && this.options.revertOnCancel ) {
+					if ( action === 'cancelled' && this.options.revertOnCancel ) {
 						this.$field.val( this.previousValue );
 					}
 
-					this.$element.trigger( action, obj );
+					this.$element.trigger( action + '.fu.placard', obj );
 					this.hide();
 				}
 			},
 
 			keyComplete: function( e ) {
 				if ( this.isInput && e.keyCode === 13 ) {
-					this.complete( 'accept' );
+					this.complete( 'accepted' );
 					this.$field.blur();
 				} else if ( e.keyCode === 27 ) {
-					this.complete( 'cancel' );
+					this.complete( 'cancelled' );
 					this.$field.blur();
 				}
 			},
@@ -1835,7 +1809,7 @@
 		$.fn.placard.defaults = {
 			onAccept: undefined,
 			onCancel: undefined,
-			externalClickAction: 'cancel',
+			externalClickAction: 'cancelled',
 			externalClickExceptions: [],
 			explicit: false,
 			revertOnCancel: -1 //negative 1 will check for an '.placard-accept' button. Also can be set to true or false
@@ -1892,152 +1866,130 @@
 		var Radio = function( element, options ) {
 			this.options = $.extend( {}, $.fn.radio.defaults, options );
 
+			if ( element.tagName.toLowerCase() !== 'label' ) {
+				//console.log('initialize radio on the label that wraps the radio');
+				return;
+			}
+
 			// cache elements
-			this.$radio = $( element ).is( 'input[type="radio"]' ) ? $( element ) : $( element ).find( 'input[type="radio"]:first' );
-			this.$label = this.$radio.parent();
-			this.groupName = this.$radio.attr( 'name' );
-			this.$blockWrapper = this.$label.parent( '.radio' ); // only used if block radio control, otherwise radio is inline
-			this.isBlockWrapped = true; // initialized as a block radio control
-			this.$toggleContainer = null;
+			this.$label = $( element );
+			this.$radio = this.$label.find( 'input[type="radio"]' );
+			this.groupName = this.$radio.attr( 'name' ); // don't cache group itself since items can be added programmatically
 
-			if ( this.$blockWrapper.length === 0 ) {
-				this.isBlockWrapped = false;
-			}
+			// determine if a toggle container is specified
+			var containerSelector = this.$radio.attr( 'data-toggle' );
+			this.$toggleContainer = $( containerSelector );
 
-			var toggleSelector = this.$radio.attr( 'data-toggle' );
-			if ( toggleSelector ) {
-				this.$toggleContainer = $( toggleSelector );
-			}
+			// handle internal events
+			this.$radio.on( 'change', $.proxy( this.itemchecked, this ) );
 
 			// set default state
-			this.setState( this.$radio );
-
-			// handle events
-			this.$radio.on( 'change.fu.radio', $.proxy( this.itemchecked, this ) );
+			this.setInitialState();
 		};
 
 		Radio.prototype = {
 
 			constructor: Radio,
 
+			setInitialState: function() {
+				var $radio = this.$radio;
+				var $lbl = this.$label;
+
+				// get current state of input
+				var checked = $radio.prop( 'checked' );
+				var disabled = $radio.prop( 'disabled' );
+
+				// sync label class with input state
+				this.setCheckedState( $radio, checked );
+				this.setDisabledState( $radio, disabled );
+			},
+
+			resetGroup: function() {
+				var $radios = $( 'input[name="' + this.groupName + '"]' );
+				$radios.each( function( index, item ) {
+					var $radio = $( item );
+					var $lbl = $radio.parent();
+					var containerSelector = $radio.attr( 'data-toggle' );
+					var $containerToggle = $( containerSelector );
+
+
+					$lbl.removeClass( 'checked' );
+					$containerToggle.addClass( 'hidden' );
+				} );
+			},
+
+			setCheckedState: function( element, checked ) {
+				var $radio = element;
+				var $lbl = $radio.parent();
+				var containerSelector = $radio.attr( 'data-toggle' );
+				var $containerToggle = $( containerSelector );
+
+				if ( checked ) {
+					// reset all items in group
+					this.resetGroup();
+
+					$radio.prop( 'checked', true );
+					$lbl.addClass( 'checked' );
+					$containerToggle.removeClass( 'hide hidden' );
+					$lbl.trigger( 'checked.fu.radio' );
+				} else {
+					$radio.prop( 'checked', false );
+					$lbl.removeClass( 'checked' );
+					$containerToggle.addClass( 'hidden' );
+					$lbl.trigger( 'unchecked.fu.radio' );
+				}
+
+				$lbl.trigger( 'changed.fu.radio', checked );
+			},
+
+			setDisabledState: function( element, disabled ) {
+				var $radio = element;
+				var $lbl = this.$label;
+
+				if ( disabled ) {
+					this.$radio.prop( 'disabled', true );
+					$lbl.addClass( 'disabled' );
+					$lbl.trigger( 'disabled.fu.radio' );
+				} else {
+					this.$radio.prop( 'disabled', false );
+					$lbl.removeClass( 'disabled' );
+					$lbl.trigger( 'enabled.fu.radio' );
+				}
+			},
+
+			itemchecked: function( evt ) {
+				var $radio = $( evt.target );
+				this.setCheckedState( $radio, true );
+			},
+
+			check: function() {
+				this.setCheckedState( this.$radio, true );
+			},
+
+			uncheck: function() {
+				this.setCheckedState( this.$radio, false );
+			},
+
+			isChecked: function() {
+				var checked = this.$radio.prop( 'checked' );
+				return checked;
+			},
+
+			enable: function() {
+				this.setDisabledState( this.$radio, false );
+			},
+
+			disable: function() {
+				this.setDisabledState( this.$radio, true );
+			},
+
 			destroy: function() {
+				this.$label.remove();
 				// remove any external bindings
 				// [none]
 				// empty elements to return to original markup
 				// [none]
-				// return string of markup
-				if ( this.isBlockWrapped ) {
-					this.$blockWrapper.remove();
-					return this.$blockWrapper[ 0 ].outerHTML;
-				} else {
-					this.$label.remove();
-					return this.$label[ 0 ].outerHTML;
-				}
-
-			},
-
-			setState: function( $radio ) {
-				$radio = $radio || this.$radio;
-
-				var checked = $radio.is( ':checked' );
-				var disabled = !!$radio.prop( 'disabled' );
-
-				this.$label.removeClass( 'checked' );
-				if ( this.isBlockWrapped ) {
-					this.$blockWrapper.removeClass( 'checked disabled' );
-				}
-
-				// set state of radio
-				if ( checked === true ) {
-					this.$label.addClass( 'checked' );
-					if ( this.isBlockWrapped ) {
-						this.$blockWrapper.addClass( 'checked' );
-					}
-
-				}
-
-				if ( disabled === true ) {
-					this.$label.addClass( 'disabled' );
-					if ( this.isBlockWrapped ) {
-						this.$blockWrapper.addClass( 'disabled' );
-					}
-
-				}
-
-				//toggle container
-				this.toggleContainer();
-			},
-
-			resetGroup: function() {
-				var group = $( 'input[name="' + this.groupName + '"]' );
-
-				group.each( function() {
-					var lbl = $( this ).parent( 'label' );
-					lbl.removeClass( 'checked' );
-					lbl.parent( '.radio' ).removeClass( 'checked' );
-				} );
-			},
-
-			enable: function() {
-				this.$radio.attr( 'disabled', false );
-				this.$label.removeClass( 'disabled' );
-				if ( this.isBlockWrapped ) {
-					this.$blockWrapper.removeClass( 'disabled' );
-				}
-			},
-
-			disable: function() {
-				this.$radio.attr( 'disabled', true );
-				this.$label.addClass( 'disabled' );
-				if ( this.isBlockWrapped ) {
-					this.$blockWrapper.addClass( 'disabled' );
-				}
-			},
-
-			itemchecked: function( e ) {
-				var radio = $( e.target );
-
-				this.resetGroup();
-				this.setState( radio );
-			},
-
-			check: function() {
-				this.resetGroup();
-				this.$radio.prop( 'checked', true );
-				this.$radio.attr( 'checked', 'checked' );
-				this.setState( this.$radio );
-			},
-
-			toggleContainer: function() {
-				var group;
-				if ( this.$toggleContainer ) {
-					// show corresponding container for currently selected radio
-					if ( this.isChecked() ) {
-						// hide containers for each item in group
-						group = $( 'input[name="' + this.groupName + '"]' );
-						group.each( function() {
-							var selector = $( this ).attr( 'data-toggle' );
-							$( selector ).addClass( 'hidden' );
-							$( selector ).attr( 'aria-hidden', 'true' );
-						} );
-						this.$toggleContainer.removeClass( 'hide hidden' );
-						this.$toggleContainer.attr( 'aria-hidden', 'false' );
-					} else {
-						this.$toggleContainer.addClass( 'hidden' );
-						this.$toggleContainer.attr( 'aria-hidden', 'true' );
-					}
-
-				}
-			},
-
-			uncheck: function() {
-				this.$radio.prop( 'checked', false );
-				this.$radio.removeAttr( 'checked' );
-				this.setState( this.$radio );
-			},
-
-			isChecked: function() {
-				return this.$radio.is( ':checked' );
+				return this.$label[ 0 ].outerHTML;
 			}
 		};
 
@@ -2077,8 +2029,8 @@
 
 		// DATA-API
 
-		$( document ).on( 'mouseover.fu.checkbox.data-api', '[data-initialize=radio]', function( e ) {
-			var $control = $( e.target ).closest( '.radio' ).find( '[type=radio]' );
+		$( document ).on( 'mouseover.fu.radio.data-api', '[data-initialize=radio]', function( e ) {
+			var $control = $( e.target );
 			if ( !$control.data( 'fu.radio' ) ) {
 				$control.radio( $control.data() );
 			}
@@ -2086,13 +2038,13 @@
 
 		// Must be domReady for AMD compatibility
 		$( function() {
-			$( '[data-initialize=radio] [type=radio]' ).each( function() {
+			$( '[data-initialize=radio]' ).each( function() {
 				var $this = $( this );
-				if ( $this.data( 'fu.radio' ) ) return;
-				$this.radio( $this.data() );
+				if ( !$this.data( 'fu.radio' ) ) {
+					$this.radio( $this.data() );
+				}
 			} );
 		} );
-
 
 
 	} )( jQuery );
@@ -2314,6 +2266,7 @@
 			this.$element = $( element );
 			this.options = $.extend( {}, $.fn.selectlist.defaults, options );
 
+
 			this.$button = this.$element.find( '.btn.dropdown-toggle' );
 			this.$hiddenField = this.$element.find( '.hidden-field' );
 			this.$label = this.$element.find( '.selected-label' );
@@ -2325,6 +2278,37 @@
 			if ( options.resize === 'auto' || this.$element.attr( 'data-resize' ) === 'auto' ) {
 				this.resize();
 			}
+
+			// if selectlist is empty or is one item, disable it
+			var items = this.$dropdownMenu.children( 'li' );
+			if ( items.length === 0 ) {
+				this.disable();
+				this.doSelect( $( this.options.emptyLabelHTML ) );
+			}
+
+			// support jumping focus to first letter in dropdown when key is pressed
+			this.$element.on( 'shown.bs.dropdown', function() {
+				var $this = $( this );
+				// attach key listener when dropdown is shown
+				$( document ).on( 'keypress.fu.selectlist', function( e ) {
+
+					// get the key that was pressed
+					var key = String.fromCharCode( e.which );
+					// look the items to find the first item with the first character match and set focus
+					$this.find( "li" ).each( function( idx, item ) {
+						if ( $( item ).text().charAt( 0 ).toLowerCase() === key ) {
+							$( item ).children( 'a' ).focus();
+							return false;
+						}
+					} );
+
+				} );
+			} );
+
+			// unbind key event when dropdown is hidden
+			this.$element.on( 'hide.bs.dropdown', function() {
+				$( document ).off( 'keypress.fu.selectlist' );
+			} );
 		};
 
 		Selectlist.prototype = {
@@ -2363,6 +2347,10 @@
 				this.$element.trigger( 'clicked.fu.selectlist', this.$selectedItem );
 
 				e.preventDefault();
+				// ignore if a disabled item is clicked
+				if ( $( e.currentTarget ).parent( 'li' ).is( '.disabled, :disabled' ) ) {
+					return;
+				}
 
 				// is clicked element different from currently selected element?
 				if ( !( $( e.target ).parent().is( this.$selectedItem ) ) ) {
@@ -2413,8 +2401,8 @@
 					return;
 				}
 
-				//this.$button.css( 'width', width );
-				//this.$dropdownMenu.css( 'width', width );
+				this.$button.css( 'width', width );
+				this.$dropdownMenu.css( 'width', width );
 
 				sizer.remove();
 			},
@@ -2498,7 +2486,9 @@
 			return ( methodReturn === undefined ) ? $set : methodReturn;
 		};
 
-		$.fn.selectlist.defaults = {};
+		$.fn.selectlist.defaults = {
+			emptyLabelHTML: '<li data-value=""><a href="#">No items</a></li>'
+		};
 
 		$.fn.selectlist.Constructor = Selectlist;
 
@@ -3004,7 +2994,9 @@
 				this.toggleFolder( ev.currentTarget );
 			}, this ) );
 
+			// folderSelect default is true
 			if ( this.options.folderSelect ) {
+				this.$element.addClass( 'tree-folder-select' );
 				this.$element.off( 'click.fu.tree', '.tree-branch-name' );
 				this.$element.on( 'click.fu.tree', '.icon-caret', $.proxy( function( ev ) {
 					this.toggleFolder( $( ev.currentTarget ).parent() );
@@ -3019,6 +3011,16 @@
 
 		Tree.prototype = {
 			constructor: Tree,
+
+			deselectAll: function deselectAll( nodes ) {
+				// clear all child tree nodes and style as deselected
+				nodes = nodes || this.$element;
+				var $selectedElements = $( nodes ).find( '.tree-selected' );
+				$selectedElements.each( function( index, element ) {
+					styleNodeDeselected( $( element ), $( element ).find( '.glyphicon' ) );
+				} );
+				return $selectedElements;
+			},
 
 			destroy: function destroy() {
 				// any external bindings [none]
@@ -3040,19 +3042,19 @@
 				var loader = $parent.find( '.tree-loader:eq(0)' );
 				var treeData = $parent.data();
 
-				loader.removeClass( 'hide' );
+				loader.removeClass( 'hide hidden' ); // hide is deprecated
 				this.options.dataSource( treeData ? treeData : {}, function( items ) {
-					loader.addClass( 'hide' );
+					loader.addClass( 'hidden' );
 
 					$.each( items.data, function( index, value ) {
 						var $entity;
 
 						if ( value.type === 'folder' ) {
-							$entity = self.$element.find( '[data-template=treebranch]:eq(0)' ).clone().removeClass( 'hide' ).removeData( 'template' );
+							$entity = self.$element.find( '[data-template=treebranch]:eq(0)' ).clone().removeClass( 'hide hidden' ).removeData( 'template' ); // hide is deprecated
 							$entity.data( value );
 							$entity.find( '.tree-branch-name > .tree-label' ).html( value.text || value.name );
 						} else if ( value.type === 'item' ) {
-							$entity = self.$element.find( '[data-template=treeitem]:eq(0)' ).clone().removeClass( 'hide' ).removeData( 'template' );
+							$entity = self.$element.find( '[data-template=treeitem]:eq(0)' ).clone().removeClass( 'hide hidden' ).removeData( 'template' ); // hide is deprecated
 							$entity.find( '.tree-item-name > .tree-label' ).html( value.text || value.name );
 							$entity.data( value );
 						}
@@ -3119,69 +3121,46 @@
 				} );
 			},
 
-			selectItem: function selectItem( el ) {
-				if ( !this.options.itemSelect ) return;
-				var $el = $( el );
-				var selData = $el.data();
-				var $all = this.$element.find( '.tree-item.tree-selected' );
-				var data = [];
-				var $icon = $el.find( '.icon-item' );
+			selectTreeNode: function selectItem( clickedElement, nodeType ) {
+				var clicked = {}; // object for clicked element
+				clicked.$element = $( clickedElement );
 
-				if ( this.options.multiSelect ) {
-					$.each( $all, function( index, value ) {
-						var $val = $( value );
-						if ( $val[ 0 ] !== $el[ 0 ] ) {
-							data.push( $( value ).data() );
-						}
-					} );
-				} else if ( $all[ 0 ] !== $el[ 0 ] ) {
-					$all.removeClass( 'tree-selected' )
-						.find( '.glyphicon' ).removeClass( 'glyphicon-ok' ).addClass( 'fueluxicon-bullet' );
-					data.push( selData );
-				}
+				var selected = {}; // object for selected elements
+				selected.$elements = this.$element.find( '.tree-selected' );
+				selected.dataForEvent = [];
 
-				var eventType = 'selected';
-				if ( $el.hasClass( 'tree-selected' ) ) {
-					eventType = 'deselected';
-					$el.removeClass( 'tree-selected' );
-					if ( $icon.hasClass( 'glyphicon-ok' ) || $icon.hasClass( 'fueluxicon-bullet' ) ) {
-						$icon.removeClass( 'glyphicon-ok' ).addClass( 'fueluxicon-bullet' );
-					}
-
+				// determine clicked element and it's icon
+				if ( nodeType === 'folder' ) {
+					// make the clicked.$element the container branch
+					clicked.$element = clicked.$element.closest( '.tree-branch' );
+					clicked.$icon = clicked.$element.find( '.icon-folder' );
 				} else {
-					$el.addClass( 'tree-selected' );
-					// add tree dot back in
-					if ( $icon.hasClass( 'glyphicon-ok' ) || $icon.hasClass( 'fueluxicon-bullet' ) ) {
-						$icon.removeClass( 'fueluxicon-bullet' ).addClass( 'glyphicon-ok' );
-					}
+					clicked.$icon = clicked.$element.find( '.icon-item' );
+				}
+				clicked.elementData = clicked.$element.data();
 
-					if ( this.options.multiSelect ) {
-						data.push( selData );
-					}
-
+				// the below functions pass objects by copy/reference and use modified object in this function
+				if ( this.options.multiSelect ) {
+					multiSelectSyncNodes( this, clicked, selected );
+				} else {
+					singleSelectSyncNodes( this, clicked, selected );
 				}
 
-				this.$element.trigger( eventType + '.fu.tree', {
-					target: selData,
-					selected: data
+				// all done with the DOM, now fire events
+				this.$element.trigger( selected.eventType + '.fu.tree', {
+					target: clicked.elementData,
+					selected: selected.dataForEvent
 				} );
 
-				// Return new list of selected items, the item
-				// clicked, and the type of event:
-				$el.trigger( 'updated.fu.tree', {
-					selected: data,
-					item: $el,
-					eventType: eventType
+				clicked.$element.trigger( 'updated.fu.tree', {
+					selected: selected.dataForEvent,
+					item: clicked.$element,
+					eventType: selected.eventType
 				} );
 			},
 
-			openFolder: function openFolder( el, ignoreRedundantOpens ) {
+			discloseFolder: function discloseFolder( el ) {
 				var $el = $( el );
-
-				//don't break the API :| (make this functionally the same as calling 'toggleFolder')
-				if ( !ignoreRedundantOpens && $el.find( '.glyphicon-folder-open' ).length && !this.options.ignoreRedundantOpens ) {
-					this.closeFolder( el );
-				}
 
 				var $branch = $el.closest( '.tree-branch' );
 				var $treeFolderContent = $branch.find( '.tree-branch-children' );
@@ -3190,7 +3169,7 @@
 				//take care of the styles
 				$branch.addClass( 'tree-open' );
 				$branch.attr( 'aria-expanded', 'true' );
-				$treeFolderContentFirstChild.removeClass( 'hide' );
+				$treeFolderContentFirstChild.removeClass( 'hide hidden' ); // hide is deprecated
 				$branch.find( '> .tree-branch-header .icon-folder' ).eq( 0 )
 					.removeClass( 'glyphicon-folder-close' )
 					.addClass( 'glyphicon-folder-open' );
@@ -3200,7 +3179,7 @@
 					this.populate( $treeFolderContent );
 				}
 
-				this.$element.trigger( 'opened.fu.tree', $branch.data() );
+				this.$element.trigger( 'disclosedFolder.fu.tree', $branch.data() );
 			},
 
 			closeFolder: function closeFolder( el ) {
@@ -3212,7 +3191,7 @@
 				//take care of the styles
 				$branch.removeClass( 'tree-open' );
 				$branch.attr( 'aria-expanded', 'false' );
-				$treeFolderContentFirstChild.addClass( 'hide' );
+				$treeFolderContentFirstChild.addClass( 'hidden' );
 				$branch.find( '> .tree-branch-header .icon-folder' ).eq( 0 )
 					.removeClass( 'glyphicon-folder-open' )
 					.addClass( 'glyphicon-folder-close' );
@@ -3229,58 +3208,22 @@
 				var $el = $( el );
 
 				if ( $el.find( '.glyphicon-folder-close' ).length ) {
-					this.openFolder( el );
+					this.discloseFolder( el );
 				} else if ( $el.find( '.glyphicon-folder-open' ).length ) {
 					this.closeFolder( el );
 				}
 			},
 
-			selectFolder: function selectFolder( clickedElement ) {
-				if ( !this.options.folderSelect ) return;
-				var $clickedElement = $( clickedElement );
-				var $clickedBranch = $clickedElement.closest( '.tree-branch' );
-				var $selectedBranch = this.$element.find( '.tree-branch.tree-selected' );
-				var clickedData = $clickedBranch.data();
-				var selectedData = [];
-				var eventType = 'selected';
-
-				// select clicked item
-				if ( $clickedBranch.hasClass( 'tree-selected' ) ) {
-					eventType = 'deselected';
-					$clickedBranch.removeClass( 'tree-selected' );
-				} else {
-					$clickedBranch.addClass( 'tree-selected' );
+			selectFolder: function selectFolder( el ) {
+				if ( this.options.folderSelect ) {
+					this.selectTreeNode( el, 'folder' );
 				}
+			},
 
-				if ( this.options.multiSelect ) {
-					// get currently selected
-					$selectedBranch = this.$element.find( '.tree-branch.tree-selected' );
-
-					$.each( $selectedBranch, function( index, value ) {
-						var $value = $( value );
-						if ( $value[ 0 ] !== $clickedElement[ 0 ] ) {
-							selectedData.push( $( value ).data() );
-						}
-					} );
-
-				} else if ( $selectedBranch[ 0 ] !== $clickedElement[ 0 ] ) {
-					$selectedBranch.removeClass( 'tree-selected' );
-
-					selectedData.push( clickedData );
+			selectItem: function selectItem( el ) {
+				if ( this.options.itemSelect ) {
+					this.selectTreeNode( el, 'item' );
 				}
-
-				this.$element.trigger( eventType + '.fu.tree', {
-					target: clickedData,
-					selected: selectedData
-				} );
-
-				// Return new list of selected items, the item
-				// clicked, and the type of event:
-				$clickedElement.trigger( 'updated.fu.tree', {
-					selected: selectedData,
-					item: $clickedElement,
-					eventType: eventType
-				} );
 			},
 
 			selectedItems: function selectedItems() {
@@ -3301,7 +3244,8 @@
 				var closedReported = function closedReported( event, closed ) {
 					reportedClosed.push( closed );
 
-					if ( self.$element.find( ".tree-branch.tree-open:not('.hide')" ).length === 0 ) {
+					// hide is deprecated
+					if ( self.$element.find( ".tree-branch.tree-open:not('.hidden, .hide')" ).length === 0 ) {
 						self.$element.trigger( 'closedAll.fu.tree', {
 							tree: self.$element,
 							reportedClosed: reportedClosed
@@ -3313,7 +3257,7 @@
 				//trigger callback when all folders have reported closed
 				self.$element.on( 'closed.fu.tree', closedReported );
 
-				self.$element.find( ".tree-branch.tree-open:not('.hide')" ).each( function() {
+				self.$element.find( ".tree-branch.tree-open:not('.hidden, .hide')" ).each( function() {
 					self.closeFolder( this );
 				} );
 			},
@@ -3321,7 +3265,8 @@
 			//disclose visible will only disclose visible tree folders
 			discloseVisible: function discloseVisible() {
 				var self = this;
-				var $openableFolders = self.$element.find( ".tree-branch:not('.tree-open, .hide')" );
+
+				var $openableFolders = self.$element.find( ".tree-branch:not('.tree-open, .hidden, .hide')" );
 				var reportedOpened = [];
 
 				var openReported = function openReported( event, opened ) {
@@ -3344,8 +3289,8 @@
 				self.$element.on( 'loaded.fu.tree', openReported );
 
 				// open all visible folders
-				self.$element.find( ".tree-branch:not('.tree-open, .hide')" ).each( function triggerOpen() {
-					self.openFolder( $( this ).find( '.tree-branch-header' ), true );
+				self.$element.find( ".tree-branch:not('.tree-open, .hidden, .hide')" ).each( function triggerOpen() {
+					self.discloseFolder( $( this ).find( '.tree-branch-header' ) );
 				} );
 			},
 
@@ -3363,7 +3308,7 @@
 				}
 
 				var isExceededLimit = ( self.options.disclosuresUpperLimit >= 1 && self.$element.data( 'disclosures' ) >= self.options.disclosuresUpperLimit );
-				var isAllDisclosed = self.$element.find( ".tree-branch:not('.tree-open, .hide')" ).length === 0;
+				var isAllDisclosed = self.$element.find( ".tree-branch:not('.tree-open, .hidden, .hide')" ).length === 0;
 
 
 				if ( !isAllDisclosed ) {
@@ -3428,8 +3373,68 @@
 			}
 		};
 
+
+		// ALIASES
+
 		//alias for collapse for consistency. "Collapse" is an ambiguous term (collapse what? All? One specific branch?)
 		Tree.prototype.closeAll = Tree.prototype.collapse;
+		//alias for backwards compatibility because there's no reason not to.
+		Tree.prototype.openFolder = Tree.prototype.discloseFolder;
+
+
+		// PRIVATE FUNCTIONS
+
+		function styleNodeSelected( $element, $icon ) {
+			$element.addClass( 'tree-selected' );
+			if ( $element.data( 'type' ) === 'item' && $icon.hasClass( 'fueluxicon-bullet' ) ) {
+				$icon.removeClass( 'fueluxicon-bullet' ).addClass( 'glyphicon-ok' ); // make checkmark
+			}
+		}
+
+		function styleNodeDeselected( $element, $icon ) {
+			$element.removeClass( 'tree-selected' );
+			if ( $element.data( 'type' ) === 'item' && $icon.hasClass( 'glyphicon-ok' ) ) {
+				$icon.removeClass( 'glyphicon-ok' ).addClass( 'fueluxicon-bullet' ); // make bullet
+			}
+		}
+
+		function multiSelectSyncNodes( self, clicked, selected ) {
+			// search for currently selected and add to selected data list if needed
+			$.each( selected.$elements, function( index, element ) {
+				var $element = $( element );
+				if ( $element[ 0 ] !== clicked.$element[ 0 ] ) {
+					selected.dataForEvent.push( $( $element ).data() );
+				}
+			} );
+
+			if ( clicked.$element.hasClass( 'tree-selected' ) ) {
+				styleNodeDeselected( clicked.$element, clicked.$icon );
+				// set event data
+				selected.eventType = 'deselected';
+			} else {
+				styleNodeSelected( clicked.$element, clicked.$icon );
+				// set event data
+				selected.eventType = 'selected';
+				selected.dataForEvent.push( clicked.elementData );
+			}
+		}
+
+		function singleSelectSyncNodes( self, clicked, selected ) {
+			// element is not currently selected
+			if ( selected.$elements[ 0 ] !== clicked.$element[ 0 ] ) {
+				var clearedElements = self.deselectAll( self.$element );
+				styleNodeSelected( clicked.$element, clicked.$icon );
+				// set event data
+				selected.eventType = 'selected';
+				selected.dataForEvent = [ clicked.elementData ];
+			} else {
+				styleNodeDeselected( clicked.$element, clicked.$icon );
+				// set event data
+				selected.eventType = 'deselected';
+				selected.dataForEvent = [];
+			}
+		}
+
 
 		// TREE PLUGIN DEFINITION
 
@@ -3460,15 +3465,6 @@
 			cacheItems: true,
 			folderSelect: true,
 			itemSelect: true,
-			/*
-			 * Calling "open" on something, should do that. However, the current API
-			 * instead treats "open" as a "toggle" and will close a folder that is open
-			 * if you call `openFolder` on it. Setting `ignoreRedundantOpens` to `true`
-			 * will make the folder instead ignore the redundant call and stay open.
-			 * This allows you to fix the API until 3.7.x when we can deprecate the switch
-			 * and make `openFolder` behave correctly by default.
-			 */
-			ignoreRedundantOpens: false,
 			/*
 			 * How many times `discloseAll` should be called before a stopping and firing
 			 * an `exceededDisclosuresLimit` event. You can force it to continue by
@@ -3535,6 +3531,14 @@
 			this.numSteps = this.$element.find( '.steps li' ).length;
 			this.$prevBtn = this.$element.find( 'button.btn-prev' );
 			this.$nextBtn = this.$element.find( 'button.btn-next' );
+
+			// maintains backwards compatibility with < 3.8, will be removed in the future
+			if ( this.$element.children( '.steps-container' ).length === 0 ) {
+				this.$element.addClass( 'no-steps-container' );
+				if ( window && window.console && window.console.warn ) {
+					window.console.warn( 'please update your wizard markup to include ".steps-container" as seen in http://getfuelux.com/javascript.html#wizard-usage-markup' );
+				}
+			}
 
 			kids = this.$nextBtn.children().detach();
 			this.nextText = $.trim( this.$nextBtn.text() );
@@ -3817,16 +3821,16 @@
 			},
 
 			next: function() {
-				if ( this.currentStep < this.numSteps ) {
-					var e = $.Event( 'actionclicked.fu.wizard' );
-					this.$element.trigger( e, {
-						step: this.currentStep,
-						direction: 'next'
-					} );
-					if ( e.isDefaultPrevented() ) {
-						return;
-					} // respect preventDefault in case dev has attached validation to step and wants to stop propagation based on it.
+				var e = $.Event( 'actionclicked.fu.wizard' );
+				this.$element.trigger( e, {
+					step: this.currentStep,
+					direction: 'next'
+				} );
+				if ( e.isDefaultPrevented() ) {
+					return;
+				} // respect preventDefault in case dev has attached validation to step and wants to stop propagation based on it.
 
+				if ( this.currentStep < this.numSteps ) {
 					this.currentStep += 1;
 					this.setState();
 				} else { //is last step
@@ -3854,7 +3858,7 @@
 				if ( selectedItem ) {
 					step = selectedItem.step || -1;
 					//allow selection of step by data-name
-					step = isNaN( step ) && this.$element.find( '.steps li[data-name="' + step + '"]' ).first().attr( 'data-step' ) || step;
+					step = Number( this.$element.find( '.steps li[data-name="' + step + '"]' ).first().attr( 'data-step' ) ) || Number( step );
 
 					if ( 1 <= step && step <= this.numSteps ) {
 						this.currentStep = step;
@@ -5085,6 +5089,52 @@
 				return markup;
 			},
 
+			disable: function() {
+				var disable = 'disable';
+				var disabled = 'disabled';
+
+				this.$search.search( disable );
+				this.$filters.selectlist( disable );
+				this.$views.find( 'label' ).attr( disabled, disabled );
+				this.$pageSize.selectlist( disable );
+				this.$primaryPaging.find( '.combobox' ).combobox( disable );
+				this.$secondaryPaging.attr( disabled, disabled );
+				this.$prevBtn.attr( disabled, disabled );
+				this.$nextBtn.attr( disabled, disabled );
+
+				this.$element.addClass( 'disabled' );
+				this.$element.trigger( 'disabled.fu.repeater' );
+			},
+
+			enable: function() {
+				var disabled = 'disabled';
+				var enable = 'enable';
+				var pageEnd = 'page-end';
+
+				this.$search.search( enable );
+				this.$filters.selectlist( enable );
+				this.$views.find( 'label' ).removeAttr( disabled );
+				this.$pageSize.selectlist( 'enable' );
+				this.$primaryPaging.find( '.combobox' ).combobox( enable );
+				this.$secondaryPaging.removeAttr( disabled );
+
+				if ( !this.$prevBtn.hasClass( pageEnd ) ) {
+					this.$prevBtn.removeAttr( disabled );
+				}
+				if ( !this.$nextBtn.hasClass( pageEnd ) ) {
+					this.$nextBtn.removeAttr( disabled );
+				}
+
+				// is 0 or 1 pages, if using $primaryPaging (combobox)
+				// if using selectlist allow user to use selectlist to select 0 or 1
+				if ( this.$prevBtn.hasClass( pageEnd ) && this.$nextBtn.hasClass( pageEnd ) ) {
+					this.$primaryPaging.combobox( 'disable' );
+				}
+
+				this.$element.removeClass( 'disabled' );
+				this.$element.trigger( 'enabled.fu.repeater' );
+			},
+
 			getDataOptions: function( options ) {
 				var dataSourceOptions = {};
 				var opts = {};
@@ -5241,9 +5291,9 @@
 			},
 
 			itemization: function( data ) {
-				this.$count.html( data.count || '' );
-				this.$end.html( data.end || '' );
-				this.$start.html( data.start || '' );
+				this.$count.html( ( data.count !== undefined ) ? data.count : '?' );
+				this.$end.html( ( data.end !== undefined ) ? data.end : '?' );
+				this.$start.html( ( data.start !== undefined ) ? data.start : '?' );
 			},
 
 			next: function( e ) {
@@ -5274,13 +5324,18 @@
 				var act = 'active';
 				var dsbl = 'disabled';
 				var page = data.page;
+				var pageEnd = 'page-end';
 				var pages = data.pages;
 				var dropMenu, i, l;
+				var currenPageOutput;
 
 				this.currentPage = ( page !== undefined ) ? page : NaN;
 
 				this.$primaryPaging.removeClass( act );
 				this.$secondaryPaging.removeClass( act );
+
+				// set paging to 0 if total pages is 0, otherwise use one-based index
+				currenPageOutput = pages === 0 ? 0 : this.currentPage + 1;
 
 				if ( pages <= this.viewOptions.dropPagingCap ) {
 					this.$primaryPaging.addClass( act );
@@ -5290,28 +5345,33 @@
 						l = i + 1;
 						dropMenu.append( '<li data-value="' + l + '"><a href="#">' + l + '</a></li>' );
 					}
-					this.$primaryPaging.find( 'input.form-control' ).val( this.currentPage + 1 );
+
+					this.$primaryPaging.find( 'input.form-control' ).val( currenPageOutput );
 				} else {
 					this.$secondaryPaging.addClass( act );
-					this.$secondaryPaging.val( this.currentPage + 1 );
+					this.$secondaryPaging.val( currenPageOutput );
 				}
 
 				this.lastPageInput = this.currentPage + 1 + '';
 
-				this.$pages.html( pages );
+				this.$pages.html( '' + pages );
 
 				// this is not the last page
 				if ( ( this.currentPage + 1 ) < pages ) {
 					this.$nextBtn.removeAttr( dsbl );
+					this.$nextBtn.removeClass( pageEnd );
 				} else {
 					this.$nextBtn.attr( dsbl, dsbl );
+					this.$nextBtn.addClass( pageEnd );
 				}
 
 				// this is not the first page
 				if ( ( this.currentPage - 1 ) >= 0 ) {
 					this.$prevBtn.removeAttr( dsbl );
+					this.$prevBtn.removeClass( pageEnd );
 				} else {
 					this.$prevBtn.attr( dsbl, dsbl );
+					this.$prevBtn.addClass( pageEnd );
 				}
 
 				// return focus to next/previous buttons after navigating
@@ -5355,6 +5415,7 @@
 				var dataOptions, prevView;
 
 				options = options || {};
+				this.disable();
 
 				if ( options.changeView && ( this.currentView !== options.changeView ) ) {
 					prevView = this.currentView;
@@ -5390,6 +5451,8 @@
 				dataOptions = this.getDataOptions( options );
 
 				this.viewOptions.dataSource( dataOptions, function( data ) {
+					data = data || {};
+
 					if ( self.infiniteScrollingEnabled ) {
 						self.infiniteScrollingCallback( {} );
 					} else {
@@ -5415,6 +5478,8 @@
 
 						//for maintaining support of 'loaded' event
 						self.$element.trigger( 'loaded.fu.repeater', dataOptions );
+
+						self.enable();
 					} );
 				} );
 			},
@@ -5539,7 +5604,7 @@
 				var opts = {};
 				var viewName = curView.split( '.' )[ 1 ];
 
-				if ( viewName && this.options.views ) {
+				if ( this.options.views ) {
 					opts = this.options.views[ viewName ] || this.options.views[ curView ] || {};
 				} else {
 					opts = {};
@@ -5582,7 +5647,16 @@
 		};
 
 		$.fn.repeater.defaults = {
-			dataSource: function( options, callback ) {},
+			dataSource: function( options, callback ) {
+				callback( {
+					count: 0,
+					end: 0,
+					items: [],
+					page: 0,
+					pages: 1,
+					start: 0
+				} );
+			},
 			defaultView: -1, //should be a string value. -1 means it will grab the active view from the view controls
 			dropPagingCap: 10,
 			staticHeight: -1, //normally true or false. -1 means it will look for data-staticheight on the element
@@ -5732,17 +5806,181 @@
 				} );
 			};
 
+			$.fn.repeater.Constructor.prototype.list_setFrozenColumns = function() {
+				var frozenTable = this.$canvas.find( '.table-frozen' );
+				var $table = this.$element.find( '.repeater-list .repeater-list-wrapper > table' );
+				var repeaterWrapper = this.$element.find( '.repeater-list' );
+				var numFrozenColumns = this.viewOptions.list_frozenColumns;
+
+				if ( frozenTable.length < 1 ) {
+					//setup frozen column markup
+					//main wrapper and remove unneeded columns
+					var $frozenColumnWrapper = $( '<div class="frozen-column-wrapper"></div>' ).insertBefore( $table );
+					var $frozenColumn = $table.clone().addClass( 'table-frozen' );
+					$frozenColumn.find( 'th:not(:lt(' + numFrozenColumns + '))' ).remove();
+					$frozenColumn.find( 'td:not(:nth-child(n+0):nth-child(-n+' + numFrozenColumns + '))' ).remove();
+
+					//need to set absolute heading for vertical scrolling
+					var $frozenThead = $frozenColumn.clone().removeClass( 'table-frozen' );
+					$frozenThead.find( 'tbody' ).remove();
+					var $frozenTheadWrapper = $( '<div class="frozen-thead-wrapper"></div>' ).append( $frozenThead );
+
+					$frozenColumnWrapper.append( $frozenColumn );
+					repeaterWrapper.append( $frozenTheadWrapper );
+					this.$canvas.addClass( 'frozen-enabled' );
+				}
+
+				this.$element.find( '.repeater-list table.table-frozen tr' ).each( function( i, elem ) {
+					$( this ).height( $table.find( 'tr:eq(' + i + ')' ).height() );
+				} );
+				var columnWidth = $table.find( 'td:eq(0)' ).outerWidth();
+				this.$element.find( '.frozen-column-wrapper, .frozen-thead-wrapper' ).width( columnWidth );
+			};
+
+			$.fn.repeater.Constructor.prototype.list_positionColumns = function() {
+				var $wrapper = this.$element.find( '.repeater-canvas' );
+				var scrollTop = $wrapper.scrollTop();
+				var scrollLeft = $wrapper.scrollLeft();
+				var frozenEnabled = this.viewOptions.list_frozenColumns;
+				var actionsEnabled = this.viewOptions.list_actions;
+
+				var canvasWidth = this.$element.find( '.repeater-canvas' ).outerWidth();
+				var tableWidth = this.$element.find( '.repeater-list .repeater-list-wrapper > table' ).outerWidth();
+
+				var actionsWidth = this.$element.find( '.table-actions' ) ? this.$element.find( '.table-actions' ).outerWidth() : 0;
+
+				var shouldScroll = ( tableWidth - ( canvasWidth - actionsWidth ) ) >= scrollLeft;
+
+
+				if ( scrollTop > 0 ) {
+					$wrapper.find( '.repeater-list-heading' ).css( 'top', scrollTop );
+				} else {
+					$wrapper.find( '.repeater-list-heading' ).css( 'top', '0' );
+				}
+				if ( scrollLeft > 0 ) {
+					if ( frozenEnabled ) {
+						$wrapper.find( '.frozen-thead-wrapper' ).css( 'left', scrollLeft );
+						$wrapper.find( '.frozen-column-wrapper' ).css( 'left', scrollLeft );
+					}
+					if ( actionsEnabled && shouldScroll ) {
+						$wrapper.find( '.actions-thead-wrapper' ).css( 'right', -scrollLeft );
+						$wrapper.find( '.actions-column-wrapper' ).css( 'right', -scrollLeft );
+					}
+
+				} else {
+					if ( frozenEnabled ) {
+						$wrapper.find( '.frozen-thead-wrapper' ).css( 'left', '0' );
+						$wrapper.find( '.frozen-column-wrapper' ).css( 'left', '0' );
+					}
+					if ( actionsEnabled ) {
+						$wrapper.find( '.actions-thead-wrapper' ).css( 'right', '0' );
+						$wrapper.find( '.actions-column-wrapper' ).css( 'right', '0' );
+					}
+				}
+			};
+
+			$.fn.repeater.Constructor.prototype.list_createItemActions = function() {
+				var actionsHtml = '';
+				var self = this;
+				var i, l;
+				var $table = this.$element.find( '.repeater-list .repeater-list-wrapper > table' );
+				var $actionsTable = this.$canvas.find( '.table-actions' );
+
+				for ( i = 0, l = this.viewOptions.list_actions.items.length; i < l; i++ ) {
+					var action = this.viewOptions.list_actions.items[ i ];
+					var html = action.html();
+
+					actionsHtml += '<li><a data-action="' + action.name + '" class="action-item"> ' + html + '</a></li>';
+				}
+
+				var selectlist = '<div class="btn-group">' +
+					'<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">' +
+					'<span class="caret"></span>' +
+					'</button>' +
+					'<ul class="dropdown-menu dropdown-menu-right" role="menu">' +
+					actionsHtml +
+					'</ul></div>';
+
+				if ( $actionsTable.length < 1 ) {
+
+					var $actionsColumnWrapper = $( '<div class="actions-column-wrapper"></div>' ).insertBefore( $table );
+					var $actionsColumn = $table.clone().addClass( 'table-actions' );
+					$actionsColumn.find( 'th:not(:lt(1))' ).remove();
+					$actionsColumn.find( 'td:not(:nth-child(n+0):nth-child(-n+1))' ).remove();
+
+					// Dont show actions dropdown in header if not multi select
+					if ( this.viewOptions.list_selectable === 'multi' ) {
+						$actionsColumn.find( 'thead tr' ).html( '<th><div class="repeater-list-heading">' + selectlist + '</div></th>' );
+					} else {
+						var label = this.viewOptions.list_actions.label || '<span class="actions-hidden">a</span>';
+						$actionsColumn.find( 'thead tr' ).addClass( 'empty-heading' ).html( '<th>' + label + '<div class="repeater-list-heading">' + label + '</div></th>' );
+					}
+
+					// Create Actions dropdown for each cell in actions table
+					var $actionsCells = $actionsColumn.find( 'td' );
+
+					$actionsCells.each( function( i ) {
+						$( this ).html( selectlist );
+						$( this ).find( 'a' ).attr( 'data-row', parseInt( [ i ] ) + 1 );
+					} );
+
+					$actionsColumnWrapper.append( $actionsColumn );
+
+					this.$canvas.addClass( 'actions-enabled' );
+				}
+
+				this.$element.find( '.repeater-list .actions-column-wrapper, .repeater-list .actions-column-wrapper td, .repeater-list .actions-column-wrapper th' )
+					.css( 'width', this.list_actions_width );
+
+				this.$element.find( '.repeater-list .actions-column-wrapper th .repeater-list-heading' ).css( 'width', parseInt( this.list_actions_width ) + 1 + 'px' );
+
+				this.$element.find( '.repeater-list table.table-actions tr' ).each( function( i, elem ) {
+					$( this ).height( $table.find( 'tr:eq(' + i + ')' ).height() );
+				} );
+
+				this.$element.find( '.table-actions .action-item' ).on( 'click', function() {
+					var actionName = $( this ).data( 'action' );
+					var row = $( this ).data( 'row' );
+					self.list_getActionItems( actionName, row );
+				} );
+
+			};
+
+			$.fn.repeater.Constructor.prototype.list_getActionItems = function( actionName, row ) {
+
+				var clickedRow = this.$canvas.find( '.repeater-list-wrapper > table tbody tr:nth-child(' + row + ')' );
+
+				var actionObj = $.grep( this.viewOptions.list_actions.items, function( actions ) {
+					return actions.name === actionName;
+				} )[ 0 ];
+
+				if ( actionObj.clickAction ) {
+					actionObj.clickAction( {
+						item: clickedRow,
+						rowData: clickedRow.data( 'item_data' )
+					}, function() {} );
+				}
+			};
+
+			$.fn.repeater.Constructor.prototype.list_sizeActionsTable = function() {
+				var $table = this.$element.find( '.repeater-list-wrapper > table' );
+				var $actionsTableHeading = this.$element.find( '.repeater-list-wrapper .actions-column-wrapper thead th .repeater-list-heading' );
+				$actionsTableHeading.outerHeight( $table.find( 'thead th .repeater-list-heading' ).outerHeight() );
+			};
+
 			//ADDITIONAL DEFAULT OPTIONS
 			$.fn.repeater.defaults = $.extend( {}, $.fn.repeater.defaults, {
 				list_columnRendered: null,
 				list_columnSizing: true,
 				list_columnSyncing: true,
-				list_highlightSortedColumn: false,
+				list_highlightSortedColumn: true,
 				list_infiniteScroll: false,
-				list_noItemsHTML: '',
+				list_noItemsHTML: 'no items found',
 				list_selectable: false,
 				list_sortClearing: false,
-				list_rowRendered: null
+				list_rowRendered: null,
+				list_frozenColumns: 0,
+				list_actions: false
 			} );
 
 			//EXTENSION DEFINITION
@@ -5764,6 +6002,7 @@
 				initialize: function( helpers, callback ) {
 					this.list_sortDirection = null;
 					this.list_sortProperty = null;
+					this.list_actions_width = ( this.viewOptions.list_actions.width !== undefined ) ? this.viewOptions.list_actions.width : '37px';
 					callback();
 				},
 				resize: function() {
@@ -5789,12 +6028,18 @@
 					var $table;
 
 					if ( $listContainer.length < 1 ) {
-						$listContainer = $( '<div class="repeater-list" data-preserve="shallow"><div class="repeater-list-wrapper" data-infinite="true" data-preserve="shallow"><table aria-readonly="true" class="table" data-preserve="shallow" role="grid"></table></div></div>' );
+						$listContainer = $( '<div class="repeater-list ' + specialBrowserClass() + '" data-preserve="shallow"><div class="repeater-list-wrapper" data-infinite="true" data-preserve="shallow"><table aria-readonly="true" class="table" data-preserve="shallow" role="grid"></table></div></div>' );
 						$listContainer.find( '.repeater-list-wrapper' ).on( 'scroll.fu.repeaterList', function() {
 							if ( self.viewOptions.list_columnSyncing ) {
 								self.list_positionHeadings();
 							}
 						} );
+						if ( self.viewOptions.list_frozenColumns || self.viewOptions.list_actions ) {
+							helpers.container.on( 'scroll.fu.repeaterList', function() {
+								self.list_positionColumns();
+							} );
+						}
+
 						helpers.container.append( $listContainer );
 					}
 
@@ -5816,6 +6061,20 @@
 						this.list_positionHeadings();
 					}
 
+					if ( this.viewOptions.list_frozenColumns ) {
+						this.list_setFrozenColumns();
+
+					}
+
+					if ( this.viewOptions.list_actions ) {
+						this.list_createItemActions();
+						this.list_sizeActionsTable();
+					}
+
+					if ( this.viewOptions.list_frozenColumns || this.viewOptions.list_actions ) {
+						this.list_positionColumns();
+					}
+
 					$sorted = this.$canvas.find( '.repeater-list-heading.sorted' );
 					if ( $sorted.length > 0 ) {
 						this.list_highlightColumn( $sorted.data( 'fu_item_index' ) );
@@ -5832,6 +6091,13 @@
 			var content = rows[ rowIndex ][ columns[ columnIndex ].property ];
 			var $col = $( '<td></td>' );
 			var width = columns[ columnIndex ]._auto_width;
+
+			var property = columns[ columnIndex ].property;
+			if ( this.viewOptions.list_actions !== false && property === '@_ACTIONS_@' ) {
+				content = '<div class="repeater-list-actions-placeholder" style="width: ' + this.list_actions_width + '"></div>';
+			}
+
+			content = ( content !== undefined ) ? content : '';
 
 			$col.addClass( ( ( className !== undefined ) ? className : '' ) ).append( content );
 			if ( width !== undefined ) {
@@ -5866,6 +6132,12 @@
 			$both = $header.add( $div );
 			$span = $div.find( chevron );
 			$spans = $span.add( $header.find( chevron ) );
+
+			if ( this.viewOptions.list_actions && columns[ index ].property === '@_ACTIONS_@' ) {
+				var width = this.list_actions_width;
+				$header.css( 'width', width );
+				$div.css( 'width', width );
+			}
 
 			className = columns[ index ].className;
 			if ( className !== undefined ) {
@@ -5938,7 +6210,7 @@
 					if ( $item.hasClass( 'selected' ) ) {
 						$item.removeClass( 'selected' );
 						$item.find( '.repeater-list-check' ).remove();
-						$item.$element.trigger( 'deselected.fu.repeaterList', $item );
+						self.$element.trigger( 'deselected.fu.repeaterList', $item );
 					} else {
 						if ( self.viewOptions.list_selectable !== 'multi' ) {
 							self.$canvas.find( '.repeater-list-check' ).remove();
@@ -5960,6 +6232,10 @@
 						$row.trigger( 'click.fu.repeaterList' );
 					}
 				} );
+			}
+
+			if ( this.viewOptions.list_actions && !this.viewOptions.list_selectable ) {
+				$row.data( 'item_data', rows[ index ] );
 			}
 
 			$tbody.append( $row );
@@ -5995,7 +6271,8 @@
 
 		function renderThead( $table, data ) {
 			var columns = data.columns || [];
-			var i, j, l, $thead, $tr;
+			var $thead = $table.find( 'thead' );
+			var i, j, l, $tr;
 
 			function differentColumns( oldCols, newCols ) {
 				if ( !newCols ) {
@@ -6020,12 +6297,23 @@
 				return false;
 			}
 
-			if ( this.list_firstRender || differentColumns( this.list_columns, columns ) ) {
-				$table.find( 'thead' ).remove();
+			if ( this.list_firstRender || differentColumns( this.list_columns, columns ) || $thead.length === 0 ) {
+				$thead.remove();
 
 				this.list_columns = columns;
 				this.list_firstRender = false;
 				this.$loader.removeClass( 'noHeader' );
+
+				if ( this.viewOptions.list_actions ) {
+					var actionsColumn = {
+						label: this.viewOptions.list_actions.label || '<span class="actions-hidden">a</span>',
+						property: '@_ACTIONS_@',
+						sortable: false,
+						width: this.list_actions_width
+					};
+					columns.push( actionsColumn );
+				}
+
 
 				$thead = $( '<thead data-preserve="deep"><tr></tr></thead>' );
 				$tr = $thead.find( 'tr' );
@@ -6082,6 +6370,20 @@
 
 					}
 				}
+			}
+		}
+
+		function specialBrowserClass() {
+			var ua = window.navigator.userAgent;
+			var msie = ua.indexOf( "MSIE " );
+			var firefox = ua.indexOf( 'Firefox' );
+
+			if ( msie > 0 ) {
+				return 'ie-' + parseInt( ua.substring( msie + 5, ua.indexOf( ".", msie ) ) );
+			} else if ( firefox > 0 ) {
+				return 'firefox';
+			} else {
+				return '';
 			}
 		}
 
@@ -6186,6 +6488,7 @@
 				thumbnail_alignment: 'left',
 				thumbnail_infiniteScroll: false,
 				thumbnail_itemRendered: null,
+				thumbnail_noItemsHTML: 'no items found',
 				thumbnail_selectable: false,
 				thumbnail_template: '<div class="thumbnail repeater-thumbnail"><img height="75" src="{{src}}" width="65"><span>{{name}}</span></div>'
 			} );
@@ -6219,11 +6522,12 @@
 							alignment = ( validAlignments[ alignment ] ) ? alignment : 'justify';
 							$cont.addClass( 'align-' + alignment );
 							this.thumbnail_injectSpacers = true;
-							response.item = $cont;
 						} else {
 							this.thumbnail_injectSpacers = false;
-							response.action = 'none';
 						}
+						response.item = $cont;
+					} else {
+						response.action = 'none';
 					}
 
 					if ( data.items && data.items.length < 1 ) {
@@ -6395,9 +6699,10 @@
 			} );
 			this.$element.find( '.combobox' ).on( 'changed.fu.combobox', $.proxy( this.changed, this ) );
 			this.$element.find( '.datepicker' ).on( 'changed.fu.datepicker', $.proxy( this.changed, this ) );
+			this.$element.find( '.datepicker' ).on( 'dateClicked.fu.datepicker', $.proxy( this.changed, this ) );
 			this.$element.find( '.selectlist' ).on( 'changed.fu.selectlist', $.proxy( this.changed, this ) );
 			this.$element.find( '.spinbox' ).on( 'changed.fu.spinbox', $.proxy( this.changed, this ) );
-			this.$element.find( '.repeat-monthly .radio, .repeat-yearly .radio' ).on( 'change.fu.scheduler', $.proxy( this.changed, this ) );
+			this.$element.find( '.repeat-monthly .radio-custom, .repeat-yearly .radio-custom' ).on( 'change.fu.scheduler', $.proxy( this.changed, this ) );
 		};
 
 		Scheduler.prototype = {
@@ -6420,7 +6725,7 @@
 				this.$element.find( '.datepicker' ).datepicker( 'destroy' );
 				this.$element.find( '.selectlist' ).selectlist( 'destroy' );
 				this.$element.find( '.spinbox' ).spinbox( 'destroy' );
-				this.$element.find( '[type=radio]' ).radio( 'destroy' );
+				this.$element.find( '.radio-custom' ).radio( 'destroy' );
 				this.$element.remove();
 
 				// any external bindings
@@ -6499,23 +6804,23 @@
 				}
 
 				// hide all panels
-				this.$endAfter.parent().addClass( 'hide' );
+				this.$endAfter.parent().addClass( 'hidden' );
 				this.$endAfter.parent().attr( 'aria-hidden', 'true' );
 
-				this.$endDate.parent().addClass( 'hide' );
+				this.$endDate.parent().addClass( 'hidden' );
 				this.$endDate.parent().attr( 'aria-hidden', 'true' );
 
 				if ( val === 'after' ) {
-					this.$endAfter.parent().removeClass( 'hide' );
+					this.$endAfter.parent().removeClass( 'hide hidden' ); // hide is deprecated
 					this.$endAfter.parent().attr( 'aria-hidden', 'false' );
 				} else if ( val === 'date' ) {
-					this.$endDate.parent().removeClass( 'hide' );
+					this.$endDate.parent().removeClass( 'hide hidden' ); // hide is deprecated
 					this.$endDate.parent().attr( 'aria-hidden', 'false' );
 				}
 			},
 
 			getValue: function() {
-				// FREQ = frequency (hourly, daily, monthly...)
+				// FREQ = frequency (secondly, minutely, hourly, daily, weekdays, weekly, monthly, yearly)
 				// BYDAY = when picking days (MO,TU,WE,etc)
 				// BYMONTH = when picking months (Jan,Feb,March) - note the values should be 1,2,3...
 				// BYMONTHDAY = when picking days of the month (1,2,3...)
@@ -6576,6 +6881,12 @@
 
 				if ( repeat === 'none' ) {
 					pattern = 'FREQ=DAILY;INTERVAL=1;COUNT=1;';
+				} else if ( repeat === 'secondly' ) {
+					pattern = 'FREQ=SECONDLY;';
+					pattern += 'INTERVAL=' + interval + ';';
+				} else if ( repeat === 'minutely' ) {
+					pattern = 'FREQ=MINUTELY;';
+					pattern += 'INTERVAL=' + interval + ';';
 				} else if ( repeat === 'hourly' ) {
 					pattern = 'FREQ=HOURLY;';
 					pattern += 'INTERVAL=' + interval + ';';
@@ -6604,8 +6915,8 @@
 						day = parseInt( this.$element.find( '.repeat-monthly-date .selectlist' ).selectlist( 'selectedItem' ).text, 10 );
 						pattern += 'BYMONTHDAY=' + day + ';';
 					} else if ( type === 'bysetpos' ) {
-						days = this.$element.find( '.month-days' ).selectlist( 'selectedItem' ).value;
-						pos = this.$element.find( '.month-day-pos' ).selectlist( 'selectedItem' ).value;
+						days = this.$element.find( '.repeat-monthly-day .month-days' ).selectlist( 'selectedItem' ).value;
+						pos = this.$element.find( '.repeat-monthly-day .month-day-pos' ).selectlist( 'selectedItem' ).value;
 						pattern += 'BYDAY=' + days + ';';
 						pattern += 'BYSETPOS=' + pos + ';';
 					}
@@ -6615,13 +6926,15 @@
 					type = this.$element.find( 'input[name=repeat-yearly]:checked' ).val();
 
 					if ( type === 'bymonthday' ) {
+						// there are multiple .year-month classed elements in scheduler markup
 						month = this.$element.find( '.repeat-yearly-date .year-month' ).selectlist( 'selectedItem' ).value;
-						day = this.$element.find( '.year-month-day' ).selectlist( 'selectedItem' ).text;
+						day = this.$element.find( '.repeat-yearly-date .year-month-day' ).selectlist( 'selectedItem' ).text;
 						pattern += 'BYMONTH=' + month + ';';
 						pattern += 'BYMONTHDAY=' + day + ';';
 					} else if ( type === 'bysetpos' ) {
-						days = this.$element.find( '.year-month-days' ).selectlist( 'selectedItem' ).value;
-						pos = this.$element.find( '.year-month-day-pos' ).selectlist( 'selectedItem' ).value;
+						days = this.$element.find( '.repeat-yearly-day .year-month-days' ).selectlist( 'selectedItem' ).value;
+						pos = this.$element.find( '.repeat-yearly-day .year-month-day-pos' ).selectlist( 'selectedItem' ).value;
+						// there are multiple .year-month classed elements in scheduler markup
 						month = this.$element.find( '.repeat-yearly-day .year-month' ).selectlist( 'selectedItem' ).value;
 
 						pattern += 'BYDAY=' + days + ';';
@@ -6646,6 +6959,8 @@
 				}
 
 				pattern += duration;
+				// remove trailing semicolon
+				pattern = pattern.substring( pattern.length - 1 ) === ';' ? pattern.substring( 0, pattern.length - 1 ) : pattern;
 
 				var data = {
 					startDateTime: startDateTime,
@@ -6681,30 +6996,30 @@
 					case 'daily':
 					case 'weekly':
 					case 'monthly':
-						this.$repeatIntervalPanel.removeClass( 'hide' );
+						this.$repeatIntervalPanel.removeClass( 'hide hidden' ); // hide is deprecated
 						this.$repeatIntervalPanel.attr( 'aria-hidden', 'false' );
 						break;
 					default:
-						this.$repeatIntervalPanel.addClass( 'hide' );
+						this.$repeatIntervalPanel.addClass( 'hidden' ); // hide is deprecated
 						this.$repeatIntervalPanel.attr( 'aria-hidden', 'true' );
 						break;
 				}
 
 				// hide all panels
-				this.$recurrencePanels.addClass( 'hide' );
+				this.$recurrencePanels.addClass( 'hidden' );
 				this.$recurrencePanels.attr( 'aria-hidden', 'true' );
 
 				// show panel for current selection
-				this.$element.find( '.repeat-' + val ).removeClass( 'hide' );
+				this.$element.find( '.repeat-' + val ).removeClass( 'hide hidden' ); // hide is deprecated
 				this.$element.find( '.repeat-' + val ).attr( 'aria-hidden', 'false' );
 
 				// the end selection should only be shown when
 				// the repeat interval is not "None (run once)"
 				if ( val === 'none' ) {
-					this.$end.addClass( 'hide' );
+					this.$end.addClass( 'hidden' );
 					this.$end.attr( 'aria-hidden', 'true' );
 				} else {
-					this.$end.removeClass( 'hide' );
+					this.$end.removeClass( 'hide hidden' ); // hide is deprecated
 					this.$end.attr( 'aria-hidden', 'false' );
 				}
 			},
@@ -6717,7 +7032,6 @@
 					startDate = temp[ 0 ];
 
 					if ( temp[ 1 ] ) {
-						startTime = temp[ 1 ];
 						temp[ 1 ] = temp[ 1 ].split( ':' );
 						hours = parseInt( temp[ 1 ][ 0 ], 10 );
 						minutes = ( temp[ 1 ][ 1 ] ) ? parseInt( temp[ 1 ][ 1 ].split( '+' )[ 0 ].split( '-' )[ 0 ].split( 'Z' )[ 0 ], 10 ) : 0;
@@ -6737,7 +7051,6 @@
 					} else {
 						startTime = '00:00';
 					}
-
 				} else {
 					startTime = '00:00';
 					var currentDate = this.$startDate.datepicker( 'getDate' );
@@ -6754,7 +7067,6 @@
 						} else {
 							item += '-offset="' + options.timeZone.offset;
 						}
-
 					}
 
 					item += '"]';
@@ -6770,7 +7082,6 @@
 						} else {
 							temp = '+00:00';
 						}
-
 					} else {
 						temp = '+00:00';
 					}
@@ -6791,7 +7102,6 @@
 							item = temp[ i ].split( '=' );
 							recur[ item[ 0 ] ] = item[ 1 ];
 						}
-
 					}
 
 					if ( recur.FREQ === 'DAILY' ) {
@@ -6803,9 +7113,11 @@
 							} else {
 								item = 'daily';
 							}
-
 						}
-
+					} else if ( recur.FREQ === 'SECONDLY' ) {
+						item = 'secondly';
+					} else if ( recur.FREQ === 'MINUTELY' ) {
+						item = 'minutely';
 					} else if ( recur.FREQ === 'HOURLY' ) {
 						item = 'hourly';
 					} else if ( recur.FREQ === 'WEEKLY' ) {
@@ -6886,11 +7198,12 @@
 						var timeZone = this.$timeZone.selectlist( 'selectedItem' );
 						var timezoneOffset = ( timeZone.offset === '+00:00' ) ? 'Z' : timeZone.offset;
 
-						startDate = temp;
-						var utcEndHours = this.setUtcTime( startDate, startTime, timezoneOffset );
+						var utcEndHours = this.setUtcTime( temp, startTime, timezoneOffset );
 						this.$endDate.datepicker( 'setDate', utcEndHours );
 
 						this.$endSelect.selectlist( 'selectByValue', 'date' );
+					} else {
+						this.$endSelect.selectlist( 'selectByValue', 'never' );
 					}
 
 					this.endSelectChanged();
@@ -6913,7 +7226,7 @@
 				this.$element.find( '.datepicker' ).datepicker( action );
 				this.$element.find( '.selectlist' ).selectlist( action );
 				this.$element.find( '.spinbox' ).spinbox( action );
-				this.$element.find( '[type=radio]' ).radio( action );
+				this.$element.find( '.radio-custom' ).radio( action );
 
 				if ( action === 'disable' ) {
 					action = 'addClass';

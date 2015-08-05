@@ -10,7 +10,7 @@ var path = require('path');
 var mongoose = require('mongoose');
 var user = require('./app-server/model/User');
 var quotation = require('./app-server/model/Quotation');
-var mysql = require('mysql');
+var pool = require("./app-server/app-pooling");
 app = express();
 app.use(express.static(path.join(__dirname, 'app-client')));
 app.listen(8080);
@@ -27,20 +27,9 @@ app.use(session({
     saveUninitialized: true
 }));
 
-var conn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'lvf05783154334',
-    database:'jhwdrivermanagementsystem',
-    port: 3306
-});
-conn.connect();
-conn.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
-    if (err) throw err;
-    console.log('The solution is: ', rows[0].solution);
-});
-conn.end();
-
+pool.iniPool();
+var selectSQL = 'select * from user limit 5';
+pool.query(selectSQL);
 /**
 var User = user.User;
 var Quotation = quotation.Quotation;

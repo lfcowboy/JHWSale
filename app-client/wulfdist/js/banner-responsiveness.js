@@ -29,33 +29,63 @@ function triggerCollapseBanner() {
 
 $('.n-banner').on('n.banner.blue.block.detached', bannerBlueBlockDetached).on('n.banner.blue.block.attached', bannerBlueBlockAttached);
 
-function bannerBlueBlockDetached() {
-    //the last tab in the bottom banner tab bar that needs to transfer style
-    var nav_tab_down_right_most_tab = $(this).find('.n-banner-2nd .rightmost-tab');
+function toggleVisibleBlocksWhenBlueDetached(detach){
     //elements mark to be hidden on blue detached event in the banner
     var hidden_on_blue_detach = $(this).find('.hidden-on-blue-detached');
     var show_on_blue_detach = $(this).find('.show-on-blue-detached');
-    //nav links
-    var nav_links = $(this).find('.n-banner-2nd .n-banner-links');
-    var overflow_cover=$(this).find('.overflow-toggle-area-cover');
+    if(detach){
+        hidden_on_blue_detach.hide();
+        show_on_blue_detach.show();
+    }else{
+        hidden_on_blue_detach.show();
+        show_on_blue_detach.hide();
+    }
+}
 
+function bannerBlueBlockDetached() {
+    var hidden_on_blue_detach = $(this).find('.hidden-on-blue-detached');
+    var show_on_blue_detach = $(this).find('.show-on-blue-detached');
     hidden_on_blue_detach.hide();
     show_on_blue_detach.show();
+
+    //the last tab in the bottom banner tab bar that needs to transfer style
+    var nav_tab_down_right_most_tab = $(this).find('.n-banner-2nd .rightmost-tab');
+    //nav links
+    var nav_links = $(this).find('.n-banner-2nd .n-banner-links');
+    var nav_dropdown_links = $(this).find('.n-banner-2nd .n-banner-dropdown-links');
+    var overflow_cover=$(this).find('.overflow-toggle-area-cover');
+    nav_dropdown_links.find('li.dropdown').each(function(){
+       $(this).addClass('n-dropdown-menu-item-has-child');
+    });
+    nav_dropdown_links.find('ul.dropdown-menu').each(function(){
+        $(this).addClass('n-dropdown-sub-menu');
+    });
+
     nav_tab_down_right_most_tab.removeClass('rightmost-tab').addClass('rightmost-tab-disabled');
     nav_links.removeClass('nav n-banner-nav n-banner-links').addClass("dropdown-menu n-banner-links-collapse-dropdown-menu");
+    nav_dropdown_links.removeClass('nav n-banner-nav n-banner-dropdown-links').addClass("dropdown-menu n-banner-dropdown-links-collapse-dropdown-menu");
     overflow_cover.show();
 }
 
 function bannerBlueBlockAttached() {
-    var nav_tab_down_right_most_tab = $(this).find('.n-banner-2nd .rightmost-tab-disabled').last();
     var hidden_on_blue_detach = $(this).find('.hidden-on-blue-detached');
     var show_on_blue_detach = $(this).find('.show-on-blue-detached');
-    var nav_links = $(this).find('.n-banner-2nd .n-banner-links-collapse-dropdown-menu');
-    var overflow_cover=$(this).find('.overflow-toggle-area-cover');
-
     hidden_on_blue_detach.show();
     show_on_blue_detach.hide();
+
+    var nav_tab_down_right_most_tab = $(this).find('.n-banner-2nd .rightmost-tab-disabled').last();
+    var nav_links = $(this).find('.n-banner-2nd .n-banner-links-collapse-dropdown-menu');
+    var nav_dropdown_links = $(this).find('.n-banner-2nd .n-banner-dropdown-links-collapse-dropdown-menu');
+    var overflow_cover=$(this).find('.overflow-toggle-area-cover');
+    nav_dropdown_links.find('li.dropdown').each(function(){
+        $(this).removeClass('n-dropdown-menu-item-has-child');
+    });
+    nav_dropdown_links.find('ul.dropdown-menu').each(function(){
+        $(this).removeClass('n-dropdown-sub-menu');
+    });
+
     nav_tab_down_right_most_tab.removeClass('rightmost-tab-disabled').addClass('rightmost-tab');
     nav_links.removeClass("dropdown-menu n-banner-links-collapse-dropdown-menu").addClass('nav n-banner-nav n-banner-links');
+    nav_dropdown_links.removeClass("dropdown-menu n-banner-dropdown-links-collapse-dropdown-menu").addClass('nav n-banner-nav n-banner-dropdown-links');
     overflow_cover.hide();
 }
