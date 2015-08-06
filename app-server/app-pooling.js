@@ -31,6 +31,9 @@ exports.query = function(sql,callback){
                     console.log(err);
                 }else{
                     console.log("SELECT ==> " + sql);
+                    for (var i in rows) {
+                        console.log(rows[i]);
+                    }
                     callback(qerr,rows,fields);
                 }
             });
