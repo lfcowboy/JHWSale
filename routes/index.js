@@ -3,5 +3,9 @@
  */
 var path = require('path');
 exports.index = function (req, res) {
-    res.render('index',{'userName':'未登录'});
+    if(req.session.user){
+        res.render('index',{'userName':req.session.user.username});
+    }else{
+        res.render('index',{'userName':'未登录'});
+    }
 };

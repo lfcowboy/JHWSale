@@ -19,21 +19,25 @@ exports.iniPool = function(){
 };
 
 //select
-exports.query = function(sql){
+exports.query = function(sql,callback){
     Pool.prototype.pool.getConnection(function (err, conn) {
-        if (err) console.log("POOL ==> " + err);
-        conn.query(sql,function(err,rows){
-            if (err) console.log(err);
-            console.log("SELECT ==> ");
-            for (var i in rows) {
-                console.log(rows[i]);
-            }
-            conn.release();
-        });
+        if (err){
+            console.log("POOL ==> " + err);
+            callback(err,null,null);
+        }else{
+            conn.query(sql,function(qerr,rows,fields){
+                conn.release();
+                if (qerr){
+                    console.log(err);
+                }else{
+                    console.log("SELECT ==> " + sql);
+                    callback(qerr,rows,fields);
+                }
+            });
+        }
     });
 };
 
-Pool.prototype.pool.
 //var conn = mysql.createConnection({
 //    host: 'localhost',
 //    user: 'root',

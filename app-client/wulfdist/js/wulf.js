@@ -5644,15 +5644,6 @@ window.E = function () {
         $login.css("margin-top", -(Math.round(height / 2)) + "px");
     }
 
-    $login.click(function () {
-        if ($errorMsg.is(":hidden")) {
-            $errorMsg.show();
-        } else {
-            $errorMsg.hide();
-        }
-        return false;
-    });
-
     $('#applicationLoginUsername,#applicationLoginPassword').on('keyup change', function (e) {
         if ($username.val() && $password.val()) {
             $login.prop('disabled', false);

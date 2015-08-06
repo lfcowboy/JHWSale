@@ -28,8 +28,7 @@ app.use(session({
 }));
 
 pool.iniPool();
-var selectSQL = 'select * from user limit 5';
-pool.query(selectSQL);
+
 /**
 var User = user.User;
 var Quotation = quotation.Quotation;
