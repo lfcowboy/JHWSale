@@ -1,0 +1,20 @@
+<div id="addCompanyPanel" class="panel panel-shadow content-panel" hidden>
+    <div class="panel-heading">
+        <h1>新建客户公司</h1>
+    </div>
+    <div class="panel-body">
+        <div class="panel-section">
+            <form class="form-horizontal" action="/addQuote" method="post">
+                <div class="form-group">
+                    <label for="addCompany_name" class="col-sm-2 control-label">名称:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control n-inputfield" id="addCompany_name" name="name"
+                               value="" placeholder="<输入公司名称>">
+                    </div>
+                </div>
+                <button id="addCustomerButton" type="button" class="btn">添加联系人</button>
+                <button id="addCompanyButton" type="button" class="btn pull-right">保存</button>
+            </form>
+        </div>
+    </div>
+</div>

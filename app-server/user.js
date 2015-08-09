@@ -1,8 +1,7 @@
 /**
  * Created by fenglv on 2015/7/28.
  */
-var path = require('path');
-var pool = require("../app-server/app-pooling");
+var pool = require("./app-pooling");
 exports.login = function (req, res) {
     res.render('index',{'userName':'周芸丽'});
 };

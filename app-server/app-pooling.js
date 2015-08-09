@@ -3,44 +3,68 @@
  */
 var mysql = require('mysql');
 
-function Pool(){
+function Pool() {
 
 }
 
 // create pool
-exports.iniPool = function(){
+exports.iniPool = function () {
     Pool.prototype.pool = mysql.createPool({
         host: 'localhost',
         user: 'root',
         password: 'lvf05783154334',
-        database:'jhwdrivermanagementsystem',
+        database: 'jhwsale',
         port: 3306
     });
 };
 
 //select
-exports.query = function(sql,callback){
+exports.query = function (sql, callback) {
     Pool.prototype.pool.getConnection(function (err, conn) {
-        if (err){
+        if (err) {
             console.log("POOL ==> " + err);
-            callback(err,null,null);
-        }else{
-            conn.query(sql,function(qerr,rows,fields){
+            callback(err, null, null);
+        }
+        else {
+            conn.query(sql, function (qerr, rows, fields) {
                 conn.release();
-                if (qerr){
+                if (qerr) {
                     console.log(err);
-                }else{
+                    callback(qerr, null, null);
+                }
+                else {
                     console.log("SELECT ==> " + sql);
                     for (var i in rows) {
                         console.log(rows[i]);
                     }
-                    callback(qerr,rows,fields);
+                    callback(qerr, rows, fields);
                 }
             });
         }
     });
 };
 
+//insert
+exports.insert = function (sql, callback) {
+    Pool.prototype.pool.getConnection(function (err, conn) {
+        if (err) {
+            console.log("POOL ==> " + err);
+            callback(err, null);
+        }
+        else {
+            conn.query(sql, function (ierr, res) {
+                conn.release();
+                if(ierr){
+                    callback(err, null);
+                    console.log(ierr);
+                }else{
+                    console.log("INSERT == >" + sql);
+                    callback(err, res);
+                }
+            });
+        }
+    });
+}
 //var conn = mysql.createConnection({
 //    host: 'localhost',
 //    user: 'root',

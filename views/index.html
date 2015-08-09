@@ -18,9 +18,9 @@
                 <div class="n-banner-header">
                     <button class="n-banner-toggle collapsed" data-target="#n-banner-collapse" data-toggle="collapse"
                             type="button">
-            <span class="sr-only">
-              Toggle navigation
-            </span>
+                        <span class="sr-only">
+                          Toggle navigation
+                        </span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -31,9 +31,7 @@
                 </div>
 
                 <div class="collapse n-banner-collapse" id="n-banner-collapse">
-
                     <div class="row n-banner-1st">
-
                         <div class="n-banner-right n-banner-logo-img hidden-xs">
                             <img alt="Nokia" src="wulfdist/img/logo.png">
                         </div>
@@ -100,13 +98,13 @@
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>
+                                    <li id="addQuoteMenu">
                                         <a href="#"><span>新建报价单</span></a>
                                     </li>
                                     <li class="n-dropdown-menu-item-has-child">
                                         <a href="#"><span>查询</span><i class="icon icon-next"></i></a>
                                         <ul class="n-dropdown-sub-menu">
-                                            <li><a href="#"><span>报价单</span></a></li>
+                                            <li id="quoteManagementMenu"><a href="#"><span>报价单</span></a></li>
                                             <li><a href="#"><span>产品报价</span></a></li>
                                         </ul>
                                     </li>
@@ -156,12 +154,13 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="#">
-                                                <span>新建</span>
-                                            </a>
+                                        <li class="n-dropdown-menu-item-has-child">
+                                            <a href="#"><span>新建</span><i class="icon icon-next"></i></a>
+                                            <ul class="n-dropdown-sub-menu">
+                                                <li id="addCompanyMenu"><a href="#"><span>客户公司</span></a></li>
+                                                <li><a href="#"><span>客户联系人</span></a></li>
+                                            </ul>
                                         </li>
-
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -254,22 +253,6 @@
 
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <span class="icon icon-manage"></span>
-                                        Manage
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Item
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Item
-                                    </a>
-                                </li>
                             </ul>
                         </div>
                         <div class="n-banner-2nd-gray-to-blue hidden-xs hidden-on-blue-detached">
@@ -286,12 +269,36 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <% include AddQuote.html %>
+        <% include customer\addCompany.html %>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <% include quote\addQuote.html %>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <% include quote\quoteManagement.html %>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <% include confirmDlg.html %>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <% include errorDlg.html %>
     </div>
 </div>
 <% include login.html %>
 <script src="wulfdist/js/jquery.min.js"></script>
 <script src="wulfdist/js/wulf.js"></script>
 <script src="wulfdist/js/fuelux.js"></script>
+<script src="js/index.js"></script>
+<script src="js/msgDlg.js"></script>
+<script src="js/addQuote.js"></script>
+<script src="js/customer.js"></script>
 </body>
 </html>
