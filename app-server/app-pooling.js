@@ -55,11 +55,11 @@ exports.insert = function (sql, callback) {
             conn.query(sql, function (ierr, res) {
                 conn.release();
                 if(ierr){
-                    callback(err, null);
+                    callback(ierr, null);
                     console.log(ierr);
                 }else{
                     console.log("INSERT == >" + sql);
-                    callback(err, res);
+                    callback(ierr, res);
                 }
             });
         }

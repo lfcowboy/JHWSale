@@ -1,7 +1,7 @@
 /**
  * Created by linaqiu on 2015/7/1.
  */
-+function () {
+(function () {
     var KEY = {up: 38, down: 40, right: 39, left: 37};
 
     /*---------------------- bind actions ----------------------*/
@@ -16,7 +16,7 @@
     // add key event to show or close sub menu
     $(".n-banner").on("keydown", ".n-dropdown-menu-item-has-child", function (event) {
         // click right arrow, open sub menu;
-        if (event.keyCode == KEY.right) {
+        if (event.keyCode === KEY.right) {
             var $subMenu = $(this).children(".n-dropdown-sub-menu");
             if (!$subMenu.hasClass("open")) {
                 showSubMenu($(this));
@@ -36,15 +36,15 @@
     $(".n-banner").on("keydown", ".n-dropdown-sub-menu>li", function (event) {
         event.stopPropagation();
         // click up arrow
-        if (event.keyCode == KEY.up) {
+        if (event.keyCode === KEY.up) {
             setSubMenuItemFocus($(this), true);
         }
         // click down arrow
-        else if (event.keyCode == KEY.down) {
+        else if (event.keyCode === KEY.down) {
             setSubMenuItemFocus($(this), false);
         }
         // click left arrow, close sub menu;
-        else if (event.keyCode == KEY.left) {
+        else if (event.keyCode === KEY.left) {
             var $subMenu = $(this).parent(".n-dropdown-sub-menu");
             hideSubMenu($subMenu);
             $subMenu.prev("a").focus();
@@ -85,6 +85,6 @@
         }
         prevItem.children("a").focus();
     };
-}();
+}());
 
 

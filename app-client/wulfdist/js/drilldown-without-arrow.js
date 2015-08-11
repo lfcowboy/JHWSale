@@ -30,6 +30,20 @@
                 obj = this;
             }
         });
+
+        $(this).bind('focus',function(){
+            $(this).addClass("n-drillDown-border-row");
+        });
+
+        $(this).bind('blur',function(){
+            $(this).removeClass("n-drillDown-border-row");
+        });
+
+        $(this).keyup(function (event) {
+            if (event.keyCode === 13) {
+                $(this).trigger("click");
+            }
+        });
     });
 
     $(".n-drillDown-collapsed-row .icon-close-rounded").click(function () {

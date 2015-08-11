@@ -4,12 +4,25 @@ $( document ).ready(function() {
 	$('.n-table-cell-hover').on('click', 'td', function(e) {
 		$(this).closest('table').find('td').removeClass('n-cell-selected');
 		$(this).addClass('n-cell-selected');
+
+
 	});
 
 	//Row selection
 	$('.n-table-hover').on('click', 'td', function(e) {
-		$(this).closest('table').find('td').removeClass('n-cell-selected');
-		$(this).closest("tr").children("td").addClass("n-cell-selected");       
+		var keyPressed=window.event.ctrlKey || window.event.shiftKey;
+		var isHighLighted=$(this).closest("tr").children("td").hasClass("n-cell-selected");
+
+		$(this).closest("tr").children("td").removeClass("n-cell-selected");
+		var otherIsHighLighted=$(this).closest('table').find('td').hasClass('n-cell-selected');
+
+		if(!keyPressed){
+			$(this).closest('table').find('td').removeClass('n-cell-selected');
+		}
+		else if(isHighLighted && otherIsHighLighted){
+			return;
+		}
+		$(this).closest("tr").children("td").addClass("n-cell-selected");
 	});
 
 
@@ -25,7 +38,4 @@ $( document ).ready(function() {
 			arrow.addClass("icon-arrow");
 		}
 	});
-
-
-	
 });

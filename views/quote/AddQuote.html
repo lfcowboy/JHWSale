@@ -6,23 +6,26 @@
         <div class="panel-section">
             <form class="form-horizontal" action="/addQuote" method="post">
                 <div class="form-group">
-                    <label for="existingValue" class="col-sm-2 control-label">单号:</label>
-                    <div class="col-sm-8">
+                    <label for="addQuote_quoteNumDiv" class="col-sm-2 control-label">单号:</label>
+                    <div id="addQuote_quoteNumDiv" class="col-sm-8">
                         <input type="text" class="form-control n-inputfield" readonly tabindex="-1"
                                id="addQuote_quoteNum" name="quoteNum" value="SDICBJYYYYMMDD00">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="existingValue" class="col-sm-2 control-label">客户公司:</label>
-                    <div class="col-sm-8">
+                    <label for="addQuote_companyDiv" class="col-sm-2 control-label">客户公司:</label>
+                    <div id="addQuote_companyDiv" class="col-sm-8">
                         <div class="n-search n-search-clearable">
-                            <a class="n-search-icon dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true" href="javascript:void(0)">
+                            <a class="n-search-icon dropdown-toggle" id="addQuote_companySearch" data-toggle="dropdown"
+                               aria-expanded="true" href="javascript:void(0)">
                                 <span class="icon icon-search"></span>
                                 <span class="icon icon-arrow"></span></a>
-                            <input id="Example4" type="text" class="n-inputfield n-search-input" placeholder="Search">
+                            <input id="addQuote_companyName" type="text" class="n-inputfield n-search-input"
+                                   placeholder="<公司名>">
                             <a class="n-search-control-icon" href="javascript:void(0)">
                                 <span class="icon icon-close"></span></a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                            <ul id="addQuote_companyList" class="dropdown-menu" role="menu"
+                                aria-labelledby="dropdownMenu2">
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><span>Action</span></a></li>
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><span>Another action</span></a></li>
                                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><span>Something else here</span></a></li>

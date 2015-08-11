@@ -9,3 +9,17 @@ exports.addCompany = function (req, res) {
         res.json({success:true, confirmHead:'成功', confirmMsg:'客户公司新建成功！'});
     });
 };
+
+exports.getCompany = function (req, res) {
+    var querySQL = 'select * from company where name like "%' + req.body.companyName + '%"';
+    pool.query(querySQL,function(qerr, rows, fields){
+        res.json(rows);
+    });
+};
+
+exports.getCompanyByName = function (req, res, callback) {
+    var querySQL = 'select id from company where name = "' + req.body.companyName + '"';
+    pool.query(querySQL,function(qerr, rows, fields){
+        callback(qerr, rows, fields);
+    });
+};

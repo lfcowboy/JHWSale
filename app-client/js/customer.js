@@ -19,7 +19,7 @@ $("#addCompanyButton").click(function(){
             }
         },
         error: function(jqXHR, textStatus, errorThrown){
-            showErrorMsg('错误','系统错误，请重试或者联系管理员！');
+            showErrorMsgDefault();
         }
     });
 });

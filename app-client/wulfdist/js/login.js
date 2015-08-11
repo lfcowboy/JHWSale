@@ -1,29 +1,10 @@
 /**
  * Created by linaqiu on 2015/7/28.
  */
-+function () {
+(function () {
     var $username = $('#applicationLoginUsername'),
         $password = $('#applicationLoginPassword'),
-        $login = $('#applicationLoginButton'),
-        $errorMsg = $("#error-msg");
-    $errorMsg.hide();
-
-    initLogin();
-
-    function initLogin() {
-        var $login = $(".n-login");
-        var height = $login.outerHeight();
-        $login.css("margin-top", -(Math.round(height / 2)) + "px");
-    }
-
-    $login.click(function () {
-        if ($errorMsg.is(":hidden")) {
-            $errorMsg.show();
-        } else {
-            $errorMsg.hide();
-        }
-        return false;
-    });
+        $login = $('#applicationLoginButton');
 
     $('#applicationLoginUsername,#applicationLoginPassword').on('keyup change', function (e) {
         if ($username.val() && $password.val()) {
@@ -49,4 +30,4 @@
             $password.next().children('span').addClass('icon-mandatory');
         }
     });
-}();
+}());

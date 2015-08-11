@@ -19,7 +19,7 @@ $.fn.extend({
     }
 });
 
-+function () {
+(function () {
     $(".n-flyout").on("click", ".n-flyout-open", function () {
         var $flyoutContainer = $(this).prev(".n-flyout-container");
         if ($flyoutContainer.is(":visible")) {
@@ -33,7 +33,7 @@ $.fn.extend({
     $(document).keyup(function (e) {
         // click esc to hide flyout menu if it is open
         var $flyoutContainer = $(".n-flyout>.n-flyout-container");
-        if (e.keyCode == 27 && $flyoutContainer.is(":visible")) {
+        if (e.keyCode === 27 && $flyoutContainer.is(":visible")) {
             hideFlyout($flyoutContainer);
         }
     });
@@ -50,5 +50,5 @@ $.fn.extend({
         $flyoutContainer.show();
         $flyoutContainer.parent(".n-flyout").animate({left: 0}, 400);
     }
-}();
+}());
 

@@ -1,7 +1,7 @@
 /**
  * Created by linaqiu on 2015/6/3.
  */
-+function () {
+(function () {
     $(document).on('click.bs.dropdown.data-api', '[data-toggle="dropdown"]', function () {
         if ($(this).parents(".combobox").length !== 0) {
             $(this).parents(".combobox").toggleClass('combobox-open');
@@ -13,5 +13,5 @@
             $(".combobox-open").removeClass('combobox-open');
         }
     });
-}();
+}());
 

@@ -1867,8 +1867,7 @@ pre code
 
     max-height: 340px;
 }
-.container,
-.n-brand-banner-container
+.container
 {
     margin-right: auto;
     margin-left: auto;
@@ -1877,24 +1876,21 @@ pre code
 }
 @media (min-width: 768px)
 {
-    .container,
-    .n-brand-banner-container
+    .container
     {
         width: 750px;
     }
 }
 @media (min-width: 992px)
 {
-    .container,
-    .n-brand-banner-container
+    .container
     {
         width: 970px;
     }
 }
 @media (min-width: 1200px)
 {
-    .container,
-    .n-brand-banner-container
+    .container
     {
         width: 1170px;
     }
@@ -8307,9 +8303,7 @@ button.close
 .n-banner-header:before,
 .n-banner-header:after,
 .n-banner-collapse:before,
-.n-banner-collapse:after,
-.n-brand-banner-container:before,
-.n-brand-banner-container:after
+.n-banner-collapse:after
 {
     display: table;
 
@@ -8332,8 +8326,7 @@ button.close
 .modal-footer:after,
 .n-banner:after,
 .n-banner-header:after,
-.n-banner-collapse:after,
-.n-brand-banner-container:after
+.n-banner-collapse:after
 {
     clear: both;
 }
@@ -9294,12 +9287,70 @@ h2
  * WULF (http://networks.nokia.com/)
  * Copyright (C) 2015 Nokia Solutions and Networks. All rights Reserved.
  */
-@media (min-width: 1200px)
+.jqx-widget-header
 {
-    .n-brand-banner-container
-    {
-        width: 1400px;
-    }
+    font-size: 14px;
+
+    color: #474747;
+}
+.jqx-grid
+{
+    border-radius: 7px;
+    -webkit-box-shadow: 0 1px 3px 0 #888;
+            box-shadow: 0 1px 3px 0 #888;
+}
+.jqx-widget-content
+{
+    font-size: 14px;
+
+    color: #1b1b1b;
+}
+.jqx-widget-content .checkbox-small
+{
+    margin-top: 2px;
+    margin-left: 8px;
+}
+.jqx-grid-cell > div
+{
+    padding-right: 4px !important;
+    padding-left: 4px !important;
+}
+.jqx-grid-cell > img
+{
+    text-align: center;
+}
+.jqx-fill-state-normal
+{
+    border-color: #adadad;
+    background: #fff;
+}
+.jqx-cell
+{
+    line-height: 26px;
+
+    padding: 0 8px 0 8px;
+}
+.jqx-grid-cell-alt
+{
+    background: #efefef;
+}
+.jqx-widget-header
+{
+    font-weight: bolder;
+
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eaeaea));
+    background: -webkit-linear-gradient(#fff, #eaeaea);
+    background:      -o-linear-gradient(#fff, #eaeaea);
+    background:         linear-gradient(#fff, #eaeaea);
+}
+.grid-alternating-rows .jqx-grid-cell
+{
+    border-width: 0 1px 0 0;
+}
+.grid-alternating-rows .jqx-rc-all
+{
+    border: 1px solid #b2b2b2;
+    border-radius: 4px;
 }
 /*
  * WULF (http://networks.nokia.com/)
@@ -12857,17 +12908,6 @@ ul.n-list-group-small:before
 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcccdd5', endColorstr='#ffc4c5cd', GradientType=0);
 }
-.n-banner-2nd .n-banner-links .icon:before
-{
-    font-size: 13px;
-
-    padding-right: 2px;
-
-    vertical-align: initial;
-
-    color: #a8bbc0;
-    text-shadow: 0 -1px #000;
-}
 .n-banner-2nd-filler-blue
 {
     position: absolute;
@@ -13718,50 +13758,6 @@ ul.n-list-group-small:before
     -webkit-box-shadow: none !important;
             box-shadow: none !important;
 }
-.n-banner-links
-{
-    height: 40px;
-    padding-top: 0;
-
-    background-image: -webkit-linear-gradient(top, #1a64c1 0%, #0e3277 100%);
-    background-image:      -o-linear-gradient(top, #1a64c1 0%, #0e3277 100%);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#1a64c1), to(#0e3277));
-    background-image:         linear-gradient(to bottom, #1a64c1 0%, #0e3277 100%);
-    background-repeat: repeat-x;
-
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1a64c1', endColorstr='#ff0e3277', GradientType=0);
-}
-.n-banner-links > li > a,
-.n-banner-links > li > .n-link
-{
-    font-weight: normal;
-
-    color: white !important;
-    background-color: transparent;
-    text-shadow: 0 1px rgba(0, 0, 0, .75);
-}
-.n-banner-links > li > a:hover,
-.n-banner-links > li > .n-link:hover
-{
-    color: white;
-    border: none;
-    outline: 0;
-    background: transparent;
-    -webkit-background-clip: text;
-            background-clip: text;
-    text-shadow: 1px -1px 5px rgba(255, 255, 255, .5);
-}
-.n-banner-links > li > a:hover > span,
-.n-banner-links > li > .n-link:hover > span
-{
-    border: none;
-}
-.n-banner-links > li > a:focus,
-.n-banner-links > li > .n-link:focus
-{
-    border: none !important;
-    background-color: transparent !important;
-}
 .n-banner-dlg-gray-to-dark
 {
     width: 90px;
@@ -14365,13 +14361,14 @@ ul.n-list-group-small:before
 }
 .n-search .dropdown-toggle:focus
 {
+    border: 1px solid #666;
     background-image: none !important;
 }
 .n-search .dropdown-menu
 {
     width: inherit;
 
-    background-color: white;
+    background-color: #ededf0;
 }
 .n-search .dropdown-menu *
 {
@@ -14402,6 +14399,11 @@ ul.n-list-group-small:before
     border-radius: 0 -webkit-calc(30px / 2) 0 0;
     border-radius: 0 calc(30px / 2) 0 0;
 }
+.n-search.open .dropdown-toggle
+{
+    border-radius: -webkit-calc(30px / 2) 0 0 0 !important;
+    border-radius:         calc(30px / 2) 0 0 0 !important;
+}
 .n-search.open .dropdown-toggle:hover
 {
     border-color: transparent;
@@ -14421,6 +14423,10 @@ ul.n-list-group-small:before
 .n-search-clearable .n-search-input
 {
     padding-right: 35px;
+}
+.n-search-clearable .n-search-control-icon:focus
+{
+    border: 1px solid #666;
 }
 /*
  * WULF (http://networks.nokia.com/)
@@ -14704,7 +14710,8 @@ ul.n-list-group-small:before
 }
 .fuelux .datepicker-calendar
 {
-    padding: 16px 8px 4px;
+    min-height: 0;
+    padding: 16px 8px 8px;
 }
 .fuelux .datepicker-calendar-header .title
 {
@@ -14787,7 +14794,7 @@ ul.n-list-group-small:before
 }
 .fuelux .datepicker-calendar-days
 {
-    margin: 8px 0 4px;
+    margin: 0;
 
     border-collapse: collapse;
 }
@@ -14970,6 +14977,16 @@ ul.n-list-group-small:before
 .fuelux .datepicker-wheels-footer .datepicker-wheels-back:focus
 {
     border: none;
+}
+/*
+ * WULF (http://networks.nokia.com/)
+ * Copyright (C) 2015 Nokia Solutions and Networks. All rights Reserved.
+ */
+.n-timezone-control
+{
+    width: 400px;
+
+    border-left-width: 1px;
 }
 .n-flyout
 {
@@ -15309,27 +15326,15 @@ ul.n-list-group-small:before
     background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, .25)));
     background:         linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .25));
 }
-/*
- * WULF (http://networks.nokia.com/)
- * Copyright (C) 2015 Nokia Solutions and Networks. All rights Reserved.
- */
 .jqx-grid
 {
     border-radius: 7px;
     -webkit-box-shadow: 0 1px 3px 0 #888;
             box-shadow: 0 1px 3px 0 #888;
+    /*------------- header -------------*/
+    /*------------- table cell -------------*/
 }
-.jqx-cell
-{
-    line-height: 26px;
-
-    padding: 0 8px 0 8px;
-}
-.jqx-grid-cell-alt
-{
-    background: #efefef;
-}
-.jqx-widget-header
+.jqx-grid .jqx-grid-column-header.jqx-widget-header
 {
     font-weight: bolder;
 
@@ -15338,25 +15343,43 @@ ul.n-list-group-small:before
     background:      -o-linear-gradient(#fff, #eaeaea);
     background:         linear-gradient(#fff, #eaeaea);
 }
-.no-grid-line .jqx-grid-table .jqx-grid-cell
+.jqx-grid .jqx-grid-column-header.jqx-widget-header > div > div
 {
-    border-width: 0 0 0 1px;
+    margin-left: 14px !important;
 }
-.jqx-grid-cell-hover
+.jqx-grid .jqx-grid-table .jqx-cell
+{
+    line-height: 26px;
+
+    padding: 0 8px 0 8px;
+}
+.jqx-grid .jqx-grid-table .jqx-cell > .jqx-tree-grid-collapse-button,
+.jqx-grid .jqx-grid-table .jqx-cell .jqx-tree-grid-expand-button
+{
+    vertical-align: baseline;
+}
+.jqx-grid .jqx-grid-table .jqx-grid-cell-alt
+{
+    background: #efefef;
+}
+.jqx-grid .jqx-grid-table .jqx-grid-cell-hover
 {
     color: #000;
     background: #ccf4ff;
 }
-td[class~='jqx-grid-cell-alt'][class~='jqx-grid-cell-hover']
+.jqx-grid .jqx-grid-table td[class~='jqx-grid-cell-alt'][class~='jqx-grid-cell-hover']
 {
     background: #b2e3f0;
 }
-.jqx-grid-cell-selected,
-td[class~='jqx-grid-cell-selected'][class~='jqx-grid-cell-hover']
+.jqx-grid .jqx-grid-table .jqx-grid-cell-selected,
+.jqx-grid .jqx-grid-table td[class~='jqx-grid-cell-selected'][class~='jqx-grid-cell-hover']
 {
     color: #fff;
-    border-left: 0 solid transparent;
     background: #0b6daf;
+}
+.no-grid-line .jqx-grid-table .jqx-grid-cell
+{
+    border-width: 0 0 0 1px;
 }
 /*
  * WULF (http://networks.nokia.com/)
@@ -16272,7 +16295,7 @@ a.n-link-disabled + span.n-link-action-icon:after,
 {
     border-bottom-color: #00a1cc;
 }
-.n-banner-dropdown-links
+.n-banner-links
 {
     height: 40px;
     margin-right: 12px;
@@ -16286,13 +16309,67 @@ a.n-link-disabled + span.n-link-action-icon:after,
 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1a64c1', endColorstr='#ff0e3277', GradientType=0);
 }
-.n-banner-dropdown-links > li
+.n-banner-links > li
 {
     height: -webkit-calc(40px - 1px);
     height:         calc(40px - 1px);
     margin: 0;
 }
-.n-banner-dropdown-links > li:after
+.n-banner-links > li > a,
+.n-banner-links > li > .n-link
+{
+    font-size: 14px;
+    font-weight: normal;
+    line-height: -webkit-calc(40px - 1px);
+    line-height:         calc(40px - 1px);
+
+    margin-top: -1px;
+    padding: 0 10px;
+
+    color: #fff;
+    border-bottom: none;
+    border-radius: 7px 7px 0 0;
+}
+.n-banner-links > li > a:active,
+.n-banner-links > li > a:focus,
+.n-banner-links > li > .n-link:active,
+.n-banner-links > li > .n-link:focus
+{
+    background-color: transparent;
+}
+.n-banner-links > li > a:hover,
+.n-banner-links > li > .n-link:hover
+{
+    border: 1px;
+    background: transparent;
+    text-shadow: 0 1px 5px rgba(255, 255, 255, .75);
+}
+.n-banner-links > li .dropdown-menu > li > a,
+.n-banner-links > li .dropdown-menu > li > .n-link
+{
+    line-height: 28px;
+
+    height: 28px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.n-banner-links > li span.caret
+{
+    margin-left: 5px;
+
+    color: #a8bbc0;
+    border-bottom: none !important;
+}
+.n-banner-links > li .icon:before
+{
+    padding-right: 1px;
+
+    vertical-align: middle;
+
+    color: #a8bbc0;
+    text-shadow: none;
+}
+.n-banner-links > li.dropdown:after
 {
     position: absolute;
     top: 0;
@@ -16310,74 +16387,20 @@ a.n-link-disabled + span.n-link-action-icon:after,
     background:      -o-linear-gradient(top, #205599, #323232, #205599);
     background:         linear-gradient(to bottom, #205599, #323232, #205599);
 }
-.n-banner-dropdown-links > li .dropdown-menu > li > a,
-.n-banner-dropdown-links > li .dropdown-menu > li > .n-link
-{
-    line-height: 28px;
-
-    height: 28px;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-.n-banner-dropdown-links > li > a,
-.n-banner-dropdown-links > li > .n-link
-{
-    font-size: 14px;
-    font-weight: normal;
-    line-height: -webkit-calc(40px - 1px);
-    line-height:         calc(40px - 1px);
-
-    margin-top: -1px;
-    padding: 0 10px;
-
-    color: #fff;
-    border-bottom: none;
-    border-radius: 7px 7px 0 0;
-}
-.n-banner-dropdown-links > li > a:active,
-.n-banner-dropdown-links > li > a:focus,
-.n-banner-dropdown-links > li > .n-link:active,
-.n-banner-dropdown-links > li > .n-link:focus
-{
-    background-color: transparent;
-}
-.n-banner-dropdown-links > li > a:hover,
-.n-banner-dropdown-links > li > .n-link:hover
-{
-    border: 1px;
-    background: transparent;
-    text-shadow: 0 1px 5px rgba(255, 255, 255, .75);
-}
-.n-banner-dropdown-links span.caret
-{
-    margin-left: 5px;
-
-    color: #a8bbc0;
-    border-bottom: none !important;
-}
-.n-banner-dropdown-links .icon:before
-{
-    padding-right: 1px;
-
-    vertical-align: middle;
-
-    color: #a8bbc0;
-    text-shadow: none;
-}
-.n-banner-dropdown-links > li.dropdown .icon
+.n-banner-links > li.dropdown .icon
 {
     line-height: -webkit-calc(40px - 1px);
     line-height:         calc(40px - 1px);
 }
-.n-banner-dropdown-links > li.dropdown .dropdown-menu
+.n-banner-links > li.dropdown .dropdown-menu
 {
     margin-top: -1px;
 
     border-color: #b2b2b2;
     border-radius: 0 5px 5px 5px;
 }
-.n-banner-dropdown-links > li.dropdown.open > a,
-.n-banner-dropdown-links > li.dropdown.open > .n-link
+.n-banner-links > li.dropdown.open > a,
+.n-banner-links > li.dropdown.open > .n-link
 {
     margin-top: 1px;
 
@@ -16388,18 +16411,18 @@ a.n-link-disabled + span.n-link-action-icon:after,
     -webkit-box-shadow: 0 1px 3px 0 #a7a7a7;
             box-shadow: 0 1px 3px 0 #a7a7a7;
 }
-.n-banner-dropdown-links > li.dropdown.open > a > span,
-.n-banner-dropdown-links > li.dropdown.open > .n-link > span
+.n-banner-links > li.dropdown.open > a > span,
+.n-banner-links > li.dropdown.open > .n-link > span
 {
     margin-bottom: -1px;
 
     color: black;
     text-shadow: none;
 }
-.n-banner-dropdown-links > li.dropdown.open > a > span:before,
-.n-banner-dropdown-links > li.dropdown.open > a > span:after,
-.n-banner-dropdown-links > li.dropdown.open > .n-link > span:before,
-.n-banner-dropdown-links > li.dropdown.open > .n-link > span:after
+.n-banner-links > li.dropdown.open > a > span:before,
+.n-banner-links > li.dropdown.open > a > span:after,
+.n-banner-links > li.dropdown.open > .n-link > span:before,
+.n-banner-links > li.dropdown.open > .n-link > span:after
 {
     position: absolute;
     z-index: 3;
@@ -16419,8 +16442,8 @@ a.n-link-disabled + span.n-link-action-icon:after,
 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffcccdd5', endColorstr='#ffc4c5cd', GradientType=0);
 }
-.n-banner-dropdown-links > li.dropdown.open > a > span:before,
-.n-banner-dropdown-links > li.dropdown.open > .n-link > span:before
+.n-banner-links > li.dropdown.open > a > span:before,
+.n-banner-links > li.dropdown.open > .n-link > span:before
 {
     left: 0;
 
@@ -16429,8 +16452,8 @@ a.n-link-disabled + span.n-link-action-icon:after,
     border-right: 1px solid #b2b2b2;
     border-radius: 0 0 7px 0;
 }
-.n-banner-dropdown-links > li.dropdown.open > a > span:after,
-.n-banner-dropdown-links > li.dropdown.open > .n-link > span:after
+.n-banner-links > li.dropdown.open > a > span:after,
+.n-banner-links > li.dropdown.open > .n-link > span:after
 {
     right: 0;
 
@@ -16439,8 +16462,8 @@ a.n-link-disabled + span.n-link-action-icon:after,
     border-left: 1px solid #b2b2b2;
     border-radius: 0 0 0 7px;
 }
-.n-banner-dropdown-links > li.dropdown.open > a:after,
-.n-banner-dropdown-links > li.dropdown.open > .n-link:after
+.n-banner-links > li.dropdown.open > a:after,
+.n-banner-links > li.dropdown.open > .n-link:after
 {
     position: absolute;
     z-index: 2;
@@ -16455,21 +16478,21 @@ a.n-link-disabled + span.n-link-action-icon:after,
 
     background: #ededf0;
 }
-.n-banner-dropdown-links > li.dropdown.open > a:after,
-.n-banner-dropdown-links > li.dropdown.open > .n-link:after
+.n-banner-links > li.dropdown.open > a:after,
+.n-banner-links > li.dropdown.open > .n-link:after
 {
     left: 0;
 
     width: -webkit-calc(100% + 7px);
     width:         calc(100% + 7px);
 }
-.n-banner-dropdown-links > li.dropdown.open > a > span:before,
-.n-banner-dropdown-links > li.dropdown.open > .n-link > span:before
+.n-banner-links > li.dropdown.open > a > span:before,
+.n-banner-links > li.dropdown.open > .n-link > span:before
 {
     visibility: hidden;
 }
-.n-banner-dropdown-links > li.dropdown.open > a:after,
-.n-banner-dropdown-links > li.dropdown.open > .n-link:after
+.n-banner-links > li.dropdown.open > a:after,
+.n-banner-links > li.dropdown.open > .n-link:after
 {
     z-index: 1001;
 
@@ -16478,8 +16501,8 @@ a.n-link-disabled + span.n-link-action-icon:after,
 
     border-left: 1px solid #b2b2b2;
 }
-.n-banner-dropdown-links > li.dropdown.open > a > span:after,
-.n-banner-dropdown-links > li.dropdown.open > .n-link > span:after
+.n-banner-links > li.dropdown.open > a > span:after,
+.n-banner-links > li.dropdown.open > .n-link > span:after
 {
     z-index: 1002;
 
@@ -16493,21 +16516,21 @@ a.n-link-disabled + span.n-link-action-icon:after,
 
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1a64c1', endColorstr='#ff0e3277', GradientType=0);
 }
-.n-banner-dropdown-links > li.dropdown.open > a > span:not(:hover),
-.n-banner-dropdown-links > li.dropdown.open > .n-link > span:not(:hover)
+.n-banner-links > li.dropdown.open > a > span:not(:hover),
+.n-banner-links > li.dropdown.open > .n-link > span:not(:hover)
 {
     border-bottom: none;
 }
-.n-banner-dropdown-links > li.dropdown.open > a span.caret,
-.n-banner-dropdown-links > li.dropdown.open > .n-link span.caret
+.n-banner-links > li.dropdown.open > a span.caret,
+.n-banner-links > li.dropdown.open > .n-link span.caret
 {
     margin-left: 5px;
 
     color: #666;
     border-bottom: none !important;
 }
-.n-banner-dropdown-links > li.dropdown.open > a .icon:before,
-.n-banner-dropdown-links > li.dropdown.open > .n-link .icon:before
+.n-banner-links > li.dropdown.open > a .icon:before,
+.n-banner-links > li.dropdown.open > .n-link .icon:before
 {
     padding-right: 1px;
 
@@ -16516,8 +16539,8 @@ a.n-link-disabled + span.n-link-action-icon:after,
     color: #666;
     text-shadow: none;
 }
-.n-banner-dropdown-links > li.dropdown.open > a:last-child,
-.n-banner-dropdown-links > li.dropdown.open > .n-link:last-child
+.n-banner-links > li.dropdown.open > a:last-child,
+.n-banner-links > li.dropdown.open > .n-link:last-child
 {
     padding-right: 0;
 }
@@ -16667,7 +16690,6 @@ y-axis
 {
     /* minimum dragger height */
     z-index: 1;
-    right: 0;
 
     width: 100%;
     height: 30px;
@@ -16788,7 +16810,6 @@ x-axis
 {
     /* minimum dragger height */
     z-index: 1;
-    right: 0;
 
     width: 30px;
     height: 100%;
@@ -16846,7 +16867,7 @@ x-axis
 /* 
 ------------------------------------------------------------------------------------------------------------------------
 4. VERTICAL AND HORIZONTAL SCROLLBARS 
-yx-axis 
+yx-axis
 ------------------------------------------------------------------------------------------------------------------------
 */
 .mCSB_container_wrapper
@@ -16861,7 +16882,7 @@ yx-axis
 
     width: auto;
     height: auto;
-    margin-right: 10px;
+    margin-right: 0;
     margin-bottom: 10px;
 }
 .mCSB_container_wrapper > .mCSB_container
@@ -16899,6 +16920,11 @@ yx-axis
 /* ------------------disabled style---------------------- */
 .mCS-disabled.mCustomScrollBox
 {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
     color: #aaa;
     background-color: #cbcbcb ;
 }
@@ -16932,6 +16958,7 @@ yx-axis
 .n-dl-wizard .navbar
 {
     min-height: 40px;
+    padding: 0 4px;
 }
 .n-dl-wizard .navbar .navbar-inner > ul li > a,
 .n-dl-wizard .navbar .navbar-inner > ul li > .n-link
@@ -16965,6 +16992,29 @@ yx-axis
     border: 1px solid #c7c9c9;
     border-radius: 28px;
     background-color: #f7f7f7;
+}
+.n-dl-wizard .navbar .navbar-inner > ul li.active:not(:last-child)::before
+{
+    position: absolute;
+    z-index: 100;
+    top: 16px;
+    left: 40px;
+
+    width: 10px;
+    height: 7px;
+
+    content: '';
+
+    border-top: 1px solid #c7c9c9;
+    border-bottom: 1px solid #c7c9c9;
+    border-radius: 0 4px 4px 0;
+    background-image: -webkit-linear-gradient(top, #0a75b2 0%, #69b2cb 100%);
+    background-image:      -o-linear-gradient(top, #0a75b2 0%, #69b2cb 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#0a75b2), to(#69b2cb));
+    background-image:         linear-gradient(to bottom, #0a75b2 0%, #69b2cb 100%);
+    background-repeat: repeat-x;
+
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0a75b2', endColorstr='#ff69b2cb', GradientType=0);
 }
 .n-dl-wizard .navbar .navbar-inner > ul li:not(:last-child)::after
 {
@@ -17019,17 +17069,18 @@ yx-axis
 }
 .n-dl-wizard .tab-content .n-dl-wizard-step-description
 {
-    padding-bottom: 18px;
+    padding: 0 4px 18px;
 
     border-bottom: 1px solid #d8d8d8;
 }
 .n-dl-wizard .tab-content .n-dl-wizard-step-content
 {
-    padding-top: 18px;
+    padding: 18px 4px 0;
 }
 .n-login-screen
 {
     height: 100%;
+    padding: 0;
 
     background-image: -webkit-radial-gradient(circle, #fbfbfb, #c4c7d0);
     background-image:      -o-radial-gradient(circle, #fbfbfb, #c4c7d0);
@@ -17044,6 +17095,8 @@ yx-axis
     left: 50%;
 
     width: 540px;
+    min-height: 278px;
+    margin-top: -139px;
     margin-left: -270px;
 }
 .n-login .n-login-logo
@@ -17071,6 +17124,10 @@ yx-axis
 {
     color: #124191;
 }
+.n-login .panel .panel-body
+{
+    background: none;
+}
 .n-login .panel .panel-body h2.n-login-title-version-light
 {
     font-weight: 300;
@@ -17091,6 +17148,8 @@ yx-axis
 }
 .n-login .panel .panel-body .alert-error
 {
+    display: none;
+
     padding-bottom: 20px;
     padding-left: 5px;
 }
@@ -17175,6 +17234,16 @@ yx-axis
 
     color: #333;
 }
+.n-login-product
+{
+    min-height: 318px;
+    margin-top: -159px;
+}
+.n-login-signup
+{
+    min-height: 350px;
+    margin-top: -175px;
+}
 .n-login-signup .n-login-sign-up-bar
 {
     padding: 20px 0;
@@ -17187,5 +17256,82 @@ yx-axis
     line-height: 32px;
 
     color: #474747;
+}
+.n-login-legal-copy
+{
+    min-height: 358px;
+    margin-top: -179px;
+}
+.n-login-legal-copy .n-login-legal-copy-text
+{
+    font-size: 11px;
+
+    padding: 14px 0;
+
+    color: #474747;
+    border-top: 1px solid #d8d8d8;
+}
+.n-login-legal-acceptance
+{
+    min-height: 296px;
+    margin-top: -148px;
+}
+.n-login-legal-acceptance .n-login-panel-fields
+{
+    font-size: 12px;
+
+    color: #474747;
+}
+.n-login-with-four-column
+{
+    top: auto;
+    bottom: 354px;
+
+    margin-top: 0;
+}
+.n-login-four-column
+{
+    position: absolute;
+    top: -webkit-calc(100% - 324px);
+    top:         calc(100% - 324px);
+
+    width: 100%;
+}
+.n-login-four-column .n-login-column-panel
+{
+    position: absolute;
+    right: -webkit-calc(50% + 10px);
+    right:         calc(50% + 10px);
+
+    display: inline-block;
+}
+.n-login-four-column .n-login-column-panel:last-child
+{
+    right: auto;
+    left: -webkit-calc(50% + 10px);
+    left:         calc(50% + 10px);
+}
+.n-login-four-column .n-login-column-panel h1
+{
+    font-size: 20px;
+
+    color: #1b1b1b;
+}
+.n-login-four-column .n-login-column-panel .n-login-column
+{
+    font-size: 12px;
+
+    display: inline-block;
+
+    width: 200px;
+    max-height: 122px;
+
+    vertical-align: top;
+
+    color: #474747;
+}
+.n-login-four-column .n-login-column-panel .n-login-column:not(:last-child)
+{
+    margin-right: 20px;
 }
 /*# sourceMappingURL=wulf.css.map */

@@ -16,14 +16,14 @@ $.fn.extend({
     }
 });
 
-+function () {
+(function () {
     $(".n-dl-wizard").on("click", ".modal-footer>input[type=button]", function () {
         var activeTab = $(this).closest(".modal-footer").prev(".modal-body").find("li.active");
-        activeTab.removeClass("passed").siblings("li").removeClass("passed");
-        var $passedSteps = activeTab.prevAll("li");
-        if ($passedSteps.length > 0) {
-            $passedSteps.addClass("passed");
-        }
+        addPassStyle(activeTab);
+    });
+
+    $(".n-dl-wizard").on("click", '[data-toggle="tab"]', function () {
+        addPassStyle($(this).parent("li"));
     });
 
     $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function () {
@@ -35,4 +35,12 @@ $.fn.extend({
         }
     });
 
-}();
+    function addPassStyle(activeTab){
+        activeTab.removeClass("passed").siblings("li").removeClass("passed");
+        var $passedSteps = activeTab.prevAll("li");
+        if ($passedSteps.length > 0) {
+            $passedSteps.addClass("passed");
+        }
+    }
+
+}());

@@ -24,6 +24,26 @@
             $(selector + " .fuelux .n-calendar .form-control").css("border-bottom-left-radius",0);
             $(' .fuelux .n-calendar .open').prev().css("border-bottom-left-radius",'7pt')
         });
+
+        $(".fuelux .datepicker-wheels-year").keydown(function (e) {
+            if (e.keyCode == 40) {
+                $(selector + " .fuelux .datepicker-wheels-footer .datepicker-wheels-back")[0].focus();
+            }
+        });
+
+        $(".fuelux .datepicker-wheels-month").keydown(function (e) {
+            if (e.keyCode == 40) {
+                $(selector + " .fuelux .datepicker-wheels-footer .datepicker-wheels-back")[0].focus();
+            }
+        });
+
+        $(".fuelux .datepicker-wheels-footer .datepicker-wheels-back").click(function () {
+            $(selector + " .fuelux .datepicker-calendar-header .title")[0].focus();
+        });
+
+        $(".fuelux .datepicker-wheels-footer .datepicker-wheels-select").click(function () {
+            $(selector + " .fuelux .datepicker-calendar-header .title")[0].focus();
+        });
     });
 }
 
