@@ -23,3 +23,26 @@ $("#addCompanyButton").click(function(){
         }
     });
 });
+
+$("#addCustomerButton").click(function(){
+    var params ={
+        name: $("#addCustomer_name").val()
+    };
+    $.ajax({
+        data: params,
+        url: '/addCustomer',
+        type: 'post',
+        dataType: 'json',
+        cache: false,
+        timeout: 5000,
+        success: function(data){
+            if(data.success){
+                showConfirmMsg(data.confirmHead,data.confirmMsg);
+                $('#addCustomerDialog').modal('hide');
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            showErrorMsgDefault();
+        }
+    });
+});

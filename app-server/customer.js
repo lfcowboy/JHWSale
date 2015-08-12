@@ -23,3 +23,10 @@ exports.getCompanyByName = function (req, res, callback) {
         callback(qerr, rows, fields);
     });
 };
+
+exports.addCustomer = function (req, res) {
+    var addSQL = 'insert into customer (name) values ("' + req.body.name + '")';
+    pool.insert(addSQL,function(err) {
+        res.json({success:true, confirmHead:'成功', confirmMsg:'联系人新建成功！'});
+    });
+};
