@@ -8,6 +8,7 @@ var customer = require('./app-server/customer');
 
 module.exports = function (app) {
     app.post('/addCustomer',customer.addCustomer);
+    app.post('/getCustomer', customer.getCustomerByCompanyId);
     app.post('/addCompany', customer.addCompany);
     app.post('/getCompany', customer.getCompany);
     app.post("/addQuote", quote.addQuote);

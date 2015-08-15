@@ -1,10 +1,10 @@
 /**
  * Created by fenglv on 2015/8/9.
  */
-var pool = require("./app-pooling");
-var customer = require("./customer");
+ var pool = require("./app-pooling");
+ var customer = require("./customer");
 
-exports.addQuote = function (req, res) {
+ exports.addQuote = function (req, res) {
     customer.getCompanyByName(req, res, function (err, rows, fields) {
         if (err) {
             res.json({success: false, errorHead: '失败', errorMsg: '报价单新建失败！'});
@@ -15,7 +15,7 @@ exports.addQuote = function (req, res) {
             }
             else {
                 var companyId = rows[0].id;
-                var addSQL = 'insert into quote (customerId, quoteNum, customerCompanyId, currency) values ("1","' + req.body.quoteNum + '","' + companyId + '","' + req.body.currency + '")';
+                var addSQL = 'insert into quote (customerId, quoteNum, companyId, currency) values ("1","' + req.body.quoteNum + '","' + companyId + '","' + req.body.currency + '")';
                 pool.insert(addSQL, function (err) {
                     if (err) {
                         res.json({success: false, errorHead: '失败', errorMsg: '报价单新建失败！'});

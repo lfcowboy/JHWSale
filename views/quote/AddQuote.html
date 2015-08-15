@@ -7,6 +7,7 @@
             <form class="form-horizontal" action="/addQuote" method="post">
                 <div class="form-group">
                     <label for="addQuote_quoteNumDiv" class="col-sm-2 control-label">单号:</label>
+
                     <div id="addQuote_quoteNumDiv" class="col-sm-8">
                         <input type="text" class="form-control n-inputfield" readonly tabindex="-1"
                                id="addQuote_quoteNum" name="quoteNum" value="SDICBJYYYYMMDD00">
@@ -14,6 +15,7 @@
                 </div>
                 <div class="form-group">
                     <label for="addQuote_companyDiv" class="col-sm-2 control-label">客户公司:</label>
+
                     <div id="addQuote_companyDiv" class="col-sm-8">
                         <div class="n-search n-search-clearable">
                             <a class="n-search-icon dropdown-toggle" id="addQuote_companySearch" data-toggle="dropdown"
@@ -22,7 +24,8 @@
                                 <span class="icon icon-arrow"></span></a>
                             <input id="addQuote_companyName" type="text" class="n-inputfield n-search-input"
                                    placeholder="<公司名>">
-                            <a class="n-search-control-icon" href="javascript:void(0)">
+                            <a class="n-search-control-icon" id="addQuote_companyClearButton"
+                               href="javascript:clearCompany()">
                                 <span class="icon icon-close"></span></a>
                             <ul id="addQuote_companyList" class="dropdown-menu" role="menu"
                                 aria-labelledby="dropdownMenu2">
@@ -31,25 +34,28 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="existingValue" class="col-sm-2 control-label">联系人:</label>
-                    <div class="col-sm-8">
-                        <div class="btn-group selectlist" data-resize="auto" data-initialize="selectlist" id="mySelectlist1">
-                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
+                    <label for="addQuote_customerDiv" class="col-sm-2 control-label">联系人:</label>
+
+                    <div id="addQuote_customerDiv" class="col-sm-8">
+                        <div class="btn-group selectlist disabled" data-resize="auto" data-initialize="selectlist"
+                             id="addQuote_customer">
+                            <button class="btn btn-default dropdown-toggle disabled" data-toggle="dropdown"
+                                    type="button">
                                 <span class="selected-label"></span>
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li data-value="1"><a href="#"><span>One</span></a></li>
-                                <li data-value="2"><a href="#"><span>Long text for testing purposes</span></a></li>
-                                <li data-value="3"><a href="#"><span>Something here</span></a></li>
+                            <ul id="addQuote_customerList" class="dropdown-menu" role="menu">
+                                <li data-value="1"><a href="#"><span>无数据</span></a></li>
                             </ul>
-                            <input class="hidden hidden-field" name="mySelectlist1" readonly="readonly" aria-hidden="true" type="text"/>
+                            <input class="hidden hidden-field" name="mySelectlist1" readonly="readonly"
+                                   aria-hidden="true" type="text"/>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">币种:</label>
+
                     <div class="col-sm-8">
                         <div class="radio">
                             <input id="addQuote_currencyRmb" name="currency" type="radio" value="rmb" checked>
@@ -64,6 +70,7 @@
                 <div class="form-group">
                     <label for="exampleInputDomain1"
                            class="col-sm-2 control-label">内部信息:</label>
+
                     <div class="col-sm-8">
                         <input type="text" class="form-control n-inputfield" id="exampleInputDomain1"
                                value="" placeholder="<此信息外部不可见>">
@@ -72,11 +79,15 @@
                 <div class="form-group">
                     <label for="exampleInputDomain1"
                            class="col-sm-2 control-label">备注:</label>
+
                     <div class="col-sm-8">
-                        <div class="input-group input-append dropdown combobox" data-resize="auto" data-initialize="combobox" id="myCombobox">
+                        <div class="input-group input-append dropdown combobox" data-resize="auto"
+                             data-initialize="combobox" id="myCombobox">
                             <input type="text" class="form-control n-inputfield">
+
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span></button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li data-value="1"><a href="#"><span>以上报价含17%增值税。</span></a></li>
                                     <li data-value="2"><a href="#"><span>订购量越大，单价可做相应调整。</span></a></li>
@@ -93,6 +104,7 @@
                 <div class="form-group">
                     <label for="exampleInputDomain1"
                            class="col-sm-2 control-label">产品报价:</label>
+
                     <div class="col-sm-8">
                         <div id="table-demo-container" class="col-md-12">
                             <div class="n-table-container">
@@ -114,7 +126,8 @@
                                     <tr>
                                         <td class="text-center"><span class="icon icon-fault-critical"></span></td>
                                         <td>Critical fault</td>
-                                        <td class="n-cell-control"><input type="text" class="n-inputfield" value="10.39.190.96"></td>
+                                        <td class="n-cell-control"><input type="text" class="n-inputfield"
+                                                                          value="10.39.190.96"></td>
                                         <td>
                                             <div class="n-checkbox-small">
                                                 <input type="checkbox" id="cb11" checked/>
@@ -122,11 +135,13 @@
                                             </div>
                                         </td>
                                         <td class="n-cell-dropdown n-cell-control">
-                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto" data-initialize="selectlist"
-                                                 id="mySelectlist21" >
-                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">
+                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto"
+                                                 data-initialize="selectlist"
+                                                 id="mySelectlist21">
+                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                                        type="button" aria-expanded="false">
                                                     <span class="selected-label"><span>Three1</span></span>
-                                                    <span class="selected-caret" ><span class="caret"></span></span>
+                                                    <span class="selected-caret"><span class="caret"></span></span>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
@@ -135,7 +150,8 @@
                                                     <li data-value="3"><a href="#"><span>Three</span></a></li>
                                                     <li data-value="4"><a href="#"><span>Five Five Five</span></a></li>
                                                 </ul>
-                                                <input class="hidden hidden-field" name="mySelectlist3" readonly="readonly" aria-hidden="true"
+                                                <input class="hidden hidden-field" name="mySelectlist3"
+                                                       readonly="readonly" aria-hidden="true"
                                                        type="text">
 
                                             </div>
@@ -146,7 +162,8 @@
                                     <tr>
                                         <td class="text-center"><span class="icon icon-fault-major"></span></td>
                                         <td>Major fault</td>
-                                        <td class="n-cell-control"><input type="text" class="n-inputfield" value="10.39.190.96"></td>
+                                        <td class="n-cell-control"><input type="text" class="n-inputfield"
+                                                                          value="10.39.190.96"></td>
                                         <td>
                                             <div class="n-checkbox-small">
                                                 <input type="checkbox" id="cb12" disabled/>
@@ -154,11 +171,13 @@
                                             </div>
                                         </td>
                                         <td class="n-cell-control n-cell-dropdown">
-                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto" data-initialize="selectlist"
-                                                 id="mySelectlist22" >
-                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">
+                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto"
+                                                 data-initialize="selectlist"
+                                                 id="mySelectlist22">
+                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                                        type="button" aria-expanded="false">
                                                     <span class="selected-label"><span>Three1</span></span>
-                                                    <span class="selected-caret" ><span class="caret"></span></span>
+                                                    <span class="selected-caret"><span class="caret"></span></span>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
@@ -167,7 +186,8 @@
                                                     <li data-value="3"><a href="#"><span>Three</span></a></li>
                                                     <li data-value="4"><a href="#"><span>Five Five Five</span></a></li>
                                                 </ul>
-                                                <input class="hidden hidden-field" name="mySelectlist3" readonly="readonly" aria-hidden="true"
+                                                <input class="hidden hidden-field" name="mySelectlist3"
+                                                       readonly="readonly" aria-hidden="true"
                                                        type="text">
 
                                             </div>
@@ -178,7 +198,8 @@
                                     <tr>
                                         <td class="text-center"><span class="icon icon-fault-minor"></span></td>
                                         <td>Minor fault</td>
-                                        <td class="n-cell-control"><input type="text" class="n-inputfield" value="10.39.190.96"></td>
+                                        <td class="n-cell-control"><input type="text" class="n-inputfield"
+                                                                          value="10.39.190.96"></td>
                                         <td>
                                             <div class="n-checkbox-small">
                                                 <input type="checkbox" id="cb13"/>
@@ -186,11 +207,13 @@
                                             </div>
                                         </td>
                                         <td class="n-cell-control n-cell-dropdown">
-                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto" data-initialize="selectlist"
-                                                 id="mySelectlist23" >
-                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">
+                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto"
+                                                 data-initialize="selectlist"
+                                                 id="mySelectlist23">
+                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                                        type="button" aria-expanded="false">
                                                     <span class="selected-label"><span>Three1</span></span>
-                                                    <span class="selected-caret" ><span class="caret"></span></span>
+                                                    <span class="selected-caret"><span class="caret"></span></span>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
@@ -199,7 +222,8 @@
                                                     <li data-value="3"><a href="#"><span>Three</span></a></li>
                                                     <li data-value="4"><a href="#"><span>Five Five Five</span></a></li>
                                                 </ul>
-                                                <input class="hidden hidden-field" name="mySelectlist3" readonly="readonly" aria-hidden="true"
+                                                <input class="hidden hidden-field" name="mySelectlist3"
+                                                       readonly="readonly" aria-hidden="true"
                                                        type="text">
 
                                             </div>
@@ -210,7 +234,8 @@
                                     <tr>
                                         <td class="text-center"><span class="icon icon-fault-warning"></span></td>
                                         <td>Warning</td>
-                                        <td class="n-cell-control"><input type="text" class="n-inputfield" value="10.39.190.96"></td>
+                                        <td class="n-cell-control"><input type="text" class="n-inputfield"
+                                                                          value="10.39.190.96"></td>
                                         <td>
                                             <div class="n-checkbox-small">
                                                 <input type="checkbox" id="cb14" checked disabled/>
@@ -218,11 +243,13 @@
                                             </div>
                                         </td>
                                         <td class="n-cell-control n-cell-dropdown">
-                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto" data-initialize="selectlist"
-                                                 id="mySelectlist24" >
-                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">
+                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto"
+                                                 data-initialize="selectlist"
+                                                 id="mySelectlist24">
+                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                                        type="button" aria-expanded="false">
                                                     <span class="selected-label"><span>Three1</span></span>
-                                                    <span class="selected-caret" ><span class="caret"></span></span>
+                                                    <span class="selected-caret"><span class="caret"></span></span>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
@@ -231,7 +258,8 @@
                                                     <li data-value="3"><a href="#"><span>Three</span></a></li>
                                                     <li data-value="4"><a href="#"><span>Five Five Five</span></a></li>
                                                 </ul>
-                                                <input class="hidden hidden-field" name="mySelectlist3" readonly="readonly" aria-hidden="true"
+                                                <input class="hidden hidden-field" name="mySelectlist3"
+                                                       readonly="readonly" aria-hidden="true"
                                                        type="text">
 
                                             </div>
@@ -242,7 +270,8 @@
                                     <tr>
                                         <td class="text-center"><span class="icon icon-fault-cleared"></span></td>
                                         <td>Fault cleared</td>
-                                        <td class="n-cell-control"><input type="text" class="n-inputfield" value="10.39.190.96"></td>
+                                        <td class="n-cell-control"><input type="text" class="n-inputfield"
+                                                                          value="10.39.190.96"></td>
                                         <td>
                                             <div class="n-checkbox-small">
                                                 <input type="checkbox" id="cb15"/>
@@ -250,11 +279,13 @@
                                             </div>
                                         </td>
                                         <td class="n-cell-control n-cell-dropdown">
-                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto" data-initialize="selectlist"
-                                                 id="mySelectlist25" >
-                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">
+                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto"
+                                                 data-initialize="selectlist"
+                                                 id="mySelectlist25">
+                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                                        type="button" aria-expanded="false">
                                                     <span class="selected-label"><span>Three1</span></span>
-                                                    <span class="selected-caret" ><span class="caret"></span></span>
+                                                    <span class="selected-caret"><span class="caret"></span></span>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
@@ -263,7 +294,8 @@
                                                     <li data-value="3"><a href="#"><span>Three</span></a></li>
                                                     <li data-value="4"><a href="#"><span>Five Five Five</span></a></li>
                                                 </ul>
-                                                <input class="hidden hidden-field" name="mySelectlist3" readonly="readonly" aria-hidden="true"
+                                                <input class="hidden hidden-field" name="mySelectlist3"
+                                                       readonly="readonly" aria-hidden="true"
                                                        type="text">
 
                                             </div>
@@ -274,7 +306,8 @@
                                     <tr>
                                         <td class="text-center"><span class="icon icon-fault-unknown"></span></td>
                                         <td>Unknown situation</td>
-                                        <td class="n-cell-control"><input type="text" class="n-inputfield" value="10.39.190.96"></td>
+                                        <td class="n-cell-control"><input type="text" class="n-inputfield"
+                                                                          value="10.39.190.96"></td>
                                         <td>
                                             <div class="n-checkbox-small">
                                                 <input type="checkbox" id="cb16"/>
@@ -282,11 +315,13 @@
                                             </div>
                                         </td>
                                         <td class="n-cell-control n-cell-dropdown">
-                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto" data-initialize="selectlist"
-                                                 id="mySelectlist26" >
-                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">
+                                            <div class="btn-group selectlist n-dropdown-small" data-resize="auto"
+                                                 data-initialize="selectlist"
+                                                 id="mySelectlist26">
+                                                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                                        type="button" aria-expanded="false">
                                                     <span class="selected-label"><span>Three1</span></span>
-                                                    <span class="selected-caret" ><span class="caret"></span></span>
+                                                    <span class="selected-caret"><span class="caret"></span></span>
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
@@ -295,7 +330,8 @@
                                                     <li data-value="3"><a href="#"><span>Three</span></a></li>
                                                     <li data-value="4"><a href="#"><span>Five Five Five</span></a></li>
                                                 </ul>
-                                                <input class="hidden hidden-field" name="mySelectlist3" readonly="readonly" aria-hidden="true"
+                                                <input class="hidden hidden-field" name="mySelectlist3"
+                                                       readonly="readonly" aria-hidden="true"
                                                        type="text">
 
                                             </div>

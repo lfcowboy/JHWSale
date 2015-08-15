@@ -25,8 +25,28 @@ exports.getCompanyByName = function (req, res, callback) {
 };
 
 exports.addCustomer = function (req, res) {
-    var addSQL = 'insert into customer (name) values ("' + req.body.name + '")';
-    pool.insert(addSQL,function(err) {
-        res.json({success:true, confirmHead:'成功', confirmMsg:'联系人新建成功！'});
+    exports.getCompanyByName(req, res, function (err, rows, fields) {
+        if (err) {
+            res.json({success: false, errorHead: '失败', errorMsg: '联系人新建失败！'});
+        }
+        else {
+            if (rows.length === 0) {
+                res.json({success: false, errorHead: '失败', errorMsg: '请输入正确的公司！'});
+            }
+            else {
+                var companyId = rows[0].id;
+                var addSQL = 'insert into customer (name, companyId) values ("' + req.body.name + '","' + companyId + '")';
+                pool.insert(addSQL,function(err) {
+                    res.json({success:true, confirmHead:'成功', confirmMsg:'联系人新建成功！'});
+                });
+            }
+        }
+    });
+};
+
+exports.getCustomerByCompanyId = function(req, res){
+    var querySQL = 'select id, name from customer where companyId = "' + req.body.companyId + '"';
+    pool.query(querySQL,function(qerr, rows, fields){
+        res.json(rows);
     });
 };

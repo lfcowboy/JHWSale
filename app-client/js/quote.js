@@ -52,29 +52,31 @@ var initAddQuote  = function init(){
 }
 
 $('#addQuote_companySearch').click(function(){
-    $('#addQuote_companyList').empty();
-    var params ={
-        companyName: $("#addQuote_companyName").val()
+    searchDropdown('addQuote_companyList', 'addQuote_companyName',function(companyId){
+        initCustomerList(companyId);
+    });
+});
+
+var initCustomerList = function(companyId){
+    var params = {
+        companyId: companyId
     };
     $.ajax({
         data: params,
-        url: '/getCompany',
+        url: '/getCustomer',
         type: 'post',
         dataType: 'json',
         cache: false,
         timeout: 5000,
-        success: function(data){
-            var lis = '';
-            for (var i in data) {
-                lis = lis + '<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:selectCompany(\'' + data[i].name + '\')"><span>' + data[i].name +'</span></a></li>';
-            }
-            $('#addQuote_companyList').append(lis);
+        success: function (data) {
+            initList('addQuote_customer','addQuote_customerList',data);
         },
-        error: function(jqXHR, textStatus, errorThrown){
+        error: function (jqXHR, textStatus, errorThrown) {
         }
     });
-})
+};
 
-var selectCompany = function(companyName){
-    $("#addQuote_companyName").val(companyName);
+var clearCompany =  function(){
+    clearSelect('addQuote_companyName');
+    clearList('addQuote_customer','addQuote_customerList');
 };

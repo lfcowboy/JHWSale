@@ -1,7 +1,7 @@
 /**
  * Created by fenglv on 2015/8/9.
  */
-$("#addCompanyButton").click(function(){
+ $("#addCompanyButton").click(function(){
     var params ={
         name: $("#addCompany_name").val()
     };
@@ -24,8 +24,9 @@ $("#addCompanyButton").click(function(){
     });
 });
 
-$("#addCustomerButton").click(function(){
+ $("#addCustomerButton").click(function(){
     var params ={
+        companyName: $('#addCustomer_companyName').val(),
         name: $("#addCustomer_name").val()
     };
     $.ajax({
@@ -45,4 +46,8 @@ $("#addCustomerButton").click(function(){
             showErrorMsgDefault();
         }
     });
+});
+
+ $('#addCustomer_companySearch').click(function(){
+    searchDropdown('addCustomer_companyList', 'addCustomer_companyName');
 });
