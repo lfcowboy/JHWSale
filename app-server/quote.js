@@ -49,6 +49,13 @@ exports.getNewQuoteNum = function (req, res) {
     })
 }
 
+exports.getDefaultRemarks = function(req, res){
+    var querySQL = 'select id, name from conf_remark';
+    pool.query(querySQL,function(qerr, rows, fields){
+        res.json(rows);
+    });
+}
+
 Date.prototype.Format = function (formatStr) {
     var str = formatStr;
     var Week = ['日', '一', '二', '三', '四', '五', '六'];

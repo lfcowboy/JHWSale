@@ -2991,7 +2991,9 @@
 			}
 
 			this.$element.on( 'click.fu.tree', '.tree-branch-name', $.proxy( function( ev ) {
-				this.toggleFolder( ev.currentTarget );
+				if(!this.options.seperator) {
+					this.toggleFolder( ev.currentTarget );
+				}
 			}, this ) );
 
 			// folderSelect default is true

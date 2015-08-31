@@ -1,5 +1,7 @@
 (function ($){
-
+    $( window ).bind('resize',function() {
+        window.onload();
+    })
 // Method to offset the plot background by a padding value
 Highcharts.Chart.prototype.offsetPlotBackgroundImage = function (t, r, b, l)
 {
@@ -219,59 +221,55 @@ window.Charts =
             var i = bar.x
             var first_series = bar.series.chart.series[bar.series.chart.series.length - 1]
             var first_data = first_series.data[first_series.data.length - 1]
+            var x = first_series.data[i].graphic.attr('x')
             var width = first_data.graphic.attr('width')
             var height = 0
 
 
-            var x = first_series.data[i].graphic.attr('x')
-
-            var xStart = 150
-            var yTotal= 341
-
             bar.series.chart.series.forEach(function (series)
             {
-
-                if(series.visible){
-                    var point = series.data[i]
-                    height += point.graphic.attr('height')
-                }
-
+                var point = series.data[i]
+                height += point.graphic.attr('height')
             })
+
+            var y = first_data.graphic.attr('y') - height + first_data.graphic.attr('height')
+
+            x -= offset
+            width += offset * 2
+            y -= offset
+            height += offset * 2
+
 
             return bar.series.chart.renderer
                 .path(
-                // TODO SPEC commented
-                //(($.browser.msie && parseInt($.browser.version) < 9))
-                (false)
+                (true)
                     ? [
-                          'M', x, y + 8,
-                          'L', x, y + height,
-                          'L', x + width, y + height,
-                          'L', x + width, y + 8,
-                          'C', x + width, y,
-                               x + width - 8, y,
-                               x + width - 8, y,
-                          'L', x + 8, y,
-                          'C', x, y,
-                               x, y + 8,
-                               x, y + 8
-                      ]
+                    'M', x, y + 8,
+                    'L', x, y + height,
+                    'L', x + width, y + height,
+                    'L', x + width, y + 8,
+                    'C', x + width, y,
+                    x + width - 8, y,
+                    x + width - 8, y,
+                    'L', x + 8, y,
+                    'C', x, y,
+                    x, y + 8,
+                    x, y + 8
+                ]
                     : [
-                    'M', xStart, yTotal-x,
-                    'L', xStart+height-2,yTotal-x,
-                    'C', xStart+height-2,yTotal-x,
-                         xStart+height-1,yTotal-x-1,
-                         xStart+height,yTotal-x-2,
-                    'L', xStart+height,yTotal-x-width+2,
-                    'L', xStart+height-2,yTotal-x-width,
-                    'L', xStart,yTotal-x-width,
-                    'Z'
-                      ]
-                )
+                    'M', x, y + 8,
+                    'l', 0, height - 8,
+                    'l', width, 0,
+                    'l', 0, -height + 8,
+                    'c', 0, -8, -8, -8, -8, -8,
+                    'l', -width + 16, 0,
+                    'c', -8, 0, -8, 8, -8, 8
+                ]
+            )
                 .attr({
                     "stroke-width": 2,
                     stroke: color,
-                    zIndex: 3
+                    zIndex: 0
                 })
                 .add(first_data.graphic.parent)
         }
@@ -317,7 +315,7 @@ window.Charts =
                     align: 'left',
                     textAlign: 'right',
                     verticalAlign: 'middle',
-                    x:0,
+                    x:-25,
                     style: {
                         fontFamily: 'Nokia Pure',
                         fontSize: '14px',
@@ -362,11 +360,11 @@ window.Charts =
                     padding: (false) ? 0 : '15px 0',
                     cursor: 'auto'
                 },
-                symbolPadding: 15,
-                symbolRadius: 25
+                symbolPadding: 15
             },
             
             plotOptions: {
+                animation: true,
                 series: {
                     stacking: 'normal',
 
@@ -374,6 +372,7 @@ window.Charts =
                 bar: {
                     borderColor: '#ffffff',
                     borderWidth: 0,
+                    borderRadius: 8,
                     shadow: false,
                     pointWidth: 44,
                     point: {
@@ -392,31 +391,31 @@ window.Charts =
                                 if (!bar_outlines[this.x])
                                 {
                                     bar_outlines[this.x] = [
-                                        //create_outline(this, '#fff', -1),
+                                        create_outline(this, '#fff', -1),
                                         create_outline(this, '#00A1CC', 0)
                                     ]
                                 }
 
-                                //for (var n in bar_outlines)
-                                //{
-                                //    alert(n)
-                                //    var visibility = n == this.x ? 'visible' : 'hidden'
-                                //    alert("this x is"+this.x)
-                                //    bar_outlines[n][0].attr('visibility', visibility)
-                                //    bar_outlines[n][1].attr('visibility', visibility)
-                                //}
-                                
-                                visible_bar_outline = bar_outlines[this.x]
-                                bar_outlines[this.x]=null
+                                for (var n in bar_outlines)
+                                {
+                                    var visibility = n == this.x ? 'visible' : 'hidden'
+                                    bar_outlines[n][0].attr('visibility', visibility)
+                                    bar_outlines[n][1].attr('visibility', visibility)
+                                }
+
+                                visible_bar_outline = bar_outlines[n]
                             },
                             
                             mouseOut: function ()
                             {
-                                if (visible_bar_outline)
+
+                                for (var n in bar_outlines)
                                 {
-                                    visible_bar_outline[0].attr('visibility', 'hidden')
-                                    visible_bar_outline = null
+                                    bar_outlines[n][0].attr('visibility', 'hidden')
+                                    bar_outlines[n][1].attr('visibility', 'hidden')
                                 }
+                                    visible_bar_outline = null
+
                             }
                         }
                     }
@@ -437,55 +436,54 @@ window.Charts =
                 
                 // Fix the legend symbols if we are in a supported browser
                 // TODO SPEC commented
-                //if (!$.browser.msie || parseInt($.browser.version) > 8)
-                //if (true)
-                //{
-                //    var legend_symbol_box = series.legendSymbol.getBBox()
-                //    series.legendSymbol.destroy()
-                //    series.legendSymbol = chart.renderer
-                //        .circle(
-                //            legend_symbol_box.x + legend_symbol_box.width / 2,
-                //            legend_symbol_box.y + legend_symbol_box.height / 2,
-                //            6)
-                //        .attr('fill', Charts.gradients[i % Charts.gradients.length].stops[2][1])
-                //        .add(series.legendItem.parent)
-                //}
+                if (true)
+                {
+                    var legend_symbol_box = series.legendSymbol.getBBox()
+                    series.legendSymbol.destroy()
+                    series.legendSymbol = chart.renderer
+                        .circle(
+                            legend_symbol_box.x + legend_symbol_box.width / 2,
+                            legend_symbol_box.y + legend_symbol_box.height / 2,
+                            6)
+                        .attr('fill', Charts.gradients[i % Charts.gradients.length].stops[2][1])
+                        .add(series.legendItem.parent)
+                }
                 // Make and place rectangles that cover some of the rounded corners
                 // on bars
-                //var cover_rect
+                var cover_rect
                 
-                //series.data.forEach(function (point)
-                //{
-                //    cover_rect = chart.renderer.rect(
-                //        point.graphic.attr('x'),
-                //        point.graphic.attr('y') + point.graphic.attr('height') - 10,
-                //        point.graphic.attr('width'),
-                //        10,
-                //        0
-                //    )
-                //    .attr(
-                //    {
-                //        fill: Charts.gradients[i % Charts.gradients.length]
-                //    })
-                //    .add(point.graphic.parent)
-                //    .toFront()
-                //
-                //    if (i != 0)
-                //    {
-                //        cover_rect = chart.renderer.rect(
-                //            point.graphic.attr('x'),
-                //            point.graphic.attr('y'),
-                //            point.graphic.attr('width'),
-                //            10,
-                //            0
-                //        ).add(point.graphic.parent)
-                //
-                //        cover_rect.attr(
-                //        {
-                //            fill: Charts.gradients[i % Charts.gradients.length]
-                //        }).toFront()
-                //    }
-                //})
+                series.data.forEach(function (point)
+                {
+                    cover_rect = chart.renderer.rect(
+                        point.graphic.attr('x'),
+                        point.graphic.attr('y') + point.graphic.attr('height') - 10,
+                        point.graphic.attr('width'),
+                        10,
+                        0
+                    )
+                    .attr(
+                    {
+                        fill: Charts.gradients[i % Charts.gradients.length]
+                    })
+                    .add(point.graphic.parent)
+                    .toFront()
+
+                    if (i != 0)
+                    {
+                        cover_rect = chart.renderer.rect(
+                            point.graphic.attr('x'),
+                            point.graphic.attr('y'),
+                            point.graphic.attr('width'),
+                            10,
+                            0
+                        ).add(point.graphic.parent)
+
+                        cover_rect.attr(
+                        {
+                            fill: Charts.gradients[i % Charts.gradients.length]
+                        }).toFront()
+                    }
+                })
             })
         })
     },

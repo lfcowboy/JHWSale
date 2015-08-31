@@ -30,4 +30,8 @@
             $password.next().children('span').addClass('icon-mandatory');
         }
     });
+
+    $('.n-login-forget-password').on('click', ">a", function () {
+        $(this).removeClass("n-link-visited").addClass("n-link-visited");
+    });
 }());

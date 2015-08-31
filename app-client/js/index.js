@@ -5,6 +5,7 @@ $("#addQuoteMenu").click(function(){
     $(".content-panel").hide();
     initAddQuote();
     $("#addQuotePanel").show();
+    initQuoteTable();
 });
 
 $("#quoteManagementMenu").click(function(){

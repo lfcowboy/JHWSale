@@ -1,3 +1,6 @@
+/**
+ * Search
+ */
 var searchDropdown = function (searchList, searchField, callback) {
     $('#' + searchList).empty();
     var params = {
@@ -22,6 +25,10 @@ var searchDropdown = function (searchList, searchField, callback) {
     });
 }
 
+var clearSearch =  function(searchField){
+    clearSelect(searchField);
+};
+
 var selectItem = function (searchField, itemValue, itemText, callback) {
     $("#" + searchField).val(itemText);
     callback(itemValue);
@@ -40,7 +47,7 @@ var clearList = function(selectlist,menu){
     $('#' + selectlist).selectlist('selectByIndex', 0);
 };
 
-var initList = function(selectlist, menu, data){
+var initList = function(selectlist, menu, data, callback){
     $('#' + menu).empty();
     var lis = '';
     if(data.length > 0 ){

@@ -10,7 +10,7 @@ $( document ).ready(function() {
 
 	//Row selection
 	$('.n-table-hover').on('click', 'td', function(e) {
-		var keyPressed=window.event.ctrlKey || window.event.shiftKey;
+		var keyPressed = (window.event && (window.event.ctrlKey || window.event.shiftKey)) || e.ctrlKey || e.shiftKey;
 		var isHighLighted=$(this).closest("tr").children("td").hasClass("n-cell-selected");
 
 		$(this).closest("tr").children("td").removeClass("n-cell-selected");

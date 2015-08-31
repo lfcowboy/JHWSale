@@ -1,7 +1,413 @@
 /*
-jQWidgets v3.8.1 (2015-June)
+jQWidgets v3.8.2 (2015-Aug)
 Copyright (c) 2011-2015 jQWidgets.
 License: http://jqwidgets.com/license/
 */
 
-(function(a){a.jqx.dataview.sort=function(){this.sortby=function(d,f,p){var m=Object.prototype.toString;if(f==null){this.sortdata=null;this.sortcache={};this.refresh();return}if(f==undefined){f=true}if(f=="a"||f=="asc"||f=="ascending"||f==true){f=true}else{f=false}var g=d;this.sortfield=d;this.sortfielddirection=f?"asc":"desc";if(this.sortcache==undefined){this.sortcache={}}this.sortdata=[];var b=[];var c=false;if(g=="constructor"){g=""}if(!this.virtualmode&&this.sortcache[g]!=null){var o=this.sortcache[g];b=o._sortdata;if(o.direction==f){b.reverse()}else{if(!o.direction&&f){b.reverse()}c=true}if(b.length<this.totalrecords){this.sortcache={};c=false;b=[]}}Object.prototype.toString=(typeof d=="function")?d:function(){return this[d]};var r=this.records;var t=this.that;var n="";if(this.source.datafields){a.each(this.source.datafields,function(){if(this.name==d){if(this.type){n=this.type}return false}})}if(b.length==0){if(r.length){var h=r.length;for(var q=0;q<h;q++){var e=r[q];if(e!=null){var j=e;var s=j.toString();b.push({sortkey:s,value:j,index:q})}}}else{var l=false;for(obj in r){var e=r[obj];if(e==undefined){l=true;break}var j=e;b.push({sortkey:j.toString(),value:j,index:obj})}if(l){a.each(r,function(u,v){b.push({sortkey:v.toString(),value:v,index:u})})}}}if(!c){if(p==null){this._sortcolumntype=n;var k=this;b.sort(function(u,i){return k._compare(u,i,n)})}else{b.sort(p)}}if(!f){b.reverse()}Object.prototype.toString=m;this.sortdata=b;this.sortcache[g]={_sortdata:b,direction:f};this.reload(this.records,this.rows,this.filters,this.updated,true)},this.clearsortdata=function(){this.sortcache={};this.sortdata=null};this._compare=function(c,b,e){var c=c.sortkey;var b=b.sortkey;if(c===undefined){c=null}if(b===undefined){b=null}if(c===null&&b===null){return 0}if(c===null&&b!==null){return -1}if(c!==null&&b===null){return 1}if(a.jqx.dataFormat){if(e&&e!=""){switch(e){case"number":case"int":case"float":if(c<b){return -1}if(c>b){return 1}return 0;case"date":case"time":if(c<b){return -1}if(c>b){return 1}return 0;case"string":case"text":c=String(c).toLowerCase();b=String(b).toLowerCase();break}}else{if(a.jqx.dataFormat.isNumber(c)&&a.jqx.dataFormat.isNumber(b)){if(c<b){return -1}if(c>b){return 1}return 0}else{if(a.jqx.dataFormat.isDate(c)&&a.jqx.dataFormat.isDate(b)){if(c<b){return -1}if(c>b){return 1}return 0}else{if(!a.jqx.dataFormat.isNumber(c)&&!a.jqx.dataFormat.isNumber(b)){c=String(c).toLowerCase();b=String(b).toLowerCase()}}}}}try{if(c<b){return -1}if(c>b){return 1}}catch(d){var f=d}return 0};this._equals=function(c,b){return(this._compare(c,b)===0)}};a.extend(a.jqx._jqxGrid.prototype,{_rendersortcolumn:function(){var b=this.that;var d=this.getsortcolumn();if(this.sortdirection){var c=function(f,g){var e=b.getcolumn(f);if(e){if(g.ascending){a.jqx.aria(e.element,"aria-sort","ascending")}else{if(g.descending){a.jqx.aria(e.element,"aria-sort","descending")}else{a.jqx.aria(e.element,"aria-sort","none")}}}};if(this._oldsortinfo){if(this._oldsortinfo.column){c(this._oldsortinfo.column,{ascending:false,descending:false})}}c(d,this.sortdirection)}this._oldsortinfo={column:d,direction:this.sortdirection};if(this.sortdirection){a.each(this.columns.records,function(f,g){var e=a.data(document.body,"groupsortelements"+this.displayfield);if(d==null||this.displayfield!=d){a(this.sortasc).hide();a(this.sortdesc).hide();if(e!=null){e.sortasc.hide();e.sortdesc.hide()}}else{if(b.sortdirection.ascending){a(this.sortasc).show();a(this.sortdesc).hide();if(e!=null){e.sortasc.show();e.sortdesc.hide()}}else{a(this.sortasc).hide();a(this.sortdesc).show();if(e!=null){e.sortasc.hide();e.sortdesc.show()}}}})}},getsortcolumn:function(){if(this.sortcolumn!=undefined){return this.sortcolumn}return null},removesort:function(){this.sortby(null)},sortby:function(d,g,f,e,b){if(this._loading&&b!==false){throw new Error("jqxGrid: "+this.loadingerrormessage);return false}if(d==null){g=null;d=this.sortcolumn}if(d!=undefined){var c=this.that;if(f==undefined&&c.source.sortcomparer!=null){f=c.source.sortcomparer}if(g=="a"||g=="asc"||g=="ascending"||g==true){ascending=true}else{ascending=false}if(g!=null){c.sortdirection={ascending:ascending,descending:!ascending}}else{c.sortdirection={ascending:false,descending:false}}if(g!=null){c.sortcolumn=d}else{c.sortcolumn=null}if(c.source.sort||c.virtualmode){c.dataview.sortfield=d;if(g==null){c.dataview.sortfielddirection=""}else{c.dataview.sortfielddirection=ascending?"asc":"desc"}if(c.source.sort&&!this._loading){c.source.sort(d,g);c._raiseEvent(6,{sortinformation:c.getsortinformation()});return}}else{c.dataview.sortby(d,g,f)}if(e===false){return}if(c.groupable&&c.groups.length>0){c._render(true,false,false);if(c._updategroupheadersbounds&&c.showgroupsheader){c._updategroupheadersbounds()}}else{if(c.pageable){c.dataview.updateview()}c._updaterowsproperties();c.rendergridcontent(true)}c._raiseEvent(6,{sortinformation:c.getsortinformation()})}},_togglesort:function(d){var b=this.that;if(this.disabled){return}if(d.sortable&&b.sortable){var c=b.getsortinformation();var e=null;if(c.sortcolumn!=null&&c.sortcolumn==d.displayfield){e=c.sortdirection.ascending;if(b.sorttogglestates>1){if(e==true){e=false}else{e=null}}else{e=!e}}else{e=true}b.sortby(d.displayfield,e,null)}}})})(jqxBaseFramework);
+
+(function ($) {
+    $.jqx.dataview.sort = function () {
+        this.sortby = function (field, ascending, comparer) {
+            var tmpToString = Object.prototype.toString;
+            if (ascending == null) {
+                this.sortdata = null;
+                this.sortcache = {};
+                this.grid._pagescache = new Array();
+                this.grid._cellscache = new Array();
+                this.refresh();
+                return;
+            }
+
+            if (ascending == undefined) {
+                ascending = true;
+            }
+
+            if (ascending == 'a' || ascending == 'asc' || ascending == 'ascending' || ascending == true) {
+                ascending = true;
+            }
+            else {
+                ascending = false;
+            }
+
+            var lookupkey = field;
+            this.sortfield = field;
+            this.sortfielddirection = ascending ? "asc" : "desc";
+
+            if (this.sortcache == undefined) {
+                this.sortcache = {};
+            }
+
+            this.sortdata = [];
+            var _sortdata = [];
+            var sorted = false;
+            if (lookupkey == 'constructor') lookupkey = "";
+
+            if (!this.virtualmode && this.sortcache[lookupkey] != null) {
+                var cache = this.sortcache[lookupkey];
+                _sortdata = cache._sortdata;
+
+                if (cache.direction == ascending) {
+                    _sortdata.reverse();
+                }
+                else {
+                    if (!cache.direction && ascending) {
+                        _sortdata.reverse();
+                    }
+
+                    sorted = true;
+                }
+
+                if (_sortdata.length < this.totalrecords) {
+                    this.sortcache = {};
+                    sorted = false;
+                    _sortdata = [];
+                }
+            }
+
+            Object.prototype.toString = (typeof field == "function") ? field : function () { return this[field] };
+            var records = this.records;
+
+            var me = this.that;
+
+            var datatype = '';
+
+            if (this.source.datafields) {
+                $.each(this.source.datafields, function () {
+                    if (this.name == field) {
+                        if (this.type) {
+                            datatype = this.type;
+                        }
+                        return false;
+                    }
+                });
+            }
+
+            if (_sortdata.length == 0) {
+                if (records.length) {
+                    var length = records.length;
+                    // tries to loop through the records with for loop for better performance.
+                    for (var i = 0; i < length; i++) {
+                        var record = records[i];
+                        if (record != null) {
+                            var recordvalue = record;
+                            var sortkey = recordvalue.toString();
+                            _sortdata.push({ sortkey: sortkey, value: recordvalue, index: i });
+                        }
+                    }
+                }
+                else {
+                    var caniterate = false;
+                    // tries to loop through the records with for..in for better performance.
+                    for (obj in records) {
+                        var record = records[obj];
+                        if (record == undefined) {
+                            caniterate = true;
+                            break;
+                        }
+
+                        var recordvalue = record;
+                        _sortdata.push({ sortkey: recordvalue.toString(), value: recordvalue, index: obj });
+                    }
+
+                    if (caniterate) {
+                        $.each(records, function (i, value) {
+                            _sortdata.push({ sortkey: value.toString(), value: value, index: i });
+                        });
+                    }
+                }
+            }
+
+            if (!sorted) {
+                if (comparer == null) {
+                    this._sortcolumntype = datatype;
+                    var that = this;
+                    _sortdata.sort(function (value1, value2) {
+                        return that._compare(value1, value2, datatype);
+                    });
+                }
+                else {
+                    _sortdata.sort(comparer);
+                }
+            }
+
+            if (!ascending) {
+                _sortdata.reverse();
+            }
+
+            Object.prototype.toString = tmpToString;
+            this.sortdata = _sortdata;
+
+            this.sortcache[lookupkey] = { _sortdata: _sortdata, direction: ascending };
+            this.reload(this.records, this.rows, this.filters, this.updated, true);
+        },
+
+        this.clearsortdata = function () {
+            this.sortcache = {};
+            this.sortdata = null;
+        }
+
+        this._compare = function (value1, value2, type) {
+            var value1 = value1.sortkey;
+            var value2 = value2.sortkey;
+            if (value1 === undefined) { value1 = null; }
+            if (value2 === undefined) { value2 = null; }
+            if (value1 === null && value2 === null) {
+                return 0;
+            }
+            if (value1 === null && value2 !== null) {
+                return -1;
+            }
+            if (value1 !== null && value2 === null) {
+                return 1;
+            }
+
+            if ($.jqx.dataFormat) {
+                if (type && type != "") {
+                    switch (type) {
+                        case "number":
+                        case "int":
+                        case "float":
+                            if (value1 < value2) { return -1; }
+                            if (value1 > value2) { return 1; }
+                            return 0;
+                        case "date":
+                        case "time":
+                            if (value1 < value2) { return -1; }
+                            if (value1 > value2) { return 1; }
+                            return 0;
+                        case "string":
+                        case "text":
+                            value1 = String(value1).toLowerCase();
+                            value2 = String(value2).toLowerCase();
+                            break;
+                    }
+                }
+                else {
+                    if ($.jqx.dataFormat.isNumber(value1) && $.jqx.dataFormat.isNumber(value2)) {
+                        if (value1 < value2) { return -1; }
+                        if (value1 > value2) { return 1; }
+                        return 0;
+                    }
+                    else if ($.jqx.dataFormat.isDate(value1) && $.jqx.dataFormat.isDate(value2)) {
+                        if (value1 < value2) { return -1; }
+                        if (value1 > value2) { return 1; }
+                        return 0;
+                    }
+                    else if (!$.jqx.dataFormat.isNumber(value1) && !$.jqx.dataFormat.isNumber(value2)) {
+                        value1 = String(value1).toLowerCase();
+                        value2 = String(value2).toLowerCase();
+                    }
+                }
+            }
+            try {
+                if (value1 < value2) { return -1; }
+                if (value1 > value2) { return 1; }
+            }
+            catch (error) {
+                var er = error;
+            }
+
+            return 0;
+        };
+
+        this._equals = function (value1, value2) {
+            return (this._compare(value1, value2) === 0);
+        };
+    }
+
+    $.extend($.jqx._jqxGrid.prototype, {
+        //[optimize]
+        _rendersortcolumn: function () {
+            var self = this.that;
+            var sortcolumn = this.getsortcolumn();
+
+            if (this.sortdirection) {
+                var ariaFunc = function (column, direction) {
+                    var sortc = self.getcolumn(column);
+                    if (sortc) {
+                        if (direction.ascending) {
+                            $.jqx.aria(sortc.element, "aria-sort", "ascending");
+                        }
+                        else if (direction.descending) {
+                            $.jqx.aria(sortc.element, "aria-sort", "descending");
+                        } else {
+                            $.jqx.aria(sortc.element, "aria-sort", "none");
+                        }
+                    }
+                }
+                if (this._oldsortinfo) {
+                    if (this._oldsortinfo.column) {
+                        ariaFunc(this._oldsortinfo.column, { ascending: false, descending: false });
+                    }
+                }
+                ariaFunc(sortcolumn, this.sortdirection);
+
+            }
+            this._oldsortinfo = { column: sortcolumn, direction: this.sortdirection };
+
+            if (this.sortdirection) {
+                $.each(this.columns.records, function (i, value) {
+                    var groupingsortelements = $.data(document.body, "groupsortelements" + this.displayfield);
+
+                    if (sortcolumn == null || this.displayfield != sortcolumn) {
+                        $(this.sortasc).hide();
+                        $(this.sortdesc).hide();
+
+                        if (groupingsortelements != null) {
+                            groupingsortelements.sortasc.hide();
+                            groupingsortelements.sortdesc.hide();
+                        }
+                    }
+                    else {
+                        if (self.sortdirection.ascending) {
+                            $(this.sortasc).show();
+                            $(this.sortdesc).hide();
+                            if (groupingsortelements != null) {
+                                groupingsortelements.sortasc.show();
+                                groupingsortelements.sortdesc.hide();
+                            }
+                        }
+                        else {
+                            $(this.sortasc).hide();
+                            $(this.sortdesc).show();
+                            if (groupingsortelements != null) {
+                                groupingsortelements.sortasc.hide();
+                                groupingsortelements.sortdesc.show();
+                            }
+                        }
+                    }
+                });
+            }
+        },
+
+        // gets the sort column.
+        getsortcolumn: function () {
+            if (this.sortcolumn != undefined) {
+                return this.sortcolumn;
+            }
+
+            return null;
+        },
+        // removes the sorting.
+        removesort: function () {
+            this.sortby(null);
+        },
+
+        // sorts by a column.
+        sortby: function (datafield, sortdirection, comparer, refresh, checkloading) {
+            if (this._loading && checkloading !== false) {
+                throw new Error('jqxGrid: ' + this.loadingerrormessage);
+                return false;
+            }
+
+            // clear the sorting.
+            if (datafield == null) {
+                sortdirection = null;
+                datafield = this.sortcolumn;
+            }
+
+            if (datafield != undefined) {
+                var self = this.that;
+                if (comparer == undefined && self.source.sortcomparer != null) {
+                    comparer = self.source.sortcomparer;
+                }
+
+                if (sortdirection == 'a' || sortdirection == 'asc' || sortdirection == 'ascending' || sortdirection == true) {
+                    ascending = true;
+                }
+                else {
+                    ascending = false;
+                }
+
+                //var columnbydatafield = self.getcolumn(datafield);
+                //if (columnbydatafield == undefined || columnbydatafield == null)
+                //    return;
+
+                if (sortdirection != null) {
+                    self.sortdirection = { 'ascending': ascending, 'descending': !ascending };
+                }
+                else {
+                    self.sortdirection = { 'ascending': false, 'descending': false };
+                }
+
+                if (sortdirection != null) {
+                    self.sortcolumn = datafield;
+                }
+                else {
+                    self.sortcolumn = null;
+                }
+
+                if (self.source.sort || self.virtualmode) {
+                    self.dataview.sortfield = datafield;
+                    if (sortdirection == null) {
+                        self.dataview.sortfielddirection = "";
+                    }
+                    else {
+                        self.dataview.sortfielddirection = ascending ? "asc" : "desc";
+                    }
+                    if (self.source.sort && !this._loading) {
+                        self.source.sort(datafield, sortdirection);
+                        self._raiseEvent(6, { sortinformation: self.getsortinformation() });
+                        return;
+                    }
+                }
+                else {
+                    self.dataview.sortby(datafield, sortdirection, comparer);
+                }
+
+                if (refresh === false) {
+                    return;
+                }
+
+                // if grouping is enabled, we need to refresh the groups too.
+                if (self.groupable && self.groups.length > 0) {
+                    self._render(true, false, false);
+                    if (self._updategroupheadersbounds && self.showgroupsheader) {
+                        self._updategroupheadersbounds();
+                    }
+                }
+                else {
+                    if (self.pageable) {
+                        self.dataview.updateview();
+                    }
+                    self._updaterowsproperties();
+                    self.rendergridcontent(true);
+                }
+                self._raiseEvent(6, { sortinformation: self.getsortinformation() });
+            }
+        },
+
+        _togglesort: function (column) {
+            var self = this.that;
+            if (this.disabled) {
+                return;
+            }
+
+            if (column.sortable && self.sortable) {
+                var sortinformation = self.getsortinformation();
+                var checked = null;
+                if (sortinformation.sortcolumn != null && sortinformation.sortcolumn == column.displayfield) {
+                    checked = sortinformation.sortdirection.ascending;
+                    if (self.sorttogglestates > 1) {
+                        if (checked == true) {
+                            checked = false;
+                        }
+                        else {
+                            checked = null;
+                        }
+                    }
+                    else {
+                        checked = !checked;
+                    }
+                }
+                else {
+                    checked = true;
+                }
+
+                self.sortby(column.displayfield, checked, null);
+            }
+        }
+    });
+})(jqxBaseFramework);
+
+

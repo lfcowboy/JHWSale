@@ -49,5 +49,5 @@
 });
 
  $('#addCustomer_companySearch').click(function(){
-    searchDropdown('addCustomer_companyList', 'addCustomer_companyName');
+    searchDropdown('addCustomer_companyList', 'addCustomer_companyName',function(){});
 });
