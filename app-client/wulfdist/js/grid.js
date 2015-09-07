@@ -38,21 +38,26 @@ $.grid = {
             '<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">'+
             '<span class="selected-label">'+value+'</span>'+
             '<span class="selected-caret" ><span class="caret"></span></span>'+
-            '</button>'+'<ul class="dropdown-menu" role="menu">'+
+            '</button>'+
+            '<ul class="dropdown-menu" role="menu">'+
             '<li data-value="1">'+'<a href="#">'+'<span>'+value+'</span>'+'</a>'+'</li>'+
-            '<li data-value="2">'+'<a href="#">'+'<span>'+'nokia'+'</span>'+'</a>'+'</li>'+
             '</ul>'+'</div>';
     },
 
-    dropdownlistEditor: function (row, cellValue, editor, cellText, width, height) {
-        editor.jqxDropDownList(
-            {autoDropDownHeight: false,
-                itemHeight: 27,
-                dropDownHeight:'150px',
-                scrollBarSize:8,width: width-4, height: 24,
-                source: ['<span>nokia</span>', '<span>nsn</span>',
-                    '<span>huawei</span>','<span>dahua</span>',
-                    '<span>reebook</span>','<span>nike</span>']});
+    dropdownlistEditor: function (dropdownlists) {
+        var _dropdownlists = dropdownlists;
+        return function (row, cellValue, editor, cellText, width, height) {
+            editor.jqxDropDownList(
+                {
+                    autoDropDownHeight: false,
+                    itemHeight: 27,
+                    dropDownHeight: '150px',
+                    scrollBarSize: 8, width: width - 4, height: 24,
+                    source: _dropdownlists.map(function (name) {
+                        return "<span>" + name + "</span>";
+                    })
+                });
+        }
     },
 
     dropdownlistInitEditor : function (row, cellValue, editor, cellText, width, height) {

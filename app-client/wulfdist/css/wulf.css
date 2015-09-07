@@ -258,16 +258,6 @@ th
 /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 @media print
 {
-    *,
-    *:before,
-    *:after
-    {
-        color: #000 !important;
-        background: transparent !important;
-        -webkit-box-shadow: none !important;
-                box-shadow: none !important;
-        text-shadow: none !important;
-    }
     a,
     a:visited,
     .n-link,
@@ -3710,7 +3700,6 @@ select[multiple].form-group-lg .form-control
     }
 }
 .form-horizontal .radio,
-.form-horizontal .checkbox,
 .form-horizontal .radio-inline,
 .form-horizontal .checkbox-inline
 {
@@ -8675,8 +8664,7 @@ html.wf-loading:not(.wf-active) body
     font-weight: 300;
     font-style: normal;
 
-    src: url('../fonts/NokiaPureHWeb_Lt.eot');
-    src: url('../fonts/NokiaPureHWeb_Lt.eot?#iefix') format('embedded-opentype'), url('../fonts/NokiaPureHWeb_Lt.woff') format('woff'), url('../fonts/NokiaPureHeadline_Light.ttf') format('truetype'), url('../fonts/NokiaPureHWeb_Lt.svg#NokiaPureHWebLight') format('svg');
+    src: url('../fonts/NokiaPureHWeb_Lt.woff') format('woff');
 }
 @font-face
 {
@@ -8684,8 +8672,7 @@ html.wf-loading:not(.wf-active) body
     font-weight: normal;
     font-style: normal;
 
-    src: url('../fonts/NokiaPureHWeb_Rg.eot');
-    src: url('../fonts/NokiaPureHWeb_Rg.eot?#iefix') format('embedded-opentype'), url('../fonts/NokiaPureHWeb_Rg.woff') format('woff'), url('../fonts/NokiaPureHeadline_Regular.ttf') format('truetype'), url('../fonts/NokiaPureHWeb_Rg.svg#NokiaPureHWebRegular') format('svg');
+    src: url('../fonts/NokiaPureHWeb_Rg.woff') format('woff');
 }
 @font-face
 {
@@ -8693,15 +8680,13 @@ html.wf-loading:not(.wf-active) body
     font-weight: bold;
     font-style: normal;
 
-    src: url('../fonts/NokiaPureHWeb_Bd.eot');
-    src: url('../fonts/NokiaPureHWeb_Bd.eot?#iefix') format('embedded-opentype'), url('../fonts/NokiaPureHWeb_Bd.woff') format('woff'), url('../fonts/NokiaPureHeadline_Bold.ttf') format('truetype'), url('../fonts/NokiaPureHWeb_Bd.svg#NokiaPureHWebBold') format('svg');
+    src: url('../fonts/NokiaPureHWeb_Bd.woff') format('woff');
 }
 @font-face
 {
     font-family: 'Icons';
 
-    src: url('../fonts/NokiaIcons.eot');
-    src: url('../fonts/NokiaIcons.eot?#iefix') format('embedded-opentype'), url('../fonts/NokiaIcons.woff') format('woff'), url('../fonts/NokiaIcons.ttf') format('truetype'), url('../fonts/NokiaIcons.svg#Icons') format('svg');
+    src: url('../fonts/NokiaIcons.woff') format('woff');
 }
 /*
  * WULF (http://networks.nokia.com/)
@@ -9479,6 +9464,8 @@ h2
 }
 .jqx-grid .jqx-grid-cell .btn-group .dropdown-toggle .selected-label
 {
+    font-size: 14px;
+
     float: left;
 
     border-right: none;
@@ -9501,7 +9488,7 @@ h2
 }
 .jqx-grid .jqx-dropdownlist-state-normal
 {
-    margin: 1px 2px 1px 2px !important;
+    margin: 1px 2px 0 2px !important;
 
     border-radius: 6px !important;
 }
@@ -9511,7 +9498,19 @@ h2
 }
 .jqx-grid .jqx-icon
 {
-    margin-top: -10px;
+    width: 8px;
+    margin-top: -2px;
+    margin-left: 3px;
+
+    border-top: 4px solid #474747;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    background-image: none;
+}
+.jqx-grid .jqx-fill-state-pressed
+{
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
 }
 .jqx-grid .n-inputfield-small
 {
@@ -9525,13 +9524,23 @@ h2
 }
 .jqx-dropdownlist-content
 {
-    margin-top: 4px !important;
+    margin: 0 !important;
     padding-left: 8px;
+
+    border-right: 1px solid #b2b2b2 !important;
+}
+.jqx-dropdownlist-content > span
+{
+    font-size: 14px;
+    line-height: 26px;
 }
 .jqx-listitem-element .jqx-listitem-state-normal
 {
-    padding-left: 8px;
+    font-size: 14px;
 
+    padding: 4px 4px 4px 8px;
+
+    border-radius: 0;
     background: #ededf0;
 }
 .jqx-listitem-element .jqx-listitem-state-selected
@@ -11138,6 +11147,8 @@ input[type=radio]
     background: #d3d3d3;
     -webkit-box-shadow: inset 2px 2px 1px rgba(0, 0, 0, .5), 0 1px 1px rgba(0, 0, 0, .5);
             box-shadow: inset 2px 2px 1px rgba(0, 0, 0, .5), 0 1px 1px rgba(0, 0, 0, .5);
+
+    -webkit-print-color-adjust: exact;
 }
 .rangeslider__handle
 {
@@ -11381,13 +11392,21 @@ input[type=radio]
 
     margin-top: 13px;
     margin-bottom: 12px;
-    margin-left: 8px;
+    margin-left: 10px;
+}
+.selectlist-small .dropdown-toggle .caret
+{
+    margin: 0 0 0 6px;
 }
 .selectlist-small .dropdown-toggle .selected-caret .caret
 {
     margin-top: 11px;
     margin-bottom: 10px;
-    margin-left: 8px;
+    margin-left: 9px;
+}
+.selectlist-small .dropdown-toggle span.caret
+{
+    margin: 0 0 0 6px;
 }
 .dropdown-menu,
 .dropdown-menu-right
@@ -11486,6 +11505,8 @@ input[type=radio]
 
     height: 26px;
     padding: 0 10px 0 0;
+
+    line-width: 28px;
 }
 .selectlist-small .dropdown-toggle[aria-expanded=true]
 {
@@ -11605,6 +11626,10 @@ input[type=radio]
 .btn-group.selectlist.disabled span.caret
 {
     color: #aaa;
+}
+span.n-small-caret
+{
+    margin: 0 0 0 6px;
 }
 @media print
 {
@@ -11989,12 +12014,12 @@ ul.n-list-group-small
     cursor: default;
 
     border: 1px solid #b2b2b2;
-    border-radius: 7px;
+    border-radius: 6px;
     text-shadow: 0 1px rgba(255, 255, 255, .65);
 }
-ul.list-group > li,
-ul.n-list-group > li,
-ul.n-list-group-small > li
+ul.list-group li,
+ul.n-list-group li,
+ul.n-list-group-small li
 {
     font-weight: normal;
 
@@ -12002,6 +12027,26 @@ ul.n-list-group-small > li
     padding: 3px 10px 3px 10px;
 
     color: #333;
+    border: 1px solid transparent;
+}
+ul.list-group > .mCustomScrollBox,
+ul.n-list-group > .mCustomScrollBox,
+ul.n-list-group-small > .mCustomScrollBox
+{
+    width: 100%;
+    padding: 0;
+
+    border-radius: 5px;
+}
+ul.list-group > .mCustomScrollBox > .mCSB_container,
+ul.n-list-group > .mCustomScrollBox > .mCSB_container,
+ul.n-list-group-small > .mCustomScrollBox > .mCSB_container
+{
+    margin-right: 0;
+}
+.list-group-item,
+.n-list-group-item
+{
     border: 1px solid transparent;
 }
 ul.disabled
@@ -12029,11 +12074,11 @@ ul.disabled:focus
 
     padding-left: 10px;
 }
-.n-list-striped > li:nth-child(odd)
+.n-list-striped li:nth-child(odd)
 {
     background-color: #fff;
 }
-.n-list-striped > li:nth-child(even)
+.n-list-striped li:nth-child(even)
 {
     background-color: #efefef;
 }
@@ -12043,6 +12088,11 @@ ul.disabled:focus
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
+}
+.n-list-group-scroll,
+.n-list-group-scroll-disabled
+{
+    height: 100px;
 }
 .n-list-group-small > li
 {
@@ -12058,6 +12108,8 @@ ul.disabled:focus
 }
 .n-list-group-item
 {
+    margin-bottom: 0;
+
     color: #333;
 }
 .n-list-group-item:hover
@@ -12612,6 +12664,10 @@ li.n-list-group-item.selected:hover span
     -webkit-box-shadow: none;
             box-shadow: none;
 }
+.combobox .form-control
+{
+    height: 30px;
+}
 .combobox.combobox-open > .form-control.n-inputfield
 {
     border-bottom-left-radius: 0;
@@ -12619,6 +12675,7 @@ li.n-list-group-item.selected:hover span
 .combobox .dropdown-toggle,
 .n-combobutton .dropdown-toggle
 {
+    height: 30px;
     margin: 0;
 
     border-radius: 0 7px 7px 0 !important;
@@ -12635,9 +12692,15 @@ li.n-list-group-item.selected:hover span
 {
     border-radius: 0 7px 0 0 !important;
 }
+.n-combobutton .dropdown-toggle
+{
+    padding-right: 11px !important;
+    padding-left: 11px !important;
+}
 .n-combobutton-btn
 {
     min-width: 160px;
+    height: 30px;
     padding-right: 36px;
 
     -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .3), inset 0 1px 0 0 #fff;
@@ -12660,7 +12723,7 @@ li.n-list-group-item.selected:hover span
 {
     font-size: 12px;
 
-    height: 26px;
+    height: 26px !important;
     padding-top: 2px;
     padding-right: 10px !important;
     padding-left: 10px !important;
@@ -13482,15 +13545,25 @@ li.n-list-group-item.selected:hover span
     border-top: none;
 }
 .n-banner-overflow-control .dropdown-menu > li > a:hover,
-.n-banner-overflow-control .dropdown-menu > li > a:focus,
-.n-banner-overflow-control .dropdown-menu > li > .n-link:hover,
-.n-banner-overflow-control .dropdown-menu > li > .n-link:focus
+.n-banner-overflow-control .dropdown-menu > li > .n-link:hover
 {
     background-color: white;
 }
 .n-banner-overflow-control .dropdown-menu > li > a:hover > span,
+.n-banner-overflow-control .dropdown-menu > li > .n-link:hover > span
+{
+    border-bottom-color: #0b6daf;
+}
+.n-banner-overflow-control .dropdown-menu > li > a:focus,
+.n-banner-overflow-control .dropdown-menu > li > .n-link:focus
+{
+    font-family: 'Nokia Pure', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+
+    color: #fff;
+    background-color: #0b6daf;
+}
 .n-banner-overflow-control .dropdown-menu > li > a:focus > span,
-.n-banner-overflow-control .dropdown-menu > li > .n-link:hover > span,
 .n-banner-overflow-control .dropdown-menu > li > .n-link:focus > span
 {
     border-bottom-color: #0b6daf;
@@ -15459,8 +15532,8 @@ li.n-list-group-item.selected:hover span
 .n-drillDown-border
 {
     border-radius: 5px;
-    -webkit-box-shadow: 0 0 0 3px #00a1cc inset;
-            box-shadow: 0 0 0 3px #00a1cc inset;
+    -webkit-box-shadow: 0 0 0 3px #00a1cc;
+            box-shadow: 0 0 0 3px #00a1cc;
 }
 .n-drillDown-inner:before
 {
@@ -16537,8 +16610,7 @@ a.n-link-disabled + span.n-link-action-icon:after,
 {
     font-size: 14px;
     font-weight: normal;
-    line-height: -webkit-calc(40px - 1px);
-    line-height:         calc(40px - 1px);
+    line-height: 39px;
 
     height: 42px;
     margin-top: -1px;
@@ -17425,44 +17497,44 @@ yx-axis
 
     padding-top: 1px;
 }
-.n-login .panel .n-login-footer
+.n-login .panel .panel-body .n-login-action
 {
     overflow: hidden;
 
-    padding-bottom: 20px;
+    padding-top: 20px;
 }
-.n-login .panel .n-login-footer .n-login-forget-password
+.n-login .panel .panel-body .n-login-action .n-login-forget-password
 {
     line-height: 32px;
 
     display: inline-block;
 }
-.n-login .panel .n-login-footer .n-login-forget-password a:hover,
-.n-login .panel .n-login-footer .n-login-forget-password a:active,
-.n-login .panel .n-login-footer .n-login-forget-password a:focus,
-.n-login .panel .n-login-footer .n-login-forget-password .n-link:hover,
-.n-login .panel .n-login-footer .n-login-forget-password .n-link:active,
-.n-login .panel .n-login-footer .n-login-forget-password .n-link:focus
+.n-login .panel .panel-body .n-login-action .n-login-forget-password a:hover,
+.n-login .panel .panel-body .n-login-action .n-login-forget-password a:active,
+.n-login .panel .panel-body .n-login-action .n-login-forget-password a:focus,
+.n-login .panel .panel-body .n-login-action .n-login-forget-password .n-link:hover,
+.n-login .panel .panel-body .n-login-action .n-login-forget-password .n-link:active,
+.n-login .panel .panel-body .n-login-action .n-login-forget-password .n-link:focus
 {
     border-bottom: 1px solid #00a1cc;
     outline: none;
 }
-.n-login .panel .n-login-footer .n-login-forget-password a.n-link-visited,
-.n-login .panel .n-login-footer .n-login-forget-password .n-link.n-link-visited
+.n-login .panel .panel-body .n-login-action .n-login-forget-password a.n-link-visited,
+.n-login .panel .panel-body .n-login-action .n-login-forget-password .n-link.n-link-visited
 {
     color: #1b1b1b;
     border-bottom: 1px solid #666;
 }
-.n-login .panel .n-login-footer .n-login-forget-password .icon-breadcrumb
+.n-login .panel .panel-body .n-login-action .n-login-forget-password .icon-breadcrumb
 {
     font-size: 80%;
     font-weight: bold;
 }
-.n-login .panel .n-login-footer .n-login-forget-password .icon-breadcrumb:after
+.n-login .panel .panel-body .n-login-action .n-login-forget-password .icon-breadcrumb:after
 {
     color: #1b1b1b;
 }
-.n-login .panel .n-login-footer button
+.n-login .panel .panel-body .n-login-action button
 {
     float: right;
 }
@@ -17628,4 +17700,3 @@ yx-axis
 {
     resize: both;
 }
-/*# sourceMappingURL=wulf.css.map */

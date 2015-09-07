@@ -27,3 +27,10 @@ exports.addProduct = function (req, res) {
         }
     });
 };
+
+exports.getProduct = function (req, res) {
+    var querySQL = 'select code from product';
+    pool.query(querySQL,function(qerr, rows, fields){
+        res.json(rows);
+    });
+};

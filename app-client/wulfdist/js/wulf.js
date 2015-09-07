@@ -2557,21 +2557,26 @@ $.grid = {
             '<button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">'+
             '<span class="selected-label">'+value+'</span>'+
             '<span class="selected-caret" ><span class="caret"></span></span>'+
-            '</button>'+'<ul class="dropdown-menu" role="menu">'+
+            '</button>'+
+            '<ul class="dropdown-menu" role="menu">'+
             '<li data-value="1">'+'<a href="#">'+'<span>'+value+'</span>'+'</a>'+'</li>'+
-            '<li data-value="2">'+'<a href="#">'+'<span>'+'nokia'+'</span>'+'</a>'+'</li>'+
             '</ul>'+'</div>';
     },
 
-    dropdownlistEditor: function (row, cellValue, editor, cellText, width, height) {
-        editor.jqxDropDownList(
-            {autoDropDownHeight: false,
-                itemHeight: 27,
-                dropDownHeight:'150px',
-                scrollBarSize:8,width: width-4, height: 24,
-                source: ['<span>nokia</span>', '<span>nsn</span>',
-                    '<span>huawei</span>','<span>dahua</span>',
-                    '<span>reebook</span>','<span>nike</span>']});
+    dropdownlistEditor: function (dropdownlists) {
+        var _dropdownlists = dropdownlists;
+        return function (row, cellValue, editor, cellText, width, height) {
+            editor.jqxDropDownList(
+                {
+                    autoDropDownHeight: false,
+                    itemHeight: 27,
+                    dropDownHeight: '150px',
+                    scrollBarSize: 8, width: width - 4, height: 24,
+                    source: _dropdownlists.map(function (name) {
+                        return "<span>" + name + "</span>";
+                    })
+                });
+        }
     },
 
     dropdownlistInitEditor : function (row, cellValue, editor, cellText, width, height) {
@@ -5648,6 +5653,14 @@ $(document).ready(function () {
     $("li.n-list-group-item").dblclick(function (e) {
         e.preventDefault();
     });
+
+    $(".n-list-group-scroll").nScrollbar();
+    $(".n-list-group-scroll-disabled").nScrollbar({
+        alwaysShowScrollbar:2,
+        theme: "disabled",
+        mouseWheel:{ enable: false }
+    });
+    $(".n-list-group-scroll-disabled").nScrollbar("disable");
 });
 
 window.E = function () {
@@ -5904,6 +5917,55 @@ window.E = function () {
 
 
 
+/**
+ * Created by xiaopcao on 9/6/2015.
+ */
++function () {
+    var setRangesliderHandle = function (sliderValue, maxValue) {
+        if (sliderValue == maxValue) {
+            var handlePostion = $(".rangeslider").width() / maxValue * sliderValue - 10 + "px";
+        } else {
+            var handlePostion = $(".rangeslider").width() / maxValue * sliderValue + "px"
+        }
+        $(".rangeslider__handle").css("left", handlePostion);
+    }
+
+    var beforePrintFunc = function () {
+        var maxValue = $('.n-slider').attr("max");
+        var sliderValue = $('.n-slider').val();
+        console.log($(".rangeslider").width());
+        var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+        if (is_chrome) {
+            setRangesliderHandle(sliderValue, maxValue);
+        }
+        else {
+           //hardcode slider length when printing
+            var sliderLength=650;
+            $(".rangeslider").css("width", sliderLength);
+            setRangesliderHandle(sliderValue, maxValue);
+        }
+
+    }
+
+    var afterPrintFunc = function () {
+        var maxValue = $('.n-slider').attr("max");
+        var sliderValue = $('.n-slider').val();
+        $(".rangeslider").css("width", "100%");
+        var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+        if (!is_firefox) {
+            setRangesliderHandle(sliderValue, maxValue);
+        }
+    }
+
+
+//for chrome
+    window.matchMedia('print').addListener(function () {
+        beforePrintFunc();
+    });
+
+    window.onbeforeprint = beforePrintFunc;
+    window.onafterprint = afterPrintFunc;
+}();
 $.fn.extend({
     nScrollbar: function (options) {
         var $select = $(this);

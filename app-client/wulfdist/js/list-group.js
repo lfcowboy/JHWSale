@@ -44,6 +44,14 @@ $(document).ready(function () {
     $("li.n-list-group-item").dblclick(function (e) {
         e.preventDefault();
     });
+
+    $(".n-list-group-scroll").nScrollbar();
+    $(".n-list-group-scroll-disabled").nScrollbar({
+        alwaysShowScrollbar:2,
+        theme: "disabled",
+        mouseWheel:{ enable: false }
+    });
+    $(".n-list-group-scroll-disabled").nScrollbar("disable");
 });
 
 window.E = function () {
