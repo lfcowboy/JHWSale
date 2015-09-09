@@ -8,6 +8,7 @@
     "express": "^4.13.1",
     "express-mongoose": "^0.1.0",
     "express-session": "^1.11.3",
+    "lodash": "^3.10.1",
     "mongoose": "^4.1.0",
     "mysql": "^2.8.0",
     "node-mysql": "^0.4.2"

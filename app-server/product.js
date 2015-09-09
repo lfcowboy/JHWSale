@@ -34,3 +34,10 @@ exports.getProduct = function (req, res) {
         res.json(rows);
     });
 };
+
+exports.getProductByCode = function (req, res, callback) {
+    var querySQL = 'select * from product where code = "' + req.body.productCode + '"';
+    pool.query(querySQL,function(qerr, rows, fields){
+        callback(qerr, rows, fields);
+    });
+};

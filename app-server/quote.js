@@ -3,6 +3,7 @@
  */
  var pool = require("./app-pooling");
  var customer = require("./customer");
+ var product = require("./product");
 
  exports.addQuote = function (req, res) {
     customer.getCompanyByName(req, res, function (err, rows, fields) {
@@ -22,6 +23,31 @@
                     }
                     else {
                         res.json({success: true, confirmHead: '成功', confirmMsg: '报价单新建成功！'});
+                    }
+                });
+            }
+        }
+    });
+};
+
+exports.addPrice = function (req, res) {
+    product.getProductByCode(req, res, function (err, rows, fields) {
+        if (err) {
+            res.json({success: false, errorHead: '失败', errorMsg: '报价新建失败！'});
+        }
+        else {
+            if (rows.length === 0) {
+                res.json({success: false, errorHead: '失败', errorMsg: '请选择正确的产品型号！'});
+            }
+            else {
+                var productId = rows[0].id;
+                var addSQL = 'insert into price (productId) values (' + productId + ')';
+                pool.insert(addSQL, function (err) {
+                    if (err) {
+                        res.json({success: false, errorHead: '失败', errorMsg: '报价新建失败！'});
+                    }
+                    else {
+                        res.json({success: true, confirmHead: '成功', confirmMsg: '报价新建成功！'});
                     }
                 });
             }

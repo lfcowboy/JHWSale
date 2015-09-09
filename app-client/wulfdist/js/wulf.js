@@ -2528,12 +2528,12 @@ $.grid = {
 
     /*---------------- nokia Checkbox render/editor ----------------*/
     nCheckboxCellsrenderer: function (row, column, value,editor) {
-        return '<div class="checkbox checkbox-small">'+ '<input id="cb' +row+ Date.now() +'" type="checkbox" ' + (value?' checked="true"':'')+ '></input>'+ '<label for="cb' +row+ Date.now() +'">checkbox</label>'+ '</div>';
+        return '<div class="checkbox checkbox-small">'+ '<input id="cb' +row+ Date.now() +'" type="checkbox" ' + (value?' checked="true"':'')+ '></input>'+ '<label for="cb' +row+ Date.now() +'"></label>'+ '</div>';
     },
     nCreateCheckboxEditor: function (row, value, editor, cellText, width, height) {
         // construct the editor.
         var target = (value)?' checked="true"':'';
-        var element = '<div class="checkbox checkbox-small margin-add-one">'+ '<input id="cb' +row+ Date.now() +'" type="checkbox" ' + (target)+ '></input>'+ '<label for="cb' +row+ Date.now() +'">checkbox</label>'+ '</div>';
+        var element = '<div class="checkbox checkbox-small margin-add-one">'+ '<input id="cb' +row+ Date.now() +'" type="checkbox" ' + (target)+ '></input>'+ '<label for="cb' +row+ Date.now() +'"></label>'+ '</div>';
         editor.append(element);
     },
 
@@ -2573,7 +2573,7 @@ $.grid = {
                     dropDownHeight: '150px',
                     scrollBarSize: 8, width: width - 4, height: 24,
                     source: _dropdownlists.map(function (name) {
-                        return "<span>" + name + "</span>";
+                        return name;
                     })
                 });
         }

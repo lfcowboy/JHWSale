@@ -153,36 +153,12 @@ var initQuoteTable = function () {
         server: 'huawei',
         cancel: 'icon-fault-major'
     };
-    data[2] = {
-        severity: 'icon-fault-minor',
-        name: 'Tom',
-        alarmnumber: '113213',
-        alarmtext: 'System module error',
-        alarmtime: "2013/11/26",
-        acknowledgment: "false",
-        server: 'nokia',
-        cancel: 'icon-fault-minor'
-    };
-    data[3] = {
-        severity: 'icon-fault-warning',
-        name: 'Green',
-        alarmnumber: '113214',
-        alarmtext: 'Small cell error',
-        alarmtime: "1999/12/26",
-        acknowledgment: "true",
-        server: 'nokia',
-        cancel: 'icon-fault-warning'
-    };
-    data[4] = {
-        severity: 'icon-fault-cleared',
-        name: 'Abby',
-        alarmnumber: '113215',
-        alarmtext: 'BTS error',
-        alarmtime: "1985/12/26",
-        acknowledgment: "true",
-        server: 'nokia',
-        cancel: 'icon-fault-cleared'
-    };
+
+    var generaterow = function (i) {
+        var row = {};
+        row["server"] = '1';
+        return row;
+    }
 
     var source =
     {
@@ -197,16 +173,47 @@ var initQuoteTable = function () {
             {name: 'server', type: 'string'},
             {name: 'cancel', type: 'Image'}
         ],
-        datatype: "array"
+        datatype: "array",
+        addrow: function (rowid, rowdata, position, commit) {
+            // synchronize with the server - send insert command
+            // call commit with parameter true if the synchronization with the server is successful
+            //and with parameter false if the synchronization failed.
+            // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
+            commit(true);
+        },
+        deleterow: function (rowid, commit) {
+            // synchronize with the server - send delete command
+            // call commit with parameter true if the synchronization with the server is successful
+            //and with parameter false if the synchronization failed.
+            commit(true);
+        }
+        //,
+        //updaterow: function (rowid, newdata, commit) {
+        //    // synchronize with the server - send update command
+        //    // call commit with parameter true if the synchronization with the server is successful
+        //    // and with parameter false if the synchronization failed.
+        //    commit(true);
+        //}
+    };
+    var beginedit = function(row, datafield){
+        //if (row == 1 && datafield == 'product') {
+        //    return false;
+        //};
     };
     var dataAdapter = new $.jqx.dataAdapter(source);
     var columns = [
         {
-            text: '产品型号', columntype: 'custom', datafield: 'product', filtertype: 'input', width: 180,
+            text: '删除', columntype: 'custom', datafield: 'acknowledgment', filtertype: 'bool', width: 45,
+            cellsrenderer: $.grid.nCheckboxCellsrenderer, createeditor: $.grid.nCreateCheckboxEditor,
+            initeditor: $.grid.nInitCheckboxEditor, geteditorvalue: $.grid.nGetCheckboxEditorValue
+        },
+        {
+            text: '产品型号', columntype: 'custom', datafield: 'productCode', filtertype: 'input', width: 180,
             cellsrenderer: $.grid.dropdownlistCellsrenderer,
             createeditor: $.grid.dropdownlistEditor(productCodeList),
             initeditor: $.grid.dropdownlistInitEditor,
-            geteditorvalue: $.grid.dropdownlistEditorValue
+            geteditorvalue: $.grid.dropdownlistEditorValue,
+            cellbeginedit: beginedit
         },
         {
             text: '最小量',
@@ -289,15 +296,11 @@ var initQuoteTable = function () {
             filtertype: 'number',
             cellsalign: 'right',
             align: "right",
-            width: 150
+            width: 150,
+            cellbeginedit: beginedit
         },
         {text: 'Alarm text', columntype: 'textbox', datafield: 'alarmtext', filtertype: 'input', width: 150},
         {text: 'Alarm time', columntype: 'textbox', datafield: 'alarmtime', filtertype: 'input', width: 150},
-        {
-            text: 'Acknowledgment', columntype: 'custom', datafield: 'acknowledgment', filtertype: 'bool', width: 150,
-            cellsrenderer: $.grid.nCheckboxCellsrenderer, createeditor: $.grid.nCreateCheckboxEditor,
-            initeditor: $.grid.nInitCheckboxEditor, geteditorvalue: $.grid.nGetCheckboxEditorValue
-        },
         {
             text: 'Cancel',
             columntype: 'textbox',
@@ -315,12 +318,71 @@ var initQuoteTable = function () {
             source: dataAdapter,
             editable: true,
             editmode: 'click',
-            selectionmode: 'singlecell',
+            selectionmode: 'multiRow',
             enableBrowserSelection: false,
             autoshowcolumnsmenubutton: true,
             altRows: true,
             columns: columns,
-            scrollBarSize: 8
+            scrollBarSize: 8,
+            showtoolbar: true,
+            autosavestate: false,
+            rendertoolbar: function (toolbar) {
+                var me = this;
+                var container = $("<div style='margin: 5px;'></div>");
+                toolbar.append(container);
+                container.append('<input id="addrowbutton" type="button" value="Add New Row" />');
+                container.append('<input style="margin-left: 5px;" id="deleterowbutton" type="button" value="Delete Selected Row" />');
+                container.append('<input style="margin-left: 5px;" id="updaterowbutton" type="button" value="Update Selected Row" />');
+                $("#addrowbutton").jqxButton();
+                $("#deleterowbutton").jqxButton();
+                $("#updaterowbutton").jqxButton();
+                // update row.
+                $("#updaterowbutton").on('click', function () {
+                    var selectedrowindex = $("#table-alternating-cell-selection").jqxGrid('getselectedrowindex');
+                    var rowscount = $("#table-alternating-cell-selection").jqxGrid('getdatainformation').rowscount;
+                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                        var datarow = $('#table-alternating-cell-selection').jqxGrid('getrowdata', 0);
+                        var id = $("#table-alternating-cell-selection").jqxGrid('getrowid', selectedrowindex);
+                        $.ajax({
+                            data: datarow,
+                            url: '/addPrice',
+                            type: 'post',
+                            dataType: 'json',
+                            cache: false,
+                            timeout: 5000,
+                            success: function (data) {
+                                if (data.success) {
+                                    showConfirmMsg(data.confirmHead, data.confirmMsg);
+                                    //$("#addQuotePanel").hide();
+                                }
+                                else {
+                                    showErrorMsg(data.errorHead, data.errorMsg);
+                                }
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                showErrorMsgDefault();
+                            }
+                        });
+                        //var commit = $("#table-alternating-cell-selection").jqxGrid('updaterow', id, datarow);
+                        //$("#table-alternating-cell-selection").jqxGrid('ensurerowvisible', selectedrowindex);
+                    }
+                });
+                // create new row.
+                $("#addrowbutton").on('click', function () {
+                    var datarow = generaterow();
+                    var commit = $("#table-alternating-cell-selection").jqxGrid('addrow', null, datarow);
+                });
+                // delete row.
+                $("#deleterowbutton").on('click', function () {
+                    var selectedrowindex = $("#table-alternating-cell-selection").jqxGrid('getselectedrowindex');
+                    var rowscount = $("#table-alternating-cell-selection").jqxGrid('getdatainformation').rowscount;
+                    alert(selectedrowindex);
+                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                        var id = $("#table-alternating-cell-selection").jqxGrid('getrowid', selectedrowindex);
+                        var commit = $("#table-alternating-cell-selection").jqxGrid('deleterow', id);
+                    }
+                });
+            }
         });
     $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'severity', 'editable', false);
     $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'alarmnumber', 'editable', false);
