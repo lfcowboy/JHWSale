@@ -16,8 +16,11 @@ $("#addQuoteButton").click(function () {
         timeout: 5000,
         success: function (data) {
             if (data.success) {
-                showConfirmMsg(data.confirmHead, data.confirmMsg);
                 $("#addQuotePanel").hide();
+                $("#addPricePanel").html(data.htmlContent);
+                initQuoteTable();
+                $("#pricePanel").show();
+                showConfirmMsg(data.confirmHead, data.confirmMsg);
             }
             else {
                 showErrorMsg(data.errorHead, data.errorMsg);
@@ -134,24 +137,6 @@ var initQuoteTable = function () {
     /*---------------- test data ----------------*/
     var data = new Array();
     data[0] = {
-        severity: 'icon-fault-critical',
-        name: 'Avatar',
-        alarmnumber: '113211',
-        alarmtext: 'System module error',
-        alarmtime: "1985/03/26",
-        acknowledgment: "false",
-        server: 'nokia',
-        cancel: 'icon-fault-critical'
-    };
-    data[1] = {
-        severity: 'icon-fault-major',
-        name: 'Robert',
-        alarmnumber: '113212',
-        alarmtext: 'Rystem module error',
-        alarmtime: "2001/10/26",
-        acknowledgment: "false",
-        server: 'huawei',
-        cancel: 'icon-fault-major'
     };
 
     var generaterow = function (i) {
@@ -203,12 +188,12 @@ var initQuoteTable = function () {
     var dataAdapter = new $.jqx.dataAdapter(source);
     var columns = [
         {
-            text: '删除', columntype: 'custom', datafield: 'acknowledgment', filtertype: 'bool', width: 45,
+            text: '删除', columntype: 'custom', datafield: 'acknowledgment', filtertype: 'bool', width: '3%',
             cellsrenderer: $.grid.nCheckboxCellsrenderer, createeditor: $.grid.nCreateCheckboxEditor,
             initeditor: $.grid.nInitCheckboxEditor, geteditorvalue: $.grid.nGetCheckboxEditorValue
         },
         {
-            text: '产品型号', columntype: 'custom', datafield: 'productCode', filtertype: 'input', width: 180,
+            text: '产品型号', columntype: 'custom', datafield: 'productCode', filtertype: 'input', width: '10%',
             cellsrenderer: $.grid.dropdownlistCellsrenderer,
             createeditor: $.grid.dropdownlistEditor(productCodeList),
             initeditor: $.grid.dropdownlistInitEditor,
@@ -224,7 +209,7 @@ var initQuoteTable = function () {
             createeditor: $.grid.nCreateTextFieldEditor,
             initeditor: $.grid.nInitTextFieldEditor,
             geteditorvalue: $.grid.nGetTextFieldEditorValue,
-            width: 200
+            width: '10%'
         },
         {
             text: '最大量',
@@ -235,7 +220,7 @@ var initQuoteTable = function () {
             createeditor: $.grid.nCreateTextFieldEditor,
             initeditor: $.grid.nInitTextFieldEditor,
             geteditorvalue: $.grid.nGetTextFieldEditorValue,
-            width: 200
+            width: '10%'
         },
         {
             text: '价格',
@@ -246,7 +231,7 @@ var initQuoteTable = function () {
             createeditor: $.grid.nCreateTextFieldEditor,
             initeditor: $.grid.nInitTextFieldEditor,
             geteditorvalue: $.grid.nGetTextFieldEditorValue,
-            width: 200
+            width: '5%'
         },
         {
             text: '税',
@@ -257,7 +242,7 @@ var initQuoteTable = function () {
             createeditor: $.grid.nCreateTextFieldEditor,
             initeditor: $.grid.nInitTextFieldEditor,
             geteditorvalue: $.grid.nGetTextFieldEditorValue,
-            width: 200
+            width: '5%'
         },
         {
             text: '内部备注',
@@ -268,7 +253,7 @@ var initQuoteTable = function () {
             createeditor: $.grid.nCreateTextFieldEditor,
             initeditor: $.grid.nInitTextFieldEditor,
             geteditorvalue: $.grid.nGetTextFieldEditorValue,
-            width: 200
+            width: '25%'
         },
         {
             text: '外部备注',
@@ -278,43 +263,14 @@ var initQuoteTable = function () {
             cellsrenderer: $.grid.nTextFieldCellRenderer,
             createeditor: $.grid.nCreateTextFieldEditor,
             initeditor: $.grid.nInitTextFieldEditor,
-            geteditorvalue: $.grid.nGetTextFieldEditorValue,
-            width: 200
-        },
-        {
-            text: 'Severity',
-            columntype: 'textbox',
-            datafield: 'severity',
-            filtertype: 'input',
-            cellsrenderer: imagerenderer,
-            width: 100
-        },
-        {
-            text: 'Alarm number',
-            columntype: 'NumberInput',
-            datafield: 'alarmnumber',
-            filtertype: 'number',
-            cellsalign: 'right',
-            align: "right",
-            width: 150,
-            cellbeginedit: beginedit
-        },
-        {text: 'Alarm text', columntype: 'textbox', datafield: 'alarmtext', filtertype: 'input', width: 150},
-        {text: 'Alarm time', columntype: 'textbox', datafield: 'alarmtime', filtertype: 'input', width: 150},
-        {
-            text: 'Cancel',
-            columntype: 'textbox',
-            datafield: 'cancel',
-            filtertype: 'input',
-            cellsrenderer: imagerenderer,
-            width: 100
+            geteditorvalue: $.grid.nGetTextFieldEditorValue
         }
     ]
     // initialize jqxGrid
     $("#table-alternating-cell-selection").jqxGrid(
         {
-            width: 1150,
-            height: 190,
+            width: '100%',
+            height: '90%',
             source: dataAdapter,
             editable: true,
             editmode: 'click',
@@ -328,11 +284,11 @@ var initQuoteTable = function () {
             autosavestate: false,
             rendertoolbar: function (toolbar) {
                 var me = this;
-                var container = $("<div style='margin: 5px;'></div>");
+                var container = $("<div class='btn-group' style='margin: 5px;'></div>");
                 toolbar.append(container);
-                container.append('<input id="addrowbutton" type="button" value="Add New Row" />');
-                container.append('<input style="margin-left: 5px;" id="deleterowbutton" type="button" value="Delete Selected Row" />');
-                container.append('<input style="margin-left: 5px;" id="updaterowbutton" type="button" value="Update Selected Row" />');
+                container.append('<button id="addrowbutton" class="btn btn-small" >添加</button>');
+                container.append('<button id="deleterowbutton" class="btn btn-small">删除</button>');
+                container.append('<button id="updaterowbutton" class="btn btn-small">保存</button>');
                 $("#addrowbutton").jqxButton();
                 $("#deleterowbutton").jqxButton();
                 $("#updaterowbutton").jqxButton();

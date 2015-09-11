@@ -22,7 +22,9 @@
                         res.json({success: false, errorHead: '失败', errorMsg: '报价单新建失败！'});
                     }
                     else {
-                        res.json({success: true, confirmHead: '成功', confirmMsg: '报价单新建成功！'});
+                        app.render('quote/addPrice', {'quoteId':'周芸丽1'}, function(err, html) {
+                            res.json({success: true, confirmHead: '成功', confirmMsg: '报价单新建成功！', htmlContent: html});
+                        });
                     }
                 });
             }
@@ -47,7 +49,7 @@ exports.addPrice = function (req, res) {
                         res.json({success: false, errorHead: '失败', errorMsg: '报价新建失败！'});
                     }
                     else {
-                        res.json({success: true, confirmHead: '成功', confirmMsg: '报价新建成功！'});
+                        res.json({success: true, confirmHead: '成功', confirmMsg: '报价新建成功1！'});
                     }
                 });
             }

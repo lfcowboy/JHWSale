@@ -3,7 +3,11 @@
  */
 var pool = require("./app-pooling");
 exports.login = function (req, res) {
-    res.render('index',{'userName':'周芸丽'});
+    res.render('index',{'userName':'周芸丽1'}, function(err, html) {
+        console.log(html);
+        //res.json({success: true, confirmHead: '成功', confirmMsg: '报价新建成功1！', htmlContent: html});
+        res.send(html);
+    });
 };
 exports.doLogin = function(req, res){
     var selectSQL = 'select * from user where account = "' + req.body.username + '"';

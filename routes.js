@@ -17,7 +17,7 @@ module.exports = function (app) {
     app.post('/addCompany', customer.addCompany);
     app.post('/getCompany', customer.getCompany);
     app.post("/addQuote", quote.addQuote);
-    app.post('/login', user.doLogin);
+    app.post('/login', user.login);
     app.get("/getNewQuoteNum",quote.getNewQuoteNum);
     app.get('/', index.index);
 };
