@@ -145,20 +145,22 @@ var initQuoteTable = function () {
         return row;
     }
 
+    var url = "/getPrice";
+
     var source =
     {
-        localdata: data,
+        datatype: "json",
         datafields: [
-            {name: 'severity', type: 'Image'},
-            {name: 'name', type: 'string'},
-            {name: 'alarmnumber', type: 'number'},
-            {name: 'alarmtext', type: 'string'},
-            {name: 'alarmtime', type: 'string'},
-            {name: 'acknowledgment', type: 'bool'},
-            {name: 'server', type: 'string'},
-            {name: 'cancel', type: 'Image'}
+            {name: 'acknowledgment', type: 'Image'},
+            {name: 'productCode', type: 'string'},
+            {name: 'min', type: 'number'},
+            {name: 'max', type: 'string'},
+            {name: 'price', type: 'string'},
+            {name: 'tax', type: 'bool'},
+            {name: 'privateRemark', type: 'string'},
+            {name: 'publicRemark', type: 'Image'}
         ],
-        datatype: "array",
+        url: url,
         addrow: function (rowid, rowdata, position, commit) {
             // synchronize with the server - send insert command
             // call commit with parameter true if the synchronization with the server is successful
@@ -189,7 +191,7 @@ var initQuoteTable = function () {
     var columns = [
         {
             text: '删除', columntype: 'custom', datafield: 'acknowledgment', filtertype: 'bool', width: '3%',
-            cellsrenderer: $.grid.nCheckboxCellsrenderer, createeditor: $.grid.nCreateCheckboxEditor,
+            cellsrenderer: $.grid.nCheckboxCellsrenderer(""), createeditor: $.grid.nCreateCheckboxEditor(""),
             initeditor: $.grid.nInitCheckboxEditor, geteditorvalue: $.grid.nGetCheckboxEditorValue
         },
         {
@@ -346,4 +348,5 @@ var initQuoteTable = function () {
     $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'cancel', 'editable', false);
     $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'alarmtime', 'editable', false);
     $('#table-alternating-cell-selection').jqxGrid({rowsheight: 28});
+    //$('#table-alternating-cell-selection').jqxGrid({ autoheight: true});
 };

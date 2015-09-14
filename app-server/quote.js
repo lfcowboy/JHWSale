@@ -57,6 +57,13 @@ exports.addPrice = function (req, res) {
     });
 };
 
+exports.getPrice = function (req, res) {
+    var querySQL = 'select * from price';
+    pool.query(querySQL, function (qerr, rows, fields) {
+        res.json(rows);
+    })
+};
+
 exports.getNewQuoteNum = function (req, res) {
     var currDate = (new Date()).Format('YYYYMMDD');
     var quoteNumPrefix = 'SDICBJ' + currDate;

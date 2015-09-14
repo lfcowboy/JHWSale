@@ -8,6 +8,7 @@ var customer = require('./app-server/customer');
 var product = require('./app-server/product');
 
 module.exports = function (app) {
+    app.get('/getPrice', quote.getPrice);
     app.post('/addPrice', quote.addPrice);
     app.get('/getProduct', product.getProduct);
     app.post('/addProduct',product.addProduct);
