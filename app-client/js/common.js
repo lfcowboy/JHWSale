@@ -61,3 +61,21 @@ var initList = function(selectlist, menu, data, callback){
         clearList(selectlist,menu);
     }
 };
+
+var showSuccess = function(msg){
+    $("#infoPanel").jqxNotification({
+        width: 250, position: "top-left", opacity: 0.9,
+        autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "success"
+    });
+    $('#infoPanel').html('<span class="icon icon-ok"></span>' + msg);
+    $("#infoPanel").jqxNotification("open");
+}
+
+var showError = function(msg){
+    $("#infoPanel").jqxNotification({
+        width: 250, position: "top-left", opacity: 0.9,
+        autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "error"
+    });
+    $('#infoPanel').html('<span class="icon icon-error"></span>' + msg);
+    $("#infoPanel").jqxNotification("open");
+}

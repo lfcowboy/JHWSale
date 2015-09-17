@@ -65,6 +65,27 @@ exports.insert = function (sql, callback) {
         }
     });
 }
+
+exports.update = function(sql, callback) {
+    Pool.prototype.pool.getConnection(function (err, conn) {
+        if (err) {
+            console.log("POOL ==> " + err);
+            callback(err, null);
+        }
+        else {
+            conn.query(sql, function (ierr, res) {
+                conn.release();
+                if(ierr){
+                    callback(ierr, null);
+                    console.log(ierr);
+                }else{
+                    console.log("UPDATE == >" + sql);
+                    callback(ierr, res);
+                }
+            });
+        }
+    });
+}
 //var conn = mysql.createConnection({
 //    host: 'localhost',
 //    user: 'root',

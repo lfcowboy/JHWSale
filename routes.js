@@ -10,6 +10,8 @@ var product = require('./app-server/product');
 module.exports = function (app) {
     app.get('/getPrice', quote.getPrice);
     app.post('/addPrice', quote.addPrice);
+    app.post('/deletePrice', quote.deletePrice);
+    app.post('/updatePrice', quote.updatePrice);
     app.get('/getProduct', product.getProduct);
     app.post('/addProduct',product.addProduct);
     app.get('/getDefaultRemarks', quote.getDefaultRemarks);

@@ -4,6 +4,7 @@
  var pool = require("./app-pooling");
  var customer = require("./customer");
  var product = require("./product");
+var constants = require("./constants");
 
  exports.addQuote = function (req, res) {
     customer.getCompanyByName(req, res, function (err, rows, fields) {
@@ -22,8 +23,10 @@
                         res.json({success: false, errorHead: '失败', errorMsg: '报价单新建失败！'});
                     }
                     else {
-                        app.render('quote/addPrice', {'quoteId':'周芸丽1'}, function(err, html) {
-                            res.json({success: true, confirmHead: '成功', confirmMsg: '报价单新建成功！', htmlContent: html});
+                        pool.query(constants.SQL_LAST_INSERT_ID,function(qerr, rows, fields){
+                            app.render('quote/addPrice', {'quoteId':rows[0].id}, function(err, html) {
+                                res.json({success: true, msg: '报价单新建成功！', htmlContent: html});
+                            });
                         });
                     }
                 });
@@ -33,29 +36,43 @@
 };
 
 exports.addPrice = function (req, res) {
-    product.getProductByCode(req, res, function (err, rows, fields) {
+    var addSQL = 'insert into price (productId,quoteId) values (' + req.body.productId + ',' + req.body.quoteId  + ')';
+    pool.insert(addSQL, function (err) {
         if (err) {
             res.json({success: false, errorHead: '失败', errorMsg: '报价新建失败！'});
         }
         else {
-            if (rows.length === 0) {
-                res.json({success: false, errorHead: '失败', errorMsg: '请选择正确的产品型号！'});
-            }
-            else {
-                var productId = rows[0].id;
-                var addSQL = 'insert into price (productId) values (' + productId + ')';
-                pool.insert(addSQL, function (err) {
-                    if (err) {
-                        res.json({success: false, errorHead: '失败', errorMsg: '报价新建失败！'});
-                    }
-                    else {
-                        res.json({success: true, confirmHead: '成功', confirmMsg: '报价新建成功1！'});
-                    }
-                });
-            }
+            var querySQL = 'select LAST_INSERT_ID() as id';
+            pool.query(querySQL,function(qerr, rows, fields){
+                res.json({success: true, id: rows[0].id, msg: '报价新建成功！'});
+            });
         }
     });
 };
+
+exports.updatePrice = function(req, res){
+    var updateSQL = "update price set productId = '" + req.body.productId + "' where id = '" + req.body.id + "'";
+    pool.update(updateSQL, function (err) {
+        if (err) {
+            res.json({success: false, errorHead: '失败', errorMsg: '报价编辑失败！'});
+        }
+        else {
+            res.json({success: true, id: req.body.id, msg: '报价编辑成功！'});
+        }
+    });
+};
+
+exports.deletePrice = function(req, res){
+    var deleteSQL = "delete from price where id = '" + req.body.id + "'";
+    pool.query(deleteSQL, function (err) {
+        if (err) {
+            res.json({success: false, errorHead: '失败', errorMsg: '报价删除失败！'});
+        }
+        else {
+            res.json({success: true, msg: '报价删除成功！'});
+        }
+    });
+}
 
 exports.getPrice = function (req, res) {
     var querySQL = 'select * from price';
