@@ -7,9 +7,14 @@ $("#addQuoteMenu").click(function(){
     $("#addQuotePanel").show();
 });
 
-$("#quoteManagementMenu").click(function(){
+$("#quoteListMenu").click(function(){
     $(".content-panel").hide();
-    $("#quoteManagementPanel").show();
+    showPriceListTable();
+});
+
+$("#priceListMenu").click(function(){
+    $(".content-panel").hide();
+    showPriceListTable();
 });
 
 $("#addCompanyMenu").click(function(){

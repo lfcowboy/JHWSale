@@ -1,12 +1,12 @@
 /**
  * Created by fenglv on 2015/8/9.
  */
- var pool = require("./app-pooling");
- var customer = require("./customer");
- var product = require("./product");
+var pool = require("./app-pooling");
+var customer = require("./customer");
+var product = require("./product");
 var constants = require("./constants");
 
- exports.addQuote = function (req, res) {
+exports.addQuote = function (req, res) {
     customer.getCompanyByName(req, res, function (err, rows, fields) {
         if (err) {
             res.json({success: false, errorHead: '失败', errorMsg: '报价单新建失败！'});
@@ -17,15 +17,15 @@ var constants = require("./constants");
             }
             else {
                 var companyId = rows[0].id;
-                var addSQL = 'insert into quote (customerId, quoteNum, companyId, currency) values ("1","' + req.body.quoteNum + '","' + companyId + '","' + req.body.currency + '")';
+                var addSQL = 'insert into quote (customerId, quoteNum, companyId, currency, remark) values ("1","' + req.body.quoteNum + '","' + companyId + '","' + req.body.currency + '","' + req.body.remark + '")';
                 pool.insert(addSQL, function (err) {
                     if (err) {
                         res.json({success: false, errorHead: '失败', errorMsg: '报价单新建失败！'});
                     }
                     else {
-                        pool.query(constants.SQL_LAST_INSERT_ID,function(qerr, rows, fields){
-                            app.render('quote/addPrice', {'quoteId':rows[0].id}, function(err, html) {
-                                res.json({success: true, msg: '报价单新建成功！', htmlContent: html});
+                        pool.query(constants.SQL_LAST_INSERT_ID, function (qerr, rows, fields) {
+                            app.render('quote/addPrice', {'quoteId': rows[0].id}, function (err, html) {
+                                res.json({success: true, msg: '报价单新建成功！', htmlContent: html, quoteId: rows[0].id});
                             });
                         });
                     }
@@ -36,22 +36,24 @@ var constants = require("./constants");
 };
 
 exports.addPrice = function (req, res) {
-    var addSQL = 'insert into price (productId,quoteId) values (' + req.body.productId + ',' + req.body.quoteId  + ')';
+    var addSQL = 'insert into price (productId,quoteId,min,max,price,tax,privateRemark,publicRemark) values (' + req.body.productId + ',' + req.body.quoteId + ',' + req.body.min + ',' + req.body.max + ',' + req.body.price + ',' + req.body.tax + ',"' + req.body.privateRemark + '","' + req.body.publicRemark + '")';
     pool.insert(addSQL, function (err) {
         if (err) {
             res.json({success: false, errorHead: '失败', errorMsg: '报价新建失败！'});
         }
         else {
             var querySQL = 'select LAST_INSERT_ID() as id';
-            pool.query(querySQL,function(qerr, rows, fields){
+            pool.query(querySQL, function (qerr, rows, fields) {
                 res.json({success: true, id: rows[0].id, msg: '报价新建成功！'});
             });
         }
     });
 };
 
-exports.updatePrice = function(req, res){
-    var updateSQL = "update price set productId = '" + req.body.productId + "' where id = '" + req.body.id + "'";
+exports.updatePrice = function (req, res) {
+    var updateSQL = "update price set productId = '" + req.body.productId + "', min = '" + req.body.min + "', " +
+        "max = '" + req.body.max + "', price = '" + req.body.price + "', tax = '" + req.body.tax + "', " +
+        "privateRemark = '" + req.body.privateRemark + "', publicRemark = '" + req.body.publicRemark + "' where id = '" + req.body.id + "'";
     pool.update(updateSQL, function (err) {
         if (err) {
             res.json({success: false, errorHead: '失败', errorMsg: '报价编辑失败！'});
@@ -62,7 +64,7 @@ exports.updatePrice = function(req, res){
     });
 };
 
-exports.deletePrice = function(req, res){
+exports.deletePrice = function (req, res) {
     var deleteSQL = "delete from price where id = '" + req.body.id + "'";
     pool.query(deleteSQL, function (err) {
         if (err) {
@@ -74,12 +76,22 @@ exports.deletePrice = function(req, res){
     });
 }
 
+var queryPriceSQL = 'select price.productId as productId, product.code as productCode, quote.quoteNum as quoteNum, ' +
+    'price.min as min, price.max as max, price.price as price, price.tax as tax, price.privateRemark as privateRemark, ' +
+    'price.publicRemark as publicRemark from price, quote, product where price.quoteId = quote.id and price.productId = product.id';
+
 exports.getPrice = function (req, res) {
-    var querySQL = 'select * from price';
-    pool.query(querySQL, function (qerr, rows, fields) {
+    pool.query(queryPriceSQL, function (qerr, rows, fields) {
         res.json(rows);
     })
 };
+
+exports.getPriceByQuoteId = function (req, res){
+    var querySQL = queryPriceSQL + ' and quote.id = ' + req.query.quoteId;
+    pool.query(querySQL, function (qerr, rows, fields) {
+        res.json(rows);
+    })
+}
 
 exports.getNewQuoteNum = function (req, res) {
     var currDate = (new Date()).Format('YYYYMMDD');
@@ -101,10 +113,16 @@ exports.getNewQuoteNum = function (req, res) {
     })
 }
 
-exports.getDefaultRemarks = function(req, res){
+exports.getDefaultRemarks = function (req, res) {
     var querySQL = 'select id, name from conf_remark';
-    pool.query(querySQL,function(qerr, rows, fields){
+    pool.query(querySQL, function (qerr, rows, fields) {
         res.json(rows);
+    });
+}
+
+exports.getPriceTablePanel = function (req, res) {
+    app.render('quote/priceList', function (err, html) {
+        res.json({success: true, htmlContent: html});
     });
 }
 

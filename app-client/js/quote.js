@@ -5,7 +5,9 @@ $("#addQuoteButton").click(function () {
     var params = {
         quoteNum: $("#addQuote_quoteNum").val(),
         companyName: $("#addQuote_companyName").val(),
-        currency: $('input[name="currency"]:checked').val()
+        currency: $('input[name="currency"]:checked').val(),
+        customerId: $("#addQuote_quoteNum").val(),
+        remark: $("#addQuote_remark").val()
     };
     $.ajax({
         data: params,
@@ -18,7 +20,7 @@ $("#addQuoteButton").click(function () {
             if (data.success) {
                 $("#addQuotePanel").hide();
                 $("#addPricePanel").html(data.htmlContent);
-                initPriceTable();
+                initPriceTable(data.quoteId);
                 $("#pricePanel").show();
                 showSuccess(data.msg);
             }
@@ -121,7 +123,7 @@ var productDataAdapter = new $.jqx.dataAdapter(productSource, {
     autoBind: true
 });
 
-var initPriceTable = function () {
+var initPriceTable = function (quoteId) {
         /*---------------- test data ----------------*/
         var data = new Array();
         data[0] = {};
@@ -137,7 +139,6 @@ var initPriceTable = function () {
             datatype: "json",
             datafields: [
                 {name: 'id', type: 'string'},
-                {name: 'acknowledgment', type: 'Image'},
                 {
                     name: 'product',
                     value: 'productId',
@@ -145,13 +146,13 @@ var initPriceTable = function () {
                 },
                 {name: 'productId', type: 'string'},
                 {name: 'min', type: 'number'},
-                {name: 'max', type: 'string'},
-                {name: 'price', type: 'string'},
-                {name: 'tax', type: 'bool'},
+                {name: 'max', type: 'number'},
+                {name: 'price', type: 'number'},
+                {name: 'tax', type: 'number'},
                 {name: 'privateRemark', type: 'string'},
                 {name: 'publicRemark', type: 'Image'}
             ],
-            url: '/getPrice',
+            url: '/getPriceByQuoteId?quoteId=' + quoteId,
             addrow: function (rowid, rowdata, position, commit) {
                 commit(true);
             },
@@ -235,30 +236,30 @@ var initPriceTable = function () {
             },
             {
                 text: '最小量',
-                columntype: 'textbox',
+                columntype: 'numberinput',
                 datafield: 'min',
                 filtertype: 'input',
                 width: '10%'
             },
             {
                 text: '最大量',
-                columntype: 'textbox',
+                columntype: 'numberinput',
                 datafield: 'max',
                 filtertype: 'input',
                 width: '10%'
             },
             {
                 text: '价格',
-                columntype: 'textbox',
+                columntype: 'numberinput',
                 datafield: 'price',
-                filtertype: 'input',
+                cellsformat: "f2",
                 width: '5%'
             },
             {
                 text: '税',
-                columntype: 'textbox',
+                columntype: 'numberinput',
                 datafield: 'tax',
-                filtertype: 'input',
+                cellsformat: "p",
                 width: '5%'
             },
             {
@@ -322,6 +323,199 @@ var initPriceTable = function () {
         $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'alarmtime', 'editable', false);
         $('#table-alternating-cell-selection').jqxGrid({rowsheight: 28});
     }
+
+var showPriceListTable = function(){
+    $.ajax({
+        url: '/getPriceTable',
+        type: 'post',
+        dataType: 'json',
+        cache: false,
+        timeout: 5000,
+        success: function (data) {
+            if (data.success) {
+                $("#priceListPage").html(data.htmlContent);
+                initPriceListTable();
+                $("#priceListPanel").show();
+            }
+            else {
+                showErrorMsg(data.errorHead, data.errorMsg);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            showErrorMsgDefault();
+        }
+    });
+}
+
+var initPriceListTable = function () {
+    /*---------------- test data ----------------*/
+    var data = new Array();
+    data[0] = {};
+
+    var generaterow = function (i) {
+        var row = {};
+        row["server"] = '1';
+        return row;
+    }
+
+    var source =
+    {
+        datatype: "json",
+        datafields: [
+            {name: 'id', type: 'string'},
+            {
+                name: 'product',
+                value: 'productId',
+                values: {source: productDataAdapter.records, value: 'id', name: 'code'}
+            },
+            {name: 'productId', type: 'string'},
+            {name: 'productCode', type: 'string'},
+            {name: 'min', type: 'number'},
+            {name: 'max', type: 'number'},
+            {name: 'price', type: 'number'},
+            {name: 'tax', type: 'number'},
+            {name: 'privateRemark', type: 'string'},
+            {name: 'publicRemark', type: 'string'},
+            {name: 'remark', type: 'string'},
+            {name: 'quoteId', type: 'string'},
+            {name: 'quoteNum', type: 'string'},
+            {name: 'company', type: 'string'},
+            {name: 'customer', type: 'string'},
+            {name: 'quoteDate', type: 'string'},
+            {name: 'quotor', type: 'string'}
+        ],
+        url: '/getPrice'
+    };
+
+    var dataAdapter = new $.jqx.dataAdapter(source);
+
+    var columns = [
+        {
+            text: '产品编号',
+            datafield: 'productCode',
+            width: '10%',
+            createeditor: function (row, value, editor) {
+                editor.jqxDropDownList({source: productDataAdapter, displayMember: 'code', valueMember: 'id'});
+            }
+        },
+        {
+            text: '最小量',
+            columntype: 'textbox',
+            datafield: 'min',
+            filtertype: 'input',
+            width: '5%'
+        },
+        {
+            text: '最大量',
+            columntype: 'textbox',
+            datafield: 'max',
+            filtertype: 'input',
+            width: '5%'
+        },
+        {
+            text: '价格',
+            columntype: 'textbox',
+            datafield: 'price',
+            filtertype: 'input',
+            width: '5%'
+        },
+        {
+            text: '税',
+            columntype: 'textbox',
+            datafield: 'tax',
+            filtertype: 'input',
+            width: '5%'
+        },
+        {
+            text: '内部备注',
+            columntype: 'textbox',
+            columngroup: 'price',
+            datafield: 'privateRemark',
+            filtertype: 'input',
+            width: '10%'
+        },
+        {
+            text: '外部备注',
+            columntype: 'textbox',
+            columngroup: 'price',
+            datafield: 'publicRemark',
+            filtertype: 'input'
+        },
+        {
+            text: '备注',
+            columntype: 'textbox',
+            columngroup: 'price',
+            datafield: 'remark',
+            filtertype: 'input'
+        },
+        {
+            text: '报价单号',
+            columntype: 'textbox',
+            columngroup: 'price',
+            datafield: 'quoteNum',
+            filtertype: 'input'
+        },
+        {
+            text: '公司名称',
+            columntype: 'textbox',
+            columngroup: 'price',
+            datafield: 'company',
+            filtertype: 'input'
+        },
+        {
+            text: '联系人',
+            columntype: 'textbox',
+            columngroup: 'price',
+            datafield: 'customer',
+            filtertype: 'input'
+        },
+        {
+            text: '报价时间',
+            columntype: 'textbox',
+            columngroup: 'price',
+            datafield: 'quoteDate',
+            filtertype: 'input'
+        },
+        {
+            text: '报价人',
+            columntype: 'textbox',
+            columngroup: 'price',
+            datafield: 'quotor',
+            filtertype: 'input'
+        }
+    ];
+
+    var columngroups =
+        [
+            { text: 'Product Details', align: 'center', name: 'ProductDetails' },
+            { text: 'Order Details', parentgroup: 'ProductDetails', align: 'center', name: 'OrderDetails' },
+            { text: '报价', align: 'center', name: 'price' }
+        ];
+
+    // initialize jqxGrid
+    $("#priceListTable").jqxGrid(
+        {
+            width: '100%',
+            height: '90%',
+            source: dataAdapter,
+            editable: false,
+            selectionmode: 'singlerow',
+            editmode: 'selectedrow',
+            enableBrowserSelection: false,
+            autoshowcolumnsmenubutton: true,
+            altRows: true,
+            columns: columns,
+            columngroups:columngroups,
+            scrollBarSize: 8,
+            autosavestate: false
+        });
+    $("#priceListTable").jqxGrid('setcolumnproperty', 'severity', 'editable', false);
+    $("#priceListTable").jqxGrid('setcolumnproperty', 'alarmnumber', 'editable', false);
+    $("#priceListTable").jqxGrid('setcolumnproperty', 'alarmtext', 'editable', false);
+    $("#priceListTable").jqxGrid('setcolumnproperty', 'cancel', 'editable', false);
+    $("#priceListTable").jqxGrid('setcolumnproperty', 'alarmtime', 'editable', false);
+    $('#priceListTable').jqxGrid({rowsheight: 28});
+}
 
 //var productList;
 //var productCodeList = new Array();

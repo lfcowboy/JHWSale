@@ -8,7 +8,11 @@ var customer = require('./app-server/customer');
 var product = require('./app-server/product');
 
 module.exports = function (app) {
+    app.post('/getPriceTable', quote.getPriceTablePanel);
+
+
     app.get('/getPrice', quote.getPrice);
+    app.get('/getPriceByQuoteId', quote.getPriceByQuoteId);
     app.post('/addPrice', quote.addPrice);
     app.post('/deletePrice', quote.deletePrice);
     app.post('/updatePrice', quote.updatePrice);
