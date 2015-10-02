@@ -76,7 +76,7 @@
                                 </p>
                             </li>
                             <li>
-                                <a href="#PlainDialog" data-backdrop="false" data-toggle="modal">登录</a>
+                                <a href="doLogout">退出</a>
                             </li>
                         </ul>
 
@@ -155,14 +155,8 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li class="n-dropdown-menu-item-has-child">
-                                            <a href="#"><span>新建</span><i class="icon icon-next"></i></a>
-                                            <ul class="n-dropdown-sub-menu">
                                                 <li id="addCompanyMenu"><a href="#"><span>客户公司</span></a></li>
-                                                <li><a href="#addCustomerDialog" data-backdrop="false"
-                                                       data-toggle="modal"><span>客户联系人</span></a></li>
-                                            </ul>
-                                        </li>
+                                                <li><a href="#addCustomerDialog" data-backdrop="false" data-toggle="modal"><span>客户联系人</span></a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -314,7 +308,6 @@
         <% include errorDlg.html %>
     </div>
 </div>
-<% include login.html %>
 <script src="wulfdist/js/jquery.min.js"></script>
 <script src="wulfdist/js/jqxcore.js"></script>
 <script src="wulfdist/js/jqxdata.js"></script>

@@ -17,7 +17,8 @@ exports.addQuote = function (req, res) {
             }
             else {
                 var companyId = rows[0].id;
-                var addSQL = 'insert into quote (customerId, quoteNum, companyId, currency, remark) values ("1","' + req.body.quoteNum + '","' + companyId + '","' + req.body.currency + '","' + req.body.remark + '")';
+                var addSQL = 'insert into quote (customerId, quoteNum, companyId, currency, remark, reporterId, reportDate) ' +
+                    'values ("' + req.body.customerId + '","' + req.body.quoteNum + '","' + companyId + '","' + req.body.currency + '","' + req.body.remark + '","' + req.session.user.id + '",curdate())';
                 pool.insert(addSQL, function (err) {
                     if (err) {
                         res.json({success: false, errorHead: '失败', errorMsg: '报价单新建失败！'});
@@ -76,12 +77,36 @@ exports.deletePrice = function (req, res) {
     });
 }
 
+exports.deleteQuote = function (req, res) {
+    var deleteSQL = "delete from quote where id = '" + req.body.id + "'";
+    pool.query(deleteSQL, function (err) {
+        if (err) {
+            res.json({success: false, errorHead: '失败', errorMsg: '报价单删除失败！'});
+        }
+        else {
+            res.json({success: true, msg: '报价单删除成功！'});
+        }
+    });
+}
+
 var queryPriceSQL = 'select price.productId as productId, product.code as productCode, quote.quoteNum as quoteNum, ' +
     'price.min as min, price.max as max, price.price as price, price.tax as tax, price.privateRemark as privateRemark, ' +
-    'price.publicRemark as publicRemark from price, quote, product where price.quoteId = quote.id and price.productId = product.id';
+    'price.publicRemark as publicRemark, quote.remark as remark, company.name as companyName, customer.name as customerName, ' +
+    'user.name as reporter, date_format(quote.reportDate,"%Y-%m-%d") as reportDate from price, quote, product, company, customer, user ' +
+    'where price.quoteId = quote.id and price.productId = product.id and quote.companyId = company.id and quote.customerId = customer.id and quote.reporterId = user.id';
 
 exports.getPrice = function (req, res) {
     pool.query(queryPriceSQL, function (qerr, rows, fields) {
+        res.json(rows);
+    })
+};
+
+var queryQuoteSQL = 'select quote.id as id, quote.quoteNum as quoteNum, quote.remark as remark, company.name as companyName, customer.name as customerName, ' +
+    'user.name as reporter, date_format(quote.reportDate,"%Y-%m-%d") as reportDate from quote, company, customer, user ' +
+    'where quote.companyId = company.id and quote.customerId = customer.id and quote.reporterId = user.id';
+
+exports.getQuote = function (req, res) {
+    pool.query(queryQuoteSQL, function (qerr, rows, fields) {
         res.json(rows);
     })
 };
@@ -120,7 +145,13 @@ exports.getDefaultRemarks = function (req, res) {
     });
 }
 
-exports.getPriceTablePanel = function (req, res) {
+exports.showQuoteListPanel = function (req, res) {
+    app.render('quote/quoteList', function (err, html) {
+        res.json({success: true, htmlContent: html});
+    });
+}
+
+exports.showPriceListPanel = function (req, res) {
     app.render('quote/priceList', function (err, html) {
         res.json({success: true, htmlContent: html});
     });

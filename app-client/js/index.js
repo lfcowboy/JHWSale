@@ -9,12 +9,12 @@ $("#addQuoteMenu").click(function(){
 
 $("#quoteListMenu").click(function(){
     $(".content-panel").hide();
-    showPriceListTable();
+    showQuoteListPanel();
 });
 
 $("#priceListMenu").click(function(){
     $(".content-panel").hide();
-    showPriceListTable();
+    showPriceListPanel();
 });
 
 $("#addCompanyMenu").click(function(){

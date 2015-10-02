@@ -8,9 +8,13 @@ var customer = require('./app-server/customer');
 var product = require('./app-server/product');
 
 module.exports = function (app) {
-    app.post('/getPriceTable', quote.getPriceTablePanel);
+    app.get('/*', index.loginFilter);
+    app.get('/', index.index);
+    app.post('/showQuoteListPanel', quote.showQuoteListPanel);
+    app.post('/showPriceListPanel', quote.showPriceListPanel);
 
-
+    app.get('/getQuote', quote.getQuote);
+    app.post('/deleteQuote', quote.deleteQuote);
     app.get('/getPrice', quote.getPrice);
     app.get('/getPriceByQuoteId', quote.getPriceByQuoteId);
     app.post('/addPrice', quote.addPrice);
@@ -24,7 +28,8 @@ module.exports = function (app) {
     app.post('/addCompany', customer.addCompany);
     app.post('/getCompany', customer.getCompany);
     app.post("/addQuote", quote.addQuote);
-    app.post('/login', user.login);
+    app.get('/loadLogin', user.loadLogin);
+    app.post('/doLogin', user.doLogin);
+    app.get('/doLogout', user.doLogout);
     app.get("/getNewQuoteNum",quote.getNewQuoteNum);
-    app.get('/', index.index);
 };

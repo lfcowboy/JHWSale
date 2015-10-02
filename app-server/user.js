@@ -2,12 +2,13 @@
  * Created by fenglv on 2015/7/28.
  */
 var pool = require("./app-pooling");
-exports.login = function (req, res) {
-    res.render('index',{'userName':'周芸丽1'}, function(err, html) {
-        console.log(html);
-        //res.json({success: true, confirmHead: '成功', confirmMsg: '报价新建成功1！', htmlContent: html});
-        res.send(html);
-    });
+exports.loadLogin = function (req, res) {
+    //res.render('index',{'userName':'周芸丽1'}, function(err, html) {
+    //    console.log(html);
+    //    //res.json({success: true, confirmHead: '成功', confirmMsg: '报价新建成功1！', htmlContent: html});
+    //    res.send(html);
+    //});
+    res.render('login',{'userName':'未登录'});
 };
 exports.doLogin = function(req, res){
     var selectSQL = 'select * from user where account = "' + req.body.username + '"';
@@ -21,4 +22,10 @@ exports.doLogin = function(req, res){
         //    res.render('index',{'userName':'未登录'});
         //}
     });
+};
+
+exports.doLogout = function(req, res){
+    console.log(req.session.user);
+    req.session.user = null;
+    res.redirect("/");
 };

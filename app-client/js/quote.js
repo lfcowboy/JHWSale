@@ -6,7 +6,7 @@ $("#addQuoteButton").click(function () {
         quoteNum: $("#addQuote_quoteNum").val(),
         companyName: $("#addQuote_companyName").val(),
         currency: $('input[name="currency"]:checked').val(),
-        customerId: $("#addQuote_quoteNum").val(),
+        customerId: $("#addQuote_customer").selectlist('selectedItem').value,
         remark: $("#addQuote_remark").val()
     };
     $.ajax({
@@ -324,9 +324,168 @@ var initPriceTable = function (quoteId) {
         $('#table-alternating-cell-selection').jqxGrid({rowsheight: 28});
     }
 
-var showPriceListTable = function(){
+var showQuoteListPanel = function(){
     $.ajax({
-        url: '/getPriceTable',
+        url: '/showQuoteListPanel',
+        type: 'post',
+        dataType: 'json',
+        cache: false,
+        timeout: 5000,
+        success: function (data) {
+            if (data.success) {
+                $("#quoteListPage").html(data.htmlContent);
+                initQuoteListTable();
+                $("#quoteListPanel").show();
+            }
+            else {
+                showErrorMsg(data.errorHead, data.errorMsg);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            showErrorMsgDefault();
+        }
+    });
+}
+
+var initQuoteListTable = function () {
+    /*---------------- test data ----------------*/
+    var data = new Array();
+    data[0] = {};
+
+    var generaterow = function (i) {
+        var row = {};
+        row["server"] = '1';
+        return row;
+    }
+
+    var source =
+    {
+        datatype: "json",
+        datafields: [
+            {name: 'id', type: 'string'},
+            {name: 'remark', type: 'string'},
+            {name: 'quoteId', type: 'string'},
+            {name: 'quoteNum', type: 'string'},
+            {name: 'companyName', type: 'string'},
+            {name: 'customerName', type: 'string'},
+            {name: 'reportDate', type: 'string'},
+            {name: 'reporter', type: 'string'}
+        ],
+        url: '/getQuote',
+        deleterow: function (rowid, commit) {
+            var data = $('#quoteListTable').jqxGrid('getrowdata', rowid);
+            $.ajax({
+                data: data,
+                url: '/deleteQuote',
+                type: 'post',
+                dataType: 'json',
+                cache: false,
+                timeout: 5000,
+                success: function (data) {
+                    if (data.success) {
+                        showSuccess(data.msg);
+                        commit(true);
+                    }
+                    else {
+                        showErrorMsg(data.errorHead, data.errorMsg);
+                        commit(false);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    showErrorMsgDefault();
+                    commit(false);
+                }
+            });
+        }
+    };
+
+    var dataAdapter = new $.jqx.dataAdapter(source);
+
+    var columns = [
+        {
+            text: '报价单号',
+            columntype: 'textbox',
+            datafield: 'quoteNum',
+            filtertype: 'input'
+        },
+        {
+            text: '公司名称',
+            columntype: 'textbox',
+            datafield: 'companyName',
+            filtertype: 'input'
+        },
+        {
+            text: '联系人',
+            columntype: 'textbox',
+            datafield: 'customerName',
+            filtertype: 'input'
+        },
+        {
+            text: '报价时间',
+            columntype: 'textbox',
+            columngroup: 'price',
+            datafield: 'reportDate',
+            filtertype: 'input'
+        },
+        {
+            text: '报价人',
+            columntype: 'textbox',
+            columngroup: 'price',
+            datafield: 'reporter',
+            filtertype: 'input'
+        },
+        {
+            text: '备注',
+            columntype: 'textbox',
+            datafield: 'remark',
+            filtertype: 'input'
+        }
+    ];
+
+    // initialize jqxGrid
+    $("#quoteListTable").jqxGrid(
+        {
+            width: '100%',
+            height: '90%',
+            source: dataAdapter,
+            editable: false,
+            selectionmode: 'singlerow',
+            editmode: 'selectedrow',
+            enableBrowserSelection: false,
+            autoshowcolumnsmenubutton: true,
+            altRows: true,
+            columns: columns,
+            scrollBarSize: 8,
+            autosavestate: false,
+            showtoolbar: true,
+            rendertoolbar: function (toolbar) {
+                var me = this;
+                var container = $("<div class='btn-group' style='margin: 5px;'></div>");
+                toolbar.append(container);
+                container.append('<button id="deleterowbutton" class="btn btn-small">删除</button>');
+                $("#deleterowbutton").jqxButton();
+                // delete row.
+                $("#deleterowbutton").on('click', function () {
+                    var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
+                    var rowscount = $("#quoteListTable").jqxGrid('getdatainformation').rowscount;
+                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                        var id = $("#quoteListTable").jqxGrid('getrowid', selectedrowindex);
+                        var commit = $("#quoteListTable").jqxGrid('deleterow', id);
+                    }
+                });
+            }
+        });
+    $("#quoteListTable").jqxGrid('setcolumnproperty', 'severity', 'editable', false);
+    $("#quoteListTable").jqxGrid('setcolumnproperty', 'alarmnumber', 'editable', false);
+    $("#quoteListTable").jqxGrid('setcolumnproperty', 'alarmtext', 'editable', false);
+    $("#quoteListTable").jqxGrid('setcolumnproperty', 'cancel', 'editable', false);
+    $("#quoteListTable").jqxGrid('setcolumnproperty', 'alarmtime', 'editable', false);
+    $('#quoteListTable').jqxGrid({rowsheight: 28});
+}
+
+var showPriceListPanel = function(){
+    $.ajax({
+        url: '/showPriceListPanel',
         type: 'post',
         dataType: 'json',
         cache: false,
@@ -379,10 +538,10 @@ var initPriceListTable = function () {
             {name: 'remark', type: 'string'},
             {name: 'quoteId', type: 'string'},
             {name: 'quoteNum', type: 'string'},
-            {name: 'company', type: 'string'},
-            {name: 'customer', type: 'string'},
-            {name: 'quoteDate', type: 'string'},
-            {name: 'quotor', type: 'string'}
+            {name: 'companyName', type: 'string'},
+            {name: 'customerName', type: 'string'},
+            {name: 'reportDate', type: 'string'},
+            {name: 'reporter', type: 'string'}
         ],
         url: '/getPrice'
     };
@@ -459,28 +618,28 @@ var initPriceListTable = function () {
             text: '公司名称',
             columntype: 'textbox',
             columngroup: 'price',
-            datafield: 'company',
+            datafield: 'companyName',
             filtertype: 'input'
         },
         {
             text: '联系人',
             columntype: 'textbox',
             columngroup: 'price',
-            datafield: 'customer',
+            datafield: 'customerName',
             filtertype: 'input'
         },
         {
             text: '报价时间',
             columntype: 'textbox',
             columngroup: 'price',
-            datafield: 'quoteDate',
+            datafield: 'reportDate',
             filtertype: 'input'
         },
         {
             text: '报价人',
             columntype: 'textbox',
             columngroup: 'price',
-            datafield: 'quotor',
+            datafield: 'reporter',
             filtertype: 'input'
         }
     ];

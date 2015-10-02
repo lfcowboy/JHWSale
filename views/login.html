@@ -1,71 +1,134 @@
-<div class="modal" id="PlainDialog" role="dialog" aria-labelledby="myModalDlgLabel-subhead" aria-hidden="true" tabindex='-1'>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="n-banner-dlg-fg-filler hidden-xs"></div>
-                <div class="n-banner-dlg-bg-filler hidden-xs"></div>
-                <!-- -->
-                <div class="n-banner-left n-banner-dlg-curve hidden-xs">
-                    <div class="fg-mask"></div>
-                    <div class="bg-mask"></div>
-                    <div class="fg-corner"></div>
-                    <div class="bg-corner"></div>
-                </div>
-                <i class="icon icon-close-rounded" data-dismiss="modal" aria-label="Close"></i>
-            </div>
-            <div class="modal-body">
-                <div class="floater"></div>
-                <div class="col-sm-6 n-login-form">
-                    <div class="n-login-logo">
-                        <img src="./wulfdist/img/logo.png" width="110" height="19" alt="Nokia logo"/>
-                    </div>
-                    <div class="panel panel-shadow panel-blue-cap">
-                        <div class="panel-heading panel-heading-transparent">
-                            <h1>BTS Site Manager</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="./wulfdist/css/wulf.css" rel="stylesheet"/>
+    <link href="demo.css" rel="stylesheet">
+</head>
+<body class="n-login-screen">
+<div class="n-login">
+    <div class="n-login-logo">
+        <img src="./wulfdist/img/logo.png" width="110" height="19" alt="Nokia logo"/>
+    </div>
+    <div class="panel panel-shadow panel-blue-cap">
+        <h1 class="n-login-title"><span class="n-product-name-blue">杭州晶华微电子有限公司</span></h1>
+
+        <div class="panel-body">
+            <h2 class="n-login-title-version-light">Version 0.0.1 beta</h2>
+
+            <div class="n-login-panel-fields">
+                <form class="form-horizontal" action="/doLogin" method="post">
+                    <!--
+                    above you need to replace "a.jsp" with valid action based on your system
+                    -->
+                    <div class="form-group n-login-textfields">
+                        <div class="col-sm-6 input-required">
+                            <input name="username" type="text" tabindex="110" class="form-control n-inputfield"
+                                   id="applicationLoginUsername"
+                                   placeholder="Username">
+                            <a class="form-control-feedback">
+                                <span class="icon icon-mandatory"></span></a>
                         </div>
-                        <div class="panel-body">
-                            <div class="panel-single-row panel-heading-transparent">
-                                <h2 class="n-login-title-version-light">Version 0.0.1 beta</h2>
-                            </div>
-                            <div class="panel-section n-login-panel-fields">
-                                <form class="form-horizontal" action="/login" method="post">
-                                    <div class="alert-error" id="error-msg">
-                                        <span class="icon icon-error"></span>Something has gone terribly wrong.
-                                    </div>
-                                    <div class="form-group has-feedback n-login-textfields">
-                                        <div class="col-sm-6 input-required">
-                                            <input id="username" name="username" type="text" tabindex="110"
-                                                   class="form-control n-inputfield"
-                                                   id="applicationLoginUsername"
-                                                   placeholder="Username">
-                                            <a class="form-control-feedback">
-                                                <span class="icon icon-mandatory"></span></a>
-                                        </div>
-                                        <div class="col-sm-6 input-required">
-                                            <input id="password" name="password" type="password" tabindex="120"
-                                                   class="form-control n-inputfield"
-                                                   id="applicationLoginPassword"
-                                                   placeholder="Password">
-                                            <a class="form-control-feedback form-control-feedback">
-                                                <span class="icon icon-mandatory"></span></a>
-                                        </div>
-                                    </div>
-                                    <div tabindex="130">
-                                        <button type="submit" class="btn btn-action btn-standard n-login-button" id="applicationLoginButton">Log In
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+                        <div class="col-sm-6 input-required">
+                            <input name="password" type="password" tabindex="120" class="form-control n-inputfield"
+                                   id="applicationLoginPassword"
+                                   placeholder="Password">
+                            <a class="form-control-feedback form-control-feedback">
+                                <span class="icon icon-mandatory"></span></a>
                         </div>
                     </div>
-                </div>
-                <div class="floater-bottom"></div>
-                <div class="small n-login-copyright">
-                    &copy; 2015 Nokia Solutions and Networks. All rights reserved.
-                </div>
-            </div>
-            <div class="modal-footer">
+                    <div class="n-login-action">
+                        <div class="n-login-forget-password">
+                            <a href="#">Forgot password</a><span class="icon icon-breadcrumb"></span>
+                        </div>
+                        <button type="submit" class="btn btn-action btn-standard n-login-button"
+                                id="applicationLoginButton"
+                                disabled="true">Log In
+                        </button>
+                    </div>
+                    <!-- you could use also this kind of input statement instead of the button statement above
+                    <input class="btn btn-action btn-standard n-login-button" type="submit" value="Log In">
+                    -->
+                </form>
             </div>
         </div>
     </div>
 </div>
+<div class="small n-login-copyright">
+    &copy; 2015 杭州晶华微电子有限公司版权所有.
+</div>
+<script src="./wulfdist/js/jquery.min.js"></script>
+<script src="./wulfdist/js/wulf.js"></script>
+</body>
+</html>
+
+<!--<div class="modal" id="PlainDialog" role="dialog" aria-labelledby="myModalDlgLabel-subhead" aria-hidden="true" tabindex='-1'>-->
+    <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<div class="n-banner-dlg-fg-filler hidden-xs"></div>-->
+                <!--<div class="n-banner-dlg-bg-filler hidden-xs"></div>-->
+                <!--&lt;!&ndash; &ndash;&gt;-->
+                <!--<div class="n-banner-left n-banner-dlg-curve hidden-xs">-->
+                    <!--<div class="fg-mask"></div>-->
+                    <!--<div class="bg-mask"></div>-->
+                    <!--<div class="fg-corner"></div>-->
+                    <!--<div class="bg-corner"></div>-->
+                <!--</div>-->
+                <!--<i class="icon icon-close-rounded" data-dismiss="modal" aria-label="Close"></i>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--<div class="floater"></div>-->
+                <!--<div class="col-sm-6 n-login-form">-->
+                    <!--<div class="n-login-logo">-->
+                        <!--<img src="./wulfdist/img/logo.png" width="110" height="19" alt="Nokia logo"/>-->
+                    <!--</div>-->
+                    <!--<div class="panel panel-shadow panel-blue-cap">-->
+                        <!--<div class="panel-heading panel-heading-transparent">-->
+                            <!--<h1>BTS Site Manager</h1>-->
+                        <!--</div>-->
+                        <!--<div class="panel-body">-->
+                            <!--<div class="panel-single-row panel-heading-transparent">-->
+                                <!--<h2 class="n-login-title-version-light">Version 0.0.1 beta</h2>-->
+                            <!--</div>-->
+                            <!--<div class="panel-section n-login-panel-fields">-->
+                                <!--<form class="form-horizontal" action="/doLogin" method="post">-->
+                                    <!--<div class="alert-error" id="error-msg">-->
+                                        <!--<span class="icon icon-error"></span>Something has gone terribly wrong.-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group has-feedback n-login-textfields">-->
+                                        <!--<div class="col-sm-6 input-required">-->
+                                            <!--<input id="username" name="username" type="text" tabindex="110"-->
+                                                   <!--class="form-control n-inputfield"-->
+                                                   <!--id="applicationLoginUsername"-->
+                                                   <!--placeholder="Username">-->
+                                            <!--<a class="form-control-feedback">-->
+                                                <!--<span class="icon icon-mandatory"></span></a>-->
+                                        <!--</div>-->
+                                        <!--<div class="col-sm-6 input-required">-->
+                                            <!--<input id="password" name="password" type="password" tabindex="120"-->
+                                                   <!--class="form-control n-inputfield"-->
+                                                   <!--id="applicationLoginPassword"-->
+                                                   <!--placeholder="Password">-->
+                                            <!--<a class="form-control-feedback form-control-feedback">-->
+                                                <!--<span class="icon icon-mandatory"></span></a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div tabindex="130">-->
+                                        <!--<button type="submit" class="btn btn-action btn-standard n-login-button" id="applicationLoginButton">Log In-->
+                                        <!--</button>-->
+                                    <!--</div>-->
+                                <!--</form>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="floater-bottom"></div>-->
+                <!--<div class="small n-login-copyright">-->
+                    <!--&copy; 2015 Nokia Solutions and Networks. All rights reserved.-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
