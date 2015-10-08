@@ -2,183 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdbba1d7-137a-4c60-a0f0-8d4d5b4aa1d5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/colorpicker/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/Thumbs.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/colorpicker/bar-hue.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/colorpicker/bar-saturation.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/icon-first.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/icon-first.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/icon-last.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/icon-last.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/colorpicker/map-hue.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/colorpicker/map-saturation-overlay.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/colorpicker/map-saturation.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-bg_diagonals-medium_20_d34d17_40x40.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-bg_diagonals-small_0_aaaaaa_40x40.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-bg_diagonals-thick_15_444444_40x40.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-bg_diagonals-thick_18_b81900_40x40.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-bg_diagonals-thick_20_666666_40x40.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-bg_diagonals-thick_95_ffdc2e_40x40.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-bg_flat_0_aaaaaa_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-bg_flat_0_aaaaaa_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-bg_flat_0_aaaaaa_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-bg_flat_0_eeeeee_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-bg_flat_10_000000_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-bg_flat_30_cccccc_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-bg_flat_30_cccccc_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-bg_flat_50_5c5c5c_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-bg_flat_50_5c5c5c_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-bg_flat_55_999999_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-bg_flat_55_c0402a_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-bg_flat_55_eeeeee_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-bg_flat_55_fbec88_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-bg_flat_75_aaaaaa_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-bg_flat_75_ffffff_40x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-bg_glass_100_f6f6f6_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-bg_glass_100_f8f8f8_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-bg_glass_100_fdf5ce_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-bg_glass_20_555555_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-bg_glass_35_dddddd_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-bg_glass_40_0078a3_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-bg_glass_40_ffc73d_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-bg_glass_45_0078ae_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-bg_glass_55_f8da4e_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-bg_glass_55_fbf5d0_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-bg_glass_55_fbf9ee_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-bg_glass_60_eeeeee_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-bg_glass_65_ffffff_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-bg_glass_65_ffffff_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-bg_glass_75_79c9ec_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-bg_glass_75_d0e5f5_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-bg_glass_75_dadada_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-bg_glass_75_e6e6e6_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-bg_glass_85_dfeffc_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-bg_glass_95_fef1ec_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-bg_glass_95_fef1ec_1x400.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-bg_gloss-wave_25_333333_500x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-bg_gloss-wave_35_f6a828_500x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-bg_gloss-wave_45_817865_500x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-bg_gloss-wave_45_e14f1c_500x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-bg_gloss-wave_50_6eac2c_500x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-bg_gloss-wave_60_fece2f_500x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-bg_gloss-wave_70_ffdd57_500x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-bg_gloss-wave_75_2191c0_500x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-bg_gloss-wave_90_fff9e5_500x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-bg_highlight-hard_30_285c00_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-bg_highlight-soft_100_eeeeee_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-bg_highlight-soft_100_feeebd_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-bg_highlight-soft_33_3a8104_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-bg_highlight-soft_50_4eb305_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-bg_highlight-soft_60_4ca20b_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-bg_highlight-soft_75_cccccc_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-bg_highlight-soft_75_ffe45c_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-bg_highlight-soft_80_eeeeee_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-bg_inset-hard_100_f5f8f9_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-bg_inset-hard_100_fcfdfd_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-bg_inset-hard_100_fcfdfd_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-bg_inset-hard_75_999999_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-bg_inset-soft_10_285c00_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-bg_inset-soft_25_000000_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-bg_inset-soft_30_f58400_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-bg_inset-soft_30_ffffff_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-bg_inset-soft_50_c9c9c9_1x100.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-icons_0078ae_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-icons_056b93_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-icons_217bc0_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-icons_222222_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-icons_222222_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-icons_222222_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-icons_228ef1_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-icons_2e83ff_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-icons_2e83ff_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-icons_3383bb_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-icons_3d3d3d_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-icons_454545_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-icons_454545_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-icons_469bdd_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-icons_4b8e0b_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-icons_4eb305_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-icons_6da8d5_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-icons_70b2e1_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-icons_72b42d_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-icons_888888_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-icons_999999_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-icons_a83300_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-icons_bd7b00_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-icons_cccccc_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-icons_cd0a0a_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-icons_cd0a0a_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ui-icons_cd0a0a_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-icons_d19405_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-icons_d8e7f3_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-icons_d8e7f3_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-icons_e0fdff_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-icons_eb990f_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-icons_ed9f26_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-icons_ef8c08_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-icons_f5e175_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-icons_f7a50d_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ui-icons_f9bd01_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-icons_fadc7a_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ui-icons_fbc856_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ui-icons_fcd113_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-icons_ffd27a_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ui-icons_ffe180_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ui-icons_ffffff_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ui-icons_ffffff_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ui-icons_ffffff_256x240.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/colorpicker/ReadMe.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/darkness/ReadMe.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/le-frog/ReadMe.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/lightness/ReadMe.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/overcast/ReadMe.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/redmond/ReadMe.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/smoothness/ReadMe.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/start/ReadMe.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/images/sunny/ReadMe.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/fonts/NokiaIcons.woff" afterPath="$PROJECT_DIR$/app-client/wulfdist/fonts/NokiaIcons.woff" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.html" afterPath="$PROJECT_DIR$/views/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/js/index.js" afterPath="$PROJECT_DIR$/app-client/js/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-server/index.js" afterPath="$PROJECT_DIR$/app-server/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxbuttons.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxbuttons.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxcheckbox.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxcheckbox.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxcore.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxcore.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxdata.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxdata.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxdatatable.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxdatatable.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxdatetimeinput.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxdatetimeinput.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxdropdownlist.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxdropdownlist.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.edit.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.edit.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.filter.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.filter.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.pager.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.pager.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.selection.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.selection.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.sort.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxgrid.sort.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxlistbox.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxlistbox.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxmenu.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxmenu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxpanel.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxpanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxscrollbar.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxscrollbar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jqxtreegrid.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxtreegrid.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/login.html" afterPath="$PROJECT_DIR$/views/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/npm.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/npm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/quote/priceList.html" afterPath="$PROJECT_DIR$/views/quote/priceList.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/js/quote.js" afterPath="$PROJECT_DIR$/app-client/js/quote.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-server/quote.js" afterPath="$PROJECT_DIR$/app-server/quote.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes.js" afterPath="$PROJECT_DIR$/routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-server/user.js" afterPath="$PROJECT_DIR$/app-server/user.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/quote/quoteList.html" afterPath="$PROJECT_DIR$/views/quote/quoteList.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/css/wulf.css" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/wulf.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/wulf.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/wulf.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/css/wulf.min.css" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/wulf.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/wulf.min.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/wulf.min.js" />
-      <change type="MOVED" beforePath="D:\JAVA\WebstormProjects\JHWSale\views\quote\AddQuote.html" afterPath="$PROJECT_DIR$/views/quote/addQuote.html" />
     </list>
     <ignored path="JHW.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -202,65 +32,22 @@
       <file leaf-file-name="quote.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app-client/js/quote.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.13748191">
-              <caret line="477" column="11" selection-start-line="477" selection-start-column="11" selection-end-line="477" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.45550528">
+              <caret line="497" column="29" selection-start-line="497" selection-start-column="29" selection-end-line="497" selection-end-column="29" />
               <folding>
                 <element signature="e#81#1079#0" expanded="false" />
                 <element signature="e#1118#1832#0" expanded="false" />
-                <element signature="e#1881#2019#0" expanded="false" />
                 <element signature="e#2067#2479#0" expanded="false" />
                 <element signature="e#2513#2618#0" expanded="false" />
-                <element signature="e#2661#3003#0" expanded="false" />
                 <element signature="e#3082#3224#0" expanded="false" />
                 <element signature="e#3248#3384#0" expanded="false" />
-                <element signature="e#3514#11568#0" expanded="false" />
-                <element signature="e#9434#10929#0" expanded="false" />
-                <element signature="e#11605#12191#0" expanded="false" />
-                <element signature="e#16880#17466#0" expanded="false" />
-                <element signature="e#17505#22636#0" expanded="false" />
-                <marker date="1443794304196" expanded="true" signature="9540:9552" placeholder="..." />
-                <marker date="1443794304196" expanded="true" signature="15524:15536" placeholder="..." />
+                <element signature="e#3514#10992#0" expanded="false" />
+                <element signature="e#11029#11615#0" expanded="false" />
+                <element signature="e#18152#18738#0" expanded="false" />
+                <element signature="e#18777#21959#0" expanded="false" />
+                <marker date="1444315950842" expanded="true" signature="9507:9519" placeholder="..." />
+                <marker date="1444315950842" expanded="true" signature="14985:14997" placeholder="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app-server/user.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="priceList.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/quote/priceList.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="295" column="6" selection-start-line="295" selection-start-column="6" selection-end-line="295" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="quoteList.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/quote/quoteList.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="35" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="35" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -269,27 +56,7 @@
         <entry file="file://$PROJECT_DIR$/routes.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="product.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app-server/product.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app-client/js/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+              <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -299,17 +66,37 @@
         <entry file="file://$PROJECT_DIR$/app-server/quote.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+              <caret line="122" column="73" selection-start-line="122" selection-start-column="66" selection-end-line="122" selection-end-column="73" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app-server/index.js">
+      <file leaf-file-name="grid.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app-client/wulfdist/js/grid.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+              <caret line="51" column="46" selection-start-line="51" selection-start-column="46" selection-end-line="51" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wulf.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app-client/wulfdist/css/wulf.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="17801" column="23" selection-start-line="17801" selection-start-column="23" selection-end-line="17801" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="quoteList.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/quote/quoteList.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="9" column="38" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -365,11 +152,9 @@
         <option value="$PROJECT_DIR$/app-client/js/customer.js" />
         <option value="$PROJECT_DIR$/views/product/addProduct.html" />
         <option value="$PROJECT_DIR$/app-client/js/product.js" />
-        <option value="$PROJECT_DIR$/app-client/wulfdist/css/wulf.css" />
         <option value="$PROJECT_DIR$/app-server/customer.js" />
         <option value="$PROJECT_DIR$/app-client/wulfdist/js/grid.js" />
         <option value="$PROJECT_DIR$/views/quote/tmp.html" />
-        <option value="$PROJECT_DIR$/app-client/wulfdist/js/wulf.js" />
         <option value="$PROJECT_DIR$/app-server/product.js" />
         <option value="$PROJECT_DIR$/app-server/app-pooling.js" />
         <option value="$PROJECT_DIR$/views/infoPanel.html" />
@@ -377,8 +162,6 @@
         <option value="$PROJECT_DIR$/app-server/constants.js" />
         <option value="$PROJECT_DIR$/views/quote/addPrice.html" />
         <option value="$PROJECT_DIR$/views/quote/quoteManagement.html" />
-        <option value="$PROJECT_DIR$/views/quote/quoteList.html" />
-        <option value="$PROJECT_DIR$/views/index.html" />
         <option value="$PROJECT_DIR$/app-server/index.js" />
         <option value="$PROJECT_DIR$/app-server/user.js" />
         <option value="$PROJECT_DIR$/views/login.html" />
@@ -386,7 +169,11 @@
         <option value="$PROJECT_DIR$/views/quote/priceList.html" />
         <option value="$PROJECT_DIR$/app-client/js/index.js" />
         <option value="$PROJECT_DIR$/routes.js" />
+        <option value="$PROJECT_DIR$/views/index.html" />
         <option value="$PROJECT_DIR$/app-server/quote.js" />
+        <option value="$PROJECT_DIR$/app-client/wulfdist/js/wulf.js" />
+        <option value="$PROJECT_DIR$/app-client/wulfdist/css/wulf.css" />
+        <option value="$PROJECT_DIR$/views/quote/quoteList.html" />
         <option value="$PROJECT_DIR$/app-client/js/quote.js" />
       </list>
     </option>
@@ -427,7 +214,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -538,10 +324,6 @@
               <option name="myItemId" value="app-client" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wulfdist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -556,9 +338,14 @@
               <option name="myItemId" value="app-client" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -699,27 +486,27 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="0" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2059569" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2059569" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15438108" sideWeight="0.50253487" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42002782" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24904943" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15438108" sideWeight="0.49746513" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32962447" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32267037" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -761,18 +548,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="10" />
+      <option name="time" value="13" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/express/lib/view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.7023121">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/ejs/ejs.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3024602">
@@ -879,13 +659,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app-client/wulfdist/css/wulf.css.map">
+      <provider editor-type-id="sourcemapFileViewerProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="0" column="690504" selection-start-line="0" selection-start-column="690504" selection-end-line="0" selection-end-column="690504" />
         </state>
-      </provider>
-      <provider editor-type-id="sourcemapFileViewerProvider">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app-server/app-pooling.js">
@@ -920,20 +700,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.214286">
           <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app-client/wulfdist/js/grid.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="65" column="6" selection-start-line="65" selection-start-column="6" selection-end-line="65" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/quote/addPrice.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25753012">
-          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -1035,14 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/quote/addQuote.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.5218704">
-          <caret line="88" column="85" selection-start-line="88" selection-start-column="85" selection-end-line="88" selection-end-column="85" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.82489145">
@@ -1054,7 +812,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1062,22 +819,70 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="30" column="2" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app-server/product.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app-client/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.3024602">
           <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-server/product.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5600579">
+          <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.9517345">
+          <caret line="330" column="36" selection-start-line="330" selection-start-column="36" selection-end-line="330" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/quote/addQuote.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.98491704">
+          <caret line="88" column="85" selection-start-line="88" selection-start-column="85" selection-end-line="88" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/quote/priceList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20060332">
+          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/quote/addPrice.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25791857">
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-client/wulfdist/js/wulf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18429004">
+          <caret line="2526" column="0" selection-start-line="2526" selection-start-column="0" selection-end-line="2526" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-client/wulfdist/js/grid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="51" column="46" selection-start-line="51" selection-start-column="46" selection-end-line="51" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-client/wulfdist/css/wulf.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17801" column="23" selection-start-line="17801" selection-start-column="23" selection-end-line="17801" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -1085,23 +890,7 @@
     <entry file="file://$PROJECT_DIR$/views/quote/quoteList.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="35" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="295" column="6" selection-start-line="295" selection-start-column="6" selection-end-line="295" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/quote/priceList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -1109,7 +898,7 @@
     <entry file="file://$PROJECT_DIR$/routes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
+          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
           <folding />
         </state>
       </provider>
@@ -1117,31 +906,28 @@
     <entry file="file://$PROJECT_DIR$/app-server/quote.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+          <caret line="122" column="73" selection-start-line="122" selection-start-column="66" selection-end-line="122" selection-end-column="73" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app-client/js/quote.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13748191">
-          <caret line="477" column="11" selection-start-line="477" selection-start-column="11" selection-end-line="477" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.45550528">
+          <caret line="497" column="29" selection-start-line="497" selection-start-column="29" selection-end-line="497" selection-end-column="29" />
           <folding>
             <element signature="e#81#1079#0" expanded="false" />
             <element signature="e#1118#1832#0" expanded="false" />
-            <element signature="e#1881#2019#0" expanded="false" />
             <element signature="e#2067#2479#0" expanded="false" />
             <element signature="e#2513#2618#0" expanded="false" />
-            <element signature="e#2661#3003#0" expanded="false" />
             <element signature="e#3082#3224#0" expanded="false" />
             <element signature="e#3248#3384#0" expanded="false" />
-            <element signature="e#3514#11568#0" expanded="false" />
-            <element signature="e#9434#10929#0" expanded="false" />
-            <element signature="e#11605#12191#0" expanded="false" />
-            <element signature="e#16880#17466#0" expanded="false" />
-            <element signature="e#17505#22636#0" expanded="false" />
-            <marker date="1443794304196" expanded="true" signature="9540:9552" placeholder="..." />
-            <marker date="1443794304196" expanded="true" signature="15524:15536" placeholder="..." />
+            <element signature="e#3514#10992#0" expanded="false" />
+            <element signature="e#11029#11615#0" expanded="false" />
+            <element signature="e#18152#18738#0" expanded="false" />
+            <element signature="e#18777#21959#0" expanded="false" />
+            <marker date="1444315950842" expanded="true" signature="9507:9519" placeholder="..." />
+            <marker date="1444315950842" expanded="true" signature="14985:14997" placeholder="..." />
           </folding>
         </state>
       </provider>

@@ -84,7 +84,15 @@ exports.deleteQuote = function (req, res) {
             res.json({success: false, errorHead: '失败', errorMsg: '报价单删除失败！'});
         }
         else {
-            res.json({success: true, msg: '报价单删除成功！'});
+            deleteSQL = "delete from price where quoteId = '" + req.body.id + "'";
+            pool.query(deleteSQL, function (err) {
+                if (err) {
+                    res.json({success: false, errorHead: '失败', errorMsg: '报价单删除失败！'});
+                }
+                else {
+                    res.json({success: true, msg: '报价单删除成功！'});
+                }
+            });
         }
     });
 }

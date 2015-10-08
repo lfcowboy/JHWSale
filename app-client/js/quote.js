@@ -130,7 +130,6 @@ var initPriceTable = function (quoteId) {
 
         var generaterow = function (i) {
             var row = {};
-            row["server"] = '1';
             return row;
         }
 
@@ -316,11 +315,6 @@ var initPriceTable = function (quoteId) {
                     });
                 }
             });
-        $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'severity', 'editable', false);
-        $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'alarmnumber', 'editable', false);
-        $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'alarmtext', 'editable', false);
-        $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'cancel', 'editable', false);
-        $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'alarmtime', 'editable', false);
         $('#table-alternating-cell-selection').jqxGrid({rowsheight: 28});
     }
 
@@ -406,33 +400,38 @@ var initQuoteListTable = function () {
             text: '报价单号',
             columntype: 'textbox',
             datafield: 'quoteNum',
-            filtertype: 'input'
+            filtertype: 'input',
+            width: '10%'
         },
         {
             text: '公司名称',
             columntype: 'textbox',
             datafield: 'companyName',
-            filtertype: 'input'
+            filtertype: 'input',
+            width: '10%'
         },
         {
             text: '联系人',
             columntype: 'textbox',
             datafield: 'customerName',
-            filtertype: 'input'
+            filtertype: 'input',
+            width: '10%'
         },
         {
             text: '报价时间',
             columntype: 'textbox',
             columngroup: 'price',
             datafield: 'reportDate',
-            filtertype: 'input'
+            filtertype: 'input',
+            width: '10%'
         },
         {
             text: '报价人',
             columntype: 'textbox',
             columngroup: 'price',
             datafield: 'reporter',
-            filtertype: 'input'
+            filtertype: 'input',
+            width: '10%'
         },
         {
             text: '备注',
@@ -446,17 +445,15 @@ var initQuoteListTable = function () {
     $("#quoteListTable").jqxGrid(
         {
             width: '100%',
-            height: '90%',
+            autoheight: true,
             source: dataAdapter,
             editable: false,
             selectionmode: 'singlerow',
-            editmode: 'selectedrow',
-            enableBrowserSelection: false,
-            autoshowcolumnsmenubutton: true,
+            filterable: true,
+            showfilterrow: true,
             altRows: true,
             columns: columns,
             scrollBarSize: 8,
-            autosavestate: false,
             showtoolbar: true,
             rendertoolbar: function (toolbar) {
                 var me = this;
@@ -475,12 +472,91 @@ var initQuoteListTable = function () {
                 });
             }
         });
-    $("#quoteListTable").jqxGrid('setcolumnproperty', 'severity', 'editable', false);
-    $("#quoteListTable").jqxGrid('setcolumnproperty', 'alarmnumber', 'editable', false);
-    $("#quoteListTable").jqxGrid('setcolumnproperty', 'alarmtext', 'editable', false);
-    $("#quoteListTable").jqxGrid('setcolumnproperty', 'cancel', 'editable', false);
-    $("#quoteListTable").jqxGrid('setcolumnproperty', 'alarmtime', 'editable', false);
     $('#quoteListTable').jqxGrid({rowsheight: 28});
+
+    initQuoteListSubTable();
+    $("#quoteListTable").on('rowselect', function (event) {
+        var subSource =
+        {
+            datatype: "json",
+            datafields: [
+                {name: 'id', type: 'string'},
+                {name: 'productCode', type: 'string'},
+                {name: 'min', type: 'string'},
+                {name: 'max', type: 'string'},
+                {name: 'price', type: 'string'},
+                {name: 'tax', type: 'string'},
+                {name: 'privateRemark', type: 'string'},
+                {name: 'publicRemark', type: 'string'}
+            ],
+            url: '/getPriceByQuoteId?quoteId=' + event.args.row.id
+        };
+
+        var subDataAdapter = new $.jqx.dataAdapter(subSource);
+
+        // update data source.
+        $("#quoteListSubTable").jqxGrid({ source: subDataAdapter });
+    });
+}
+
+var initQuoteListSubTable = function () {
+    var columns = [
+        {
+            text: '产品编号',
+            datafield: 'productCode',
+            filtertype: 'input',
+            width: '10%'
+        },
+        {
+            text: '最小量',
+            datafield: 'min',
+            filtertype: 'input',
+            width: '5%'
+        },
+        {
+            text: '最大量',
+            datafield: 'max',
+            filtertype: 'input',
+            width: '5%'
+        },
+        {
+            text: '价格',
+            datafield: 'price',
+            filtertype: 'input',
+            width: '5%'
+        },
+        {
+            text: '税',
+            datafield: 'tax',
+            filtertype: 'input',
+            width: '5%'
+        },
+        {
+            text: '内部备注',
+            datafield: 'privateRemark',
+            filtertype: 'input',
+            width: '10%'
+        },
+        {
+            text: '外部备注',
+            datafield: 'publicRemark',
+            filtertype: 'input'
+        }
+    ];
+
+    // initialize jqxGrid
+    $("#quoteListSubTable").jqxGrid(
+        {
+            width: '100%',
+            autoheight: true,
+            selectionmode: 'singlerow',
+            filterable: true,
+            showfilterrow: true,
+            altRows: true,
+            columns: columns,
+            scrollBarSize: 8
+        });
+    $('#quoteListSubTable').jqxGrid({rowsheight: 28});
 }
 
 var showPriceListPanel = function(){
@@ -507,16 +583,6 @@ var showPriceListPanel = function(){
 }
 
 var initPriceListTable = function () {
-    /*---------------- test data ----------------*/
-    var data = new Array();
-    data[0] = {};
-
-    var generaterow = function (i) {
-        var row = {};
-        row["server"] = '1';
-        return row;
-    }
-
     var source =
     {
         datatype: "json",
@@ -529,10 +595,10 @@ var initPriceListTable = function () {
             },
             {name: 'productId', type: 'string'},
             {name: 'productCode', type: 'string'},
-            {name: 'min', type: 'number'},
-            {name: 'max', type: 'number'},
-            {name: 'price', type: 'number'},
-            {name: 'tax', type: 'number'},
+            {name: 'min', type: 'string'},
+            {name: 'max', type: 'string'},
+            {name: 'price', type: 'string'},
+            {name: 'tax', type: 'string'},
             {name: 'privateRemark', type: 'string'},
             {name: 'publicRemark', type: 'string'},
             {name: 'remark', type: 'string'},
@@ -552,104 +618,75 @@ var initPriceListTable = function () {
         {
             text: '产品编号',
             datafield: 'productCode',
-            width: '10%',
-            createeditor: function (row, value, editor) {
-                editor.jqxDropDownList({source: productDataAdapter, displayMember: 'code', valueMember: 'id'});
-            }
+            filtertype: 'input',
+            width: '10%'
         },
         {
             text: '最小量',
-            columntype: 'textbox',
             datafield: 'min',
             filtertype: 'input',
             width: '5%'
         },
         {
             text: '最大量',
-            columntype: 'textbox',
             datafield: 'max',
             filtertype: 'input',
             width: '5%'
         },
         {
             text: '价格',
-            columntype: 'textbox',
             datafield: 'price',
             filtertype: 'input',
             width: '5%'
         },
         {
             text: '税',
-            columntype: 'textbox',
             datafield: 'tax',
             filtertype: 'input',
             width: '5%'
         },
         {
             text: '内部备注',
-            columntype: 'textbox',
-            columngroup: 'price',
             datafield: 'privateRemark',
             filtertype: 'input',
             width: '10%'
         },
         {
             text: '外部备注',
-            columntype: 'textbox',
-            columngroup: 'price',
             datafield: 'publicRemark',
             filtertype: 'input'
         },
         {
-            text: '备注',
-            columntype: 'textbox',
-            columngroup: 'price',
-            datafield: 'remark',
-            filtertype: 'input'
-        },
-        {
             text: '报价单号',
-            columntype: 'textbox',
-            columngroup: 'price',
             datafield: 'quoteNum',
             filtertype: 'input'
         },
         {
             text: '公司名称',
-            columntype: 'textbox',
-            columngroup: 'price',
             datafield: 'companyName',
             filtertype: 'input'
         },
         {
             text: '联系人',
-            columntype: 'textbox',
-            columngroup: 'price',
             datafield: 'customerName',
             filtertype: 'input'
         },
         {
             text: '报价时间',
-            columntype: 'textbox',
-            columngroup: 'price',
             datafield: 'reportDate',
             filtertype: 'input'
         },
         {
             text: '报价人',
-            columntype: 'textbox',
-            columngroup: 'price',
             datafield: 'reporter',
             filtertype: 'input'
-        }
+        },
+        {
+            text: '备注',
+            datafield: 'remark',
+            filtertype: 'input'
+        },
     ];
-
-    var columngroups =
-        [
-            { text: 'Product Details', align: 'center', name: 'ProductDetails' },
-            { text: 'Order Details', parentgroup: 'ProductDetails', align: 'center', name: 'OrderDetails' },
-            { text: '报价', align: 'center', name: 'price' }
-        ];
 
     // initialize jqxGrid
     $("#priceListTable").jqxGrid(
@@ -657,22 +694,13 @@ var initPriceListTable = function () {
             width: '100%',
             height: '90%',
             source: dataAdapter,
-            editable: false,
             selectionmode: 'singlerow',
-            editmode: 'selectedrow',
-            enableBrowserSelection: false,
-            autoshowcolumnsmenubutton: true,
+            filterable: true,
+            showfilterrow: true,
             altRows: true,
             columns: columns,
-            columngroups:columngroups,
-            scrollBarSize: 8,
-            autosavestate: false
+            scrollBarSize: 8
         });
-    $("#priceListTable").jqxGrid('setcolumnproperty', 'severity', 'editable', false);
-    $("#priceListTable").jqxGrid('setcolumnproperty', 'alarmnumber', 'editable', false);
-    $("#priceListTable").jqxGrid('setcolumnproperty', 'alarmtext', 'editable', false);
-    $("#priceListTable").jqxGrid('setcolumnproperty', 'cancel', 'editable', false);
-    $("#priceListTable").jqxGrid('setcolumnproperty', 'alarmtime', 'editable', false);
     $('#priceListTable').jqxGrid({rowsheight: 28});
 }
 
