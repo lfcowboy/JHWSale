@@ -1,0 +1,51 @@
+<div class="modal" id="addChipDialog" role="dialog" aria-hidden="true" tabindex='-1'>
+    <form class="form-horizontal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="n-dialog-header-fg-filler"></div>
+                    <div class="n-dialog-header-bg-filler"></div>
+                    <div class="n-dialog-header-curve">
+                        <div class="fg-mask"></div>
+                        <div class="bg-mask"></div>
+                        <div class="fg-corner"></div>
+                        <div class="bg-corner"></div>
+                    </div>
+                    <i class="icon icon-close-rounded" data-dismiss="modal" aria-label="Close"></i>
+                    <h1 class="modal-title" id="myModalLabel">芯片新建</h1>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="addChip_code" class="col-sm-2 control-label">芯片型号:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control n-inputfield" id="addChip_code" name="code"
+                                   value="" placeholder="<芯片型号>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addChip_packageDiv" class="col-sm-2 control-label">封装类型:</label>
+                        <div id="addChip_packageDiv" class="col-sm-8">
+                            <div class="btn-group selectlist disabled" data-resize="auto" data-initialize="selectlist"
+                                 id="addChip_package">
+                                <button class="btn btn-default dropdown-toggle disabled" data-toggle="dropdown"
+                                        type="button">
+                                    <span class="selected-label"></span>
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul id="addChip_packageList" class="dropdown-menu" role="menu">
+                                    <li data-value="1"><a href="#"><span>无数据</span></a></li>
+                                </ul>
+                                <input class="hidden hidden-field" name="mySelectlist1" readonly="readonly" aria-hidden="true" type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="addChipButton" type="button" class="btn btn btn-standard ">保存</button>
+                    <button class="btn btn btn-standard" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

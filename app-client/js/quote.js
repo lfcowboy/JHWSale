@@ -109,17 +109,17 @@ $('#addQuote_addRemark').on('changed.fu.selectlist', function (event, data) {
     //$("#remark").append(data.text + '\n');
 });
 
-var productSource =
+var chipSource =
 {
     datatype: "json",
     datafields: [
         {name: 'id'},
         {name: 'code'}
     ],
-    url: '/getProduct',
+    url: '/getChip',
     async: false
 };
-var productDataAdapter = new $.jqx.dataAdapter(productSource, {
+var chipDataAdapter = new $.jqx.dataAdapter(chipSource, {
     autoBind: true
 });
 
@@ -139,11 +139,11 @@ var initPriceTable = function (quoteId) {
             datafields: [
                 {name: 'id', type: 'string'},
                 {
-                    name: 'product',
-                    value: 'productId',
-                    values: {source: productDataAdapter.records, value: 'id', name: 'code'}
+                    name: 'chip',
+                    value: 'chipId',
+                    values: {source: chipDataAdapter.records, value: 'id', name: 'code'}
                 },
-                {name: 'productId', type: 'string'},
+                {name: 'chipId', type: 'string'},
                 {name: 'min', type: 'number'},
                 {name: 'max', type: 'number'},
                 {name: 'price', type: 'number'},
@@ -224,13 +224,13 @@ var initPriceTable = function (quoteId) {
 
         var columns = [
             {
-                text: '产品型号',
-                datafield: 'productId',
-                displayfield: 'product',
+                text: '芯片型号',
+                datafield: 'chipId',
+                displayfield: 'chip',
                 columntype: 'dropdownlist',
                 width: '10%',
                 createeditor: function (row, value, editor) {
-                    editor.jqxDropDownList({source: productDataAdapter, displayMember: 'code', valueMember: 'id'});
+                    editor.jqxDropDownList({source: chipDataAdapter, displayMember: 'code', valueMember: 'id'});
                 }
             },
             {
@@ -445,11 +445,12 @@ var initQuoteListTable = function () {
     $("#quoteListTable").jqxGrid(
         {
             width: '100%',
-            autoheight: true,
             source: dataAdapter,
             editable: false,
             selectionmode: 'singlerow',
             filterable: true,
+            pageable: true,
+            autoheight: true,
             showfilterrow: true,
             altRows: true,
             columns: columns,
@@ -481,7 +482,7 @@ var initQuoteListTable = function () {
             datatype: "json",
             datafields: [
                 {name: 'id', type: 'string'},
-                {name: 'productCode', type: 'string'},
+                {name: 'chipCode', type: 'string'},
                 {name: 'min', type: 'string'},
                 {name: 'max', type: 'string'},
                 {name: 'price', type: 'string'},
@@ -502,8 +503,8 @@ var initQuoteListTable = function () {
 var initQuoteListSubTable = function () {
     var columns = [
         {
-            text: '产品编号',
-            datafield: 'productCode',
+            text: '芯片型号',
+            datafield: 'chipCode',
             filtertype: 'input',
             width: '10%'
         },
@@ -589,12 +590,12 @@ var initPriceListTable = function () {
         datafields: [
             {name: 'id', type: 'string'},
             {
-                name: 'product',
-                value: 'productId',
-                values: {source: productDataAdapter.records, value: 'id', name: 'code'}
+                name: 'chip',
+                value: 'chipId',
+                values: {source: chipDataAdapter.records, value: 'id', name: 'code'}
             },
-            {name: 'productId', type: 'string'},
-            {name: 'productCode', type: 'string'},
+            {name: 'chipId', type: 'string'},
+            {name: 'chipCode', type: 'string'},
             {name: 'min', type: 'string'},
             {name: 'max', type: 'string'},
             {name: 'price', type: 'string'},
@@ -616,8 +617,8 @@ var initPriceListTable = function () {
 
     var columns = [
         {
-            text: '产品编号',
-            datafield: 'productCode',
+            text: '芯片型号',
+            datafield: 'chipCode',
             filtertype: 'input',
             width: '10%'
         },
@@ -692,9 +693,10 @@ var initPriceListTable = function () {
     $("#priceListTable").jqxGrid(
         {
             width: '100%',
-            height: '90%',
             source: dataAdapter,
             selectionmode: 'singlerow',
+            pageable: true,
+            autoheight: true,
             filterable: true,
             showfilterrow: true,
             altRows: true,
@@ -704,20 +706,20 @@ var initPriceListTable = function () {
     $('#priceListTable').jqxGrid({rowsheight: 28});
 }
 
-//var productList;
-//var productCodeList = new Array();
+//var chipList;
+//var chipCodeList = new Array();
 //
-//var initProductList = function () {
+//var initChipList = function () {
 //    $.ajax({
-//        url: '/getProduct',
+//        url: '/getChip',
 //        type: 'get',
 //        dataType: 'json',
 //        cache: false,
 //        timeout: 5000,
 //        success: function (data) {
-//            productList = data;
-//            for (var i in productList) {
-//                productCodeList[i] = productList[i].code;
+//            chipList = data;
+//            for (var i in chipList) {
+//                chipCodeList[i] = chipList[i].code;
 //            }
 //        },
 //        error: function (jqXHR, textStatus, errorThrown) {
@@ -726,7 +728,7 @@ var initPriceListTable = function () {
 //};
 //
 //var initQuoteTable = function () {
-//    initProductList();
+//    initChipList();
 //    /*---------------- image render/editor ----------------*/
 //    var imagerenderer = function (row, datafield, value) {
 //        return '<div class="text-center"><span class="icon ' + value + '"></span></div>';
@@ -749,7 +751,7 @@ var initPriceListTable = function () {
 //        datatype: "json",
 //        datafields: [
 //            {name: 'acknowledgment', type: 'Image'},
-//            {name: 'productCode', type: 'string'},
+//            {name: 'chipCode', type: 'string'},
 //            {name: 'min', type: 'number'},
 //            {name: 'max', type: 'string'},
 //            {name: 'price', type: 'string'},
@@ -780,7 +782,7 @@ var initPriceListTable = function () {
 //        //}
 //    };
 //    var beginedit = function(row, datafield){
-//        //if (row == 1 && datafield == 'product') {
+//        //if (row == 1 && datafield == 'chip') {
 //        //    return false;
 //        //};
 //    };
@@ -792,9 +794,9 @@ var initPriceListTable = function () {
 //            initeditor: $.grid.nInitCheckboxEditor, geteditorvalue: $.grid.nGetCheckboxEditorValue
 //        },
 //        {
-//            text: '产品型号', columntype: 'custom', datafield: 'productCode', displayfield:'productCode', filtertype: 'input', width: '10%',
+//            text: '芯片型号', columntype: 'custom', datafield: 'chipCode', displayfield:'chipCode', filtertype: 'input', width: '10%',
 //            cellsrenderer: $.grid.dropdownlistCellsrenderer,
-//            createeditor: $.grid.dropdownlistEditor(productCodeList),
+//            createeditor: $.grid.dropdownlistEditor(chipCodeList),
 //            initeditor: $.grid.dropdownlistInitEditor,
 //            geteditorvalue: $.grid.dropdownlistEditorValue,
 //            cellbeginedit: beginedit

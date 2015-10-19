@@ -3,7 +3,7 @@
  */
 var pool = require("./app-pooling");
 var customer = require("./customer");
-var product = require("./product");
+var chip = require("./chip");
 var constants = require("./constants");
 
 exports.addQuote = function (req, res) {
@@ -37,7 +37,7 @@ exports.addQuote = function (req, res) {
 };
 
 exports.addPrice = function (req, res) {
-    var addSQL = 'insert into price (productId,quoteId,min,max,price,tax,privateRemark,publicRemark) values (' + req.body.productId + ',' + req.body.quoteId + ',' + req.body.min + ',' + req.body.max + ',' + req.body.price + ',' + req.body.tax + ',"' + req.body.privateRemark + '","' + req.body.publicRemark + '")';
+    var addSQL = 'insert into price (chipId,quoteId,min,max,price,tax,privateRemark,publicRemark) values (' + req.body.chipId + ',' + req.body.quoteId + ',' + req.body.min + ',' + req.body.max + ',' + req.body.price + ',' + req.body.tax + ',"' + req.body.privateRemark + '","' + req.body.publicRemark + '")';
     pool.insert(addSQL, function (err) {
         if (err) {
             res.json({success: false, errorHead: '失败', errorMsg: '报价新建失败！'});
@@ -52,7 +52,7 @@ exports.addPrice = function (req, res) {
 };
 
 exports.updatePrice = function (req, res) {
-    var updateSQL = "update price set productId = '" + req.body.productId + "', min = '" + req.body.min + "', " +
+    var updateSQL = "update price set chipId = '" + req.body.chipId + "', min = '" + req.body.min + "', " +
         "max = '" + req.body.max + "', price = '" + req.body.price + "', tax = '" + req.body.tax + "', " +
         "privateRemark = '" + req.body.privateRemark + "', publicRemark = '" + req.body.publicRemark + "' where id = '" + req.body.id + "'";
     pool.update(updateSQL, function (err) {
@@ -97,11 +97,11 @@ exports.deleteQuote = function (req, res) {
     });
 }
 
-var queryPriceSQL = 'select price.productId as productId, product.code as productCode, quote.quoteNum as quoteNum, ' +
+var queryPriceSQL = 'select price.chipId as chipId, chip.code as chipCode, quote.quoteNum as quoteNum, ' +
     'price.min as min, price.max as max, price.price as price, price.tax as tax, price.privateRemark as privateRemark, ' +
     'price.publicRemark as publicRemark, quote.remark as remark, company.name as companyName, customer.name as customerName, ' +
-    'user.name as reporter, date_format(quote.reportDate,"%Y-%m-%d") as reportDate from price, quote, product, company, customer, user ' +
-    'where price.quoteId = quote.id and price.productId = product.id and quote.companyId = company.id and quote.customerId = customer.id and quote.reporterId = user.id';
+    'user.name as reporter, date_format(quote.reportDate,"%Y-%m-%d") as reportDate from price, quote, chip, company, customer, user ' +
+    'where price.quoteId = quote.id and price.chipId = chip.id and quote.companyId = company.id and quote.customerId = customer.id and quote.reporterId = user.id';
 
 exports.getPrice = function (req, res) {
     pool.query(queryPriceSQL, function (qerr, rows, fields) {

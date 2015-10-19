@@ -106,7 +106,7 @@
                                         <a href="#"><span>查询</span><i class="icon icon-next"></i></a>
                                         <ul class="n-dropdown-sub-menu">
                                             <li id="quoteListMenu"><a href="#"><span>报价单</span></a></li>
-                                            <li id="priceListMenu"><a href="#"><span>产品报价</span></a></li>
+                                            <li id="priceListMenu"><a href="#"><span>芯片报价</span></a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -155,19 +155,19 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                                <li id="addCompanyMenu"><a href="#"><span>客户公司</span></a></li>
-                                                <li><a href="#addCustomerDialog" data-backdrop="false" data-toggle="modal"><span>客户联系人</span></a></li>
+                                        <li id="addCompanyMenu"><a href="#"><span>客户公司</span></a></li>
+                                        <li><a href="#addCustomerDialog" data-backdrop="false" data-toggle="modal"><span>客户联系人</span></a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
                                     <a aria-expanded="false" data-toggle="dropdown" href="#" role="button">
                                         <i class="icon icon-manage"></i>
-                                        <span>产品</span>
+                                        <span>芯片</span>
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="#addProductDialog" data-backdrop="false" data-toggle="modal">
+                                            <a href="#addChipDialog" data-backdrop="false" data-toggle="modal">
                                                 <span>新建</span>
                                             </a>
                                         </li>
@@ -278,7 +278,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <% include product\addProduct.html %>
+        <% include chip\addChip.html %>
     </div>
 </div>
 <div class="row">
@@ -322,6 +322,7 @@
 <script src="wulfdist/js/jqxgrid.selection.js"></script>
 <script src="wulfdist/js/jqxpanel.js"></script>
 <script src="wulfdist/js/jqxgrid.filter.js"></script>
+<script src="wulfdist/js/jqxgrid.pager.js"></script>
 <script src="jqx/js/jqxnotification.js"></script>
 <script src="jqx/js/jqxnumberinput.js"></script>
 <script src="wulfdist/js/wulf.js"></script>
@@ -331,6 +332,6 @@
 <script src="js/msgDlg.js"></script>
 <script src="js/quote.js"></script>
 <script src="js/customer.js"></script>
-<script src="js/product.js"></script>
+<script src="js/chip.js"></script>
 </body>
 </html>

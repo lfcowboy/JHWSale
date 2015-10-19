@@ -5,7 +5,7 @@ var index = require('./app-server/index');
 var user = require('./app-server/user');
 var quote = require("./app-server/quote");
 var customer = require('./app-server/customer');
-var product = require('./app-server/product');
+var chip = require('./app-server/chip');
 
 module.exports = function (app) {
     app.get('/*', index.loginFilter);
@@ -20,8 +20,9 @@ module.exports = function (app) {
     app.post('/addPrice', quote.addPrice);
     app.post('/deletePrice', quote.deletePrice);
     app.post('/updatePrice', quote.updatePrice);
-    app.get('/getProduct', product.getProduct);
-    app.post('/addProduct',product.addProduct);
+    app.get('/getChip', chip.getChip);
+    app.post('/addChip',chip.addChip);
+    app.get('/getPackage',chip.getPackage);
     app.get('/getDefaultRemarks', quote.getDefaultRemarks);
     app.post('/addCustomer',customer.addCustomer);
     app.post('/getCustomer', customer.getCustomerByCompanyId);
