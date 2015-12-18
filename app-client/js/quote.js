@@ -34,6 +34,10 @@ $("#addQuoteButton").click(function () {
     });
 });
 
+$("#printQuoteDialog_printButton").click(function () {
+    $("#quotePrintarea").printArea();
+});
+
 var initAddQuote = function init() {
     $.ajax({
         url: '/getNewQuoteNum',
@@ -461,7 +465,9 @@ var initQuoteListTable = function () {
                 var container = $("<div class='btn-group' style='margin: 5px;'></div>");
                 toolbar.append(container);
                 container.append('<button id="deleterowbutton" class="btn btn-small">删除</button>');
+                container.append('<button id="printQuotebutton" class="btn btn-small" data-toggle="modal" data-target="#printQuoteDialog" data-backdrop="false">打印</button>');
                 $("#deleterowbutton").jqxButton();
+                $("#printQuotebutton").jqxButton();
                 // delete row.
                 $("#deleterowbutton").on('click', function () {
                     var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
@@ -471,6 +477,10 @@ var initQuoteListTable = function () {
                         var commit = $("#quoteListTable").jqxGrid('deleterow', id);
                     }
                 });
+                ////print quote.
+                //$("#printQuotebutton").on('click', function () {
+                //    window.open("http://www.jb51.net");
+                //});
             }
         });
     $('#quoteListTable').jqxGrid({rowsheight: 28});
