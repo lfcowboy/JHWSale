@@ -50,3 +50,10 @@ exports.getCustomerByCompanyId = function(req, res){
         res.json(rows);
     });
 };
+
+exports.getCustomerByCustomerId = function(customerId, callback){
+    var querySQL = 'select id, name, jobTitle, tel, email from customer where id = "' + customerId + '"';
+    pool.query(querySQL,function(qerr, rows, fields){
+        callback(rows[0]);
+    });
+}

@@ -27,22 +27,14 @@
                                     致：
                                 </td>
                                 <td>
-                                    公司名字
+                                    <%= companyName %>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                 </td>
                                 <td>
-                                    联系人（先生/女士）
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-
-                                </td>
-                                <td>
-                                    职称
+                                    <%= customerName %>（先生/女士）
                                 </td>
                             </tr>
                             <tr>
@@ -50,15 +42,21 @@
 
                                 </td>
                                 <td>
-                                    联系电话
+                                    <%= customerJobTitle %>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-
                                 </td>
                                 <td>
-                                    邮箱
+                                    <%= customerTel %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    <%= customerEmail %>
                                 </td>
                             </tr>
                             <tr>
@@ -72,6 +70,7 @@
                                 </td>
                             </tr>
                         </table>
+
                         <table width="1024px" border="1">
                             <tr>
                                 <td>
@@ -95,46 +94,32 @@
                                     增值税
                                 </td>
                             </tr>
+                            <%
+                                prices.forEach(function(price,index){
+                            %>
                             <tr>
                                 <td>
-                                    1
+                                    <%= index + 1 %>
                                 </td>
                                 <td>
-                                    SD8000S
+                                    <%= price.chipCode %>
                                 </td>
                                 <td>
                                     SDIC
                                 </td>
                                 <td>
-                                    0-10K
+                                    <%= price.min %> - <%= price.max %>
                                 </td>
                                 <td>
-                                    2.6
+                                    <%= price.price %>
                                 </td>
                                 <td>
-                                    17%
+                                    <%= price.tax %>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    1
-                                </td>
-                                <td>
-                                    SD8000S
-                                </td>
-                                <td>
-                                    SDIC
-                                </td>
-                                <td>
-                                    0-10K
-                                </td>
-                                <td>
-                                    2.6
-                                </td>
-                                <td>
-                                    17%
-                                </td>
-                            </tr>
+                            <%
+                                })
+                            %>
                         </table>
                         <table width="1024px" >
                             <tr>
@@ -180,7 +165,7 @@
                                     报价人：
                                 </td>
                                 <td>
-                                    XXX
+                                    <%= reporter %>
                                 </td>
                             </tr>
                             <tr>

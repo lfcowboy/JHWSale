@@ -109,7 +109,7 @@ exports.getPrice = function (req, res) {
     })
 };
 
-var queryQuoteSQL = 'select quote.id as id, quote.quoteNum as quoteNum, quote.remark as remark, company.name as companyName, customer.name as customerName, ' +
+var queryQuoteSQL = 'select quote.id as id, quote.quoteNum as quoteNum, quote.remark as remark, company.name as companyName, customer.id as customerId, customer.name as customerName, ' +
     'user.name as reporter, date_format(quote.reportDate,"%Y-%m-%d") as reportDate from quote, company, customer, user ' +
     'where quote.companyId = company.id and quote.customerId = customer.id and quote.reporterId = user.id';
 
@@ -162,6 +162,23 @@ exports.showQuoteListPanel = function (req, res) {
 exports.showPriceListPanel = function (req, res) {
     app.render('quote/priceList', function (err, html) {
         res.json({success: true, htmlContent: html});
+    });
+}
+
+exports.showPrintQuotePanel = function (req, res){
+    customer.getCustomerByCustomerId(req.body.customerId,function(customerInfo){
+        req.body.customerJobTitle = customerInfo.jobTitle;
+        req.body.customerTel = customerInfo.tel;
+        req.body.customerEmail = customerInfo.email;
+        var querySQL = 'select price.chipId as chipId, chip.code as chipCode, '+
+            'price.min as min, price.max as max, price.price as price, price.tax as tax ' +
+            'from price, chip where price.quoteId =' + req.body.id + ' and price.chipId = chip.id';
+        pool.query(querySQL, function (qerr, rows, fields) {
+            req.body.prices = rows;
+            app.render('quote/printQuote', req.body, function (err, html){
+                res.json({success: true, htmlContent: html});
+            });
+        })
     });
 }
 

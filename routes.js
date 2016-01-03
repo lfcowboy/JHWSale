@@ -12,7 +12,7 @@ module.exports = function (app) {
     app.get('/', index.index);
     app.post('/showQuoteListPanel', quote.showQuoteListPanel);
     app.post('/showPriceListPanel', quote.showPriceListPanel);
-
+    app.post('/showPrintQuotePanel', quote.showPrintQuotePanel);
     app.get('/getQuote', quote.getQuote);
     app.post('/deleteQuote', quote.deleteQuote);
     app.get('/getPrice', quote.getPrice);

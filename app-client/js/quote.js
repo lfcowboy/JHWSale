@@ -34,10 +34,6 @@ $("#addQuoteButton").click(function () {
     });
 });
 
-$("#printQuoteDialog_printButton").click(function () {
-    $("#quotePrintarea").printArea();
-});
-
 var initAddQuote = function init() {
     $.ajax({
         url: '/getNewQuoteNum',
@@ -366,6 +362,7 @@ var initQuoteListTable = function () {
             {name: 'quoteNum', type: 'string'},
             {name: 'companyName', type: 'string'},
             {name: 'customerName', type: 'string'},
+            {name: 'customerId', type: 'string'},
             {name: 'reportDate', type: 'string'},
             {name: 'reporter', type: 'string'}
         ],
@@ -465,7 +462,7 @@ var initQuoteListTable = function () {
                 var container = $("<div class='btn-group' style='margin: 5px;'></div>");
                 toolbar.append(container);
                 container.append('<button id="deleterowbutton" class="btn btn-small">删除</button>');
-                container.append('<button id="printQuotebutton" class="btn btn-small" data-toggle="modal" data-target="#printQuoteDialog" data-backdrop="false">打印</button>');
+                container.append('<button id="printQuotebutton" class="btn btn-small">打印</button>');
                 $("#deleterowbutton").jqxButton();
                 $("#printQuotebutton").jqxButton();
                 // delete row.
@@ -477,13 +474,41 @@ var initQuoteListTable = function () {
                         var commit = $("#quoteListTable").jqxGrid('deleterow', id);
                     }
                 });
-                ////print quote.
-                //$("#printQuotebutton").on('click', function () {
-                //    window.open("http://www.jb51.net");
-                //});
+                //print quote.
+                $("#printQuotebutton").on('click', function () {
+                    showPrintQuotePanel();
+                });
             }
         });
     $('#quoteListTable').jqxGrid({rowsheight: 28});
+
+    var showPrintQuotePanel = function(){
+        var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
+        var data = $('#quoteListTable').jqxGrid('getrowdata', selectedrowindex);
+        $.ajax({
+            data:data,
+            url: '/showPrintQuotePanel',
+            type: 'post',
+            dataType: 'json',
+            cache: false,
+            timeout: 5000,
+            success: function (data) {
+                if (data.success) {
+                    $("#printQuotePanel").html(data.htmlContent);
+                    $("#printQuoteDialog_printButton").click(function () {
+                        $("#quotePrintarea").printArea();
+                    });
+                    $("#printQuoteDialog").modal('show');
+                }
+                else {
+                    showErrorMsg(data.errorHead, data.errorMsg);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                showErrorMsgDefault();
+            }
+        });
+    }
 
     initQuoteListSubTable();
     $("#quoteListTable").on('rowselect', function (event) {
