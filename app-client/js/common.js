@@ -79,3 +79,25 @@ var showError = function(msg){
     $('#infoPanel').html('<span class="icon icon-error"></span>' + msg);
     $("#infoPanel").jqxNotification("open");
 }
+
+var showContentPanel = function( panelUrl,callback ){
+    $.ajax({
+        url: panelUrl,
+        type: 'post',
+        dataType: 'json',
+        cache: false,
+        timeout: 5000,
+        success: function (data) {
+            if (data.success) {
+                $("#contentPanel").html(data.htmlContent);
+                callback();
+            }
+            else {
+                showErrorMsg(data.errorHead, data.errorMsg);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            showErrorMsgDefault();
+        }
+    });
+}

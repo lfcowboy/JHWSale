@@ -21,3 +21,10 @@ $("#addCompanyMenu").click(function(){
     $(".content-panel").hide();
     $("#addCompanyPanel").show();
 });
+
+$("#setRoleMenu").click(function(){
+    $(".content-panel").hide();
+    showContentPanel('showPanel_SetRole', function(){
+        initUserListTable();
+    });
+});

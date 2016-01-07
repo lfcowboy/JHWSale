@@ -12,9 +12,10 @@
                         <div class="bg-corner"></div>
                     </div>
                     <i class="icon icon-close-rounded" data-dismiss="modal" aria-label="Close"></i>
+
                     <h1 class="modal-title" id="myModalLabel">订单打印</h1>
                 </div>
-                <div id="quotePrintarea" >
+                <div id="quotePrintarea">
                     <div class="form-group" align="center">
                         <table width="1024">
                             <tr>
@@ -66,7 +67,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" align="right">
-                                    日期：2013年09月16日
+                                    日期：<%= (new Date()).Format('YYYY/MM/DD') %>
                                 </td>
                             </tr>
                         </table>
@@ -95,7 +96,7 @@
                                 </td>
                             </tr>
                             <%
-                                prices.forEach(function(price,index){
+                            prices.forEach(function(price,index){
                             %>
                             <tr>
                                 <td>
@@ -118,30 +119,16 @@
                                 </td>
                             </tr>
                             <%
-                                })
+                            })
                             %>
                         </table>
-                        <table width="1024px" >
+                        <table width="1024px">
                             <tr>
                                 <td width="50px">
-                                    备注：
+                                    备注:
                                 </td>
                                 <td>
-                                    1.以上报价含17%增值税。
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                    2.SD8100和SD8000S都是采用LQFP48的封装片。
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                    3.订购量越大，单价可做相应调整。
+                                    <pre style="border: 0px"><%= remark %></pre>
                                 </td>
                             </tr>
                         </table>

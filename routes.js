@@ -6,6 +6,7 @@ var user = require('./app-server/user');
 var quote = require("./app-server/quote");
 var customer = require('./app-server/customer');
 var chip = require('./app-server/chip');
+var role = require('./app-server/sever_role');
 
 module.exports = function (app) {
     app.get('/*', index.loginFilter);
@@ -13,6 +14,14 @@ module.exports = function (app) {
     app.post('/showQuoteListPanel', quote.showQuoteListPanel);
     app.post('/showPriceListPanel', quote.showPriceListPanel);
     app.post('/showPrintQuotePanel', quote.showPrintQuotePanel);
+    app.post('/showPanel_SetRole',role.showSetRolePanel);
+
+    //user
+    app.get('/getSubUsers', user.getUser);
+
+    //role
+    app.get('/getRoles', role.getRoles);
+
     app.get('/getQuote', quote.getQuote);
     app.post('/deleteQuote', quote.deleteQuote);
     app.get('/getPrice', quote.getPrice);

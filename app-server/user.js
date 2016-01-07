@@ -29,3 +29,10 @@ exports.doLogout = function(req, res){
     req.session.user = null;
     res.redirect("/");
 };
+
+exports.getUser = function(req, res){
+    var selectSQL = 'select id, name, account from user';
+    pool.query(selectSQL,function(err,rows,fields){
+        res.json(rows);
+    });
+}
