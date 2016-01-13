@@ -8,31 +8,38 @@ exports.loadLogin = function (req, res) {
     //    //res.json({success: true, confirmHead: '成功', confirmMsg: '报价新建成功1！', htmlContent: html});
     //    res.send(html);
     //});
-    res.render('login',{'userName':'未登录'});
+    res.render('login', {'userName': '未登录'});
 };
-exports.doLogin = function(req, res){
+exports.doLogin = function (req, res) {
     var selectSQL = 'select * from user where account = "' + req.body.username + '"';
-    pool.query(selectSQL,function(err,rows,fields) {
+    pool.query(selectSQL, function (err, rows, fields) {
         console.log("username:" + req.body.username);
         //if(req.body.username===user.username && req.body.password===user.password){
-            req.session.user=rows[0];
-            res.redirect("/");
-            //res.render('index',{'userName':req.session.user.username});
+        req.session.user = rows[0];
+        res.redirect("/");
+        //res.render('index',{'userName':req.session.user.username});
         //} else {
         //    res.render('index',{'userName':'未登录'});
         //}
     });
 };
 
-exports.doLogout = function(req, res){
+exports.doLogout = function (req, res) {
     console.log(req.session.user);
     req.session.user = null;
     res.redirect("/");
 };
 
-exports.getUser = function(req, res){
+exports.getUsers = function (req, res) {
     var selectSQL = 'select id, name, account from user';
-    pool.query(selectSQL,function(err,rows,fields){
+    pool.query(selectSQL, function (err, rows, fields) {
         res.json(rows);
+    });
+}
+
+exports.addUser = function (req, res) {
+    var addSQL = 'insert into user (name,account,password) values("' + req.body.name + '","' + req.body.account + '","' + req.body.password + '")';
+    pool.insert(addSQL, function (err) {
+        res.json({success: true, confirmHead: '成功', confirmMsg: '帐号新建成功！'});
     });
 }

@@ -49,5 +49,6 @@
 });
 
  $('#addCustomer_companySearch').click(function(){
-    searchDropdown('addCustomer_companyList', 'addCustomer_companyName',function(){});
+     var params = {"companyName": $('#addCustomer_companyName').val()};
+    searchDropdown('addCustomer_companyList', 'addCustomer_companyName', params, '/getCompany', function(){});
 });

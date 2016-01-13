@@ -22,9 +22,32 @@ $("#addCompanyMenu").click(function(){
     $("#addCompanyPanel").show();
 });
 
+$("li[name='setGroupMenu']").click(function(){
+    $(".content-panel").hide();
+    var data = {"sectionId": $(this).data("sectionId")};
+    showContentPanel('showPanel_setGroup', data, function(){
+        initUserListTable(data);
+    });
+});
+
+$("li[name='setSectionUserMenu']").click(function(){
+    $(".content-panel").hide();
+    var data = {"sectionId": $(this).data("sectionId")};
+    showContentPanel('showPanel_setSectionUser', data, function(){
+        initUserListTable(data);
+    });
+});
+
+$("li[name='setSectionRoleUserMenu']").click(function(){
+    $(".content-panel").hide();
+    var data = {"sectionId": $(this).data("sectionId")};
+    showContentPanel('showPanel_setSectionRoleUser', data, function(){
+    });
+});
+
+
 $("#setRoleMenu").click(function(){
     $(".content-panel").hide();
-    showContentPanel('showPanel_SetRole', function(){
-        initUserListTable();
+    showContentPanel('showPanel_setRole', function(){
     });
 });

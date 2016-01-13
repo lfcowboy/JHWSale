@@ -1,15 +1,12 @@
 /**
  * Search
  */
-var searchDropdown = function (searchList, searchField, callback) {
+var searchDropdown = function (searchList, searchField, params, url, callback) {
     $('#' + searchList).empty();
-    var params = {
-        companyName: $('#' + searchField).val()
-    };
     $.ajax({
         data: params,
-        url: '/getCompany',
-        type: 'post',
+        url: url,
+        type: 'get',
         dataType: 'json',
         cache: false,
         timeout: 5000,
@@ -80,8 +77,9 @@ var showError = function(msg){
     $("#infoPanel").jqxNotification("open");
 }
 
-var showContentPanel = function( panelUrl,callback ){
+var showContentPanel = function( panelUrl,data,callback ){
     $.ajax({
+        data: data,
         url: panelUrl,
         type: 'post',
         dataType: 'json',

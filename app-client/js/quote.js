@@ -59,7 +59,8 @@ var initAddQuote = function init() {
 }
 
 $('#addQuote_companySearch').click(function () {
-    searchDropdown('addQuote_companyList', 'addQuote_companyName', function (companyId) {
+    var params = {"companyName": $('#addQuote_companyName').val()};
+    searchDropdown('addQuote_companyList', 'addQuote_companyName', params, '/getCompany', function (companyId) {
         initCustomerList(companyId);
     });
 });

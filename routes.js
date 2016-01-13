@@ -6,7 +6,8 @@ var user = require('./app-server/user');
 var quote = require("./app-server/quote");
 var customer = require('./app-server/customer');
 var chip = require('./app-server/chip');
-var role = require('./app-server/sever_role');
+var role = require('./app-server/server_role');
+var section = require('./app-server/server_group');
 
 module.exports = function (app) {
     app.get('/*', index.loginFilter);
@@ -14,13 +15,24 @@ module.exports = function (app) {
     app.post('/showQuoteListPanel', quote.showQuoteListPanel);
     app.post('/showPriceListPanel', quote.showPriceListPanel);
     app.post('/showPrintQuotePanel', quote.showPrintQuotePanel);
-    app.post('/showPanel_SetRole',role.showSetRolePanel);
+    app.post('/showPanel_setRole',role.showSetRolePanel);
+    app.post('/showPanel_setGroup', section.showSetGroupPanel);
+    app.post('/showPanel_setSectionUser', section.showSetSectionUserPanel);
+    app.post('/showPanel_setSectionRoleUser', section.showSetSectionRoleUserPanel);
 
-    //user
-    app.get('/getSubUsers', user.getUser);
+    //section
+    app.get('/getSectionUsers', section.getSectionUsers);
+    app.get('/getSectionRoleUsers', section.getSectionUsers);
+    app.get('/getSectionRoleUsersDiv', section.getSectionRoleUsersDiv);
+    app.post('/addSectionRoleUser', section.addSectionRoleUser);
+    app.post('/deleteSectionRoleUser', section.deleteSectionRoleUser);
+    app.post('/addSectionUser', section.addSectionUser);
 
     //role
     app.get('/getRoles', role.getRoles);
+
+    //user
+    app.get('/getUsers', user.getUsers);
 
     app.get('/getQuote', quote.getQuote);
     app.post('/deleteQuote', quote.deleteQuote);
@@ -36,10 +48,12 @@ module.exports = function (app) {
     app.post('/addCustomer',customer.addCustomer);
     app.post('/getCustomer', customer.getCustomerByCompanyId);
     app.post('/addCompany', customer.addCompany);
-    app.post('/getCompany', customer.getCompany);
+    app.get('/getCompany', customer.getCompany);
     app.post("/addQuote", quote.addQuote);
     app.get('/loadLogin', user.loadLogin);
     app.post('/doLogin', user.doLogin);
     app.get('/doLogout', user.doLogout);
-    app.get("/getNewQuoteNum",quote.getNewQuoteNum);
+    app.get("/getNewQuoteNum", quote.getNewQuoteNum);
+    app.post("/addUser", user.addUser);
+    app.post("/addGroup", section.addDepart);
 };

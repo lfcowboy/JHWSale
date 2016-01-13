@@ -11,7 +11,7 @@ exports.addCompany = function (req, res) {
 };
 
 exports.getCompany = function (req, res) {
-    var querySQL = 'select * from company where name like "%' + req.body.companyName + '%"';
+    var querySQL = 'select * from company where name like "%' + req.query.companyName + '%"';
     pool.query(querySQL,function(qerr, rows, fields){
         res.json(rows);
     });
