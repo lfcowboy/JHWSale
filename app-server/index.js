@@ -14,6 +14,8 @@ exports.loginFilter = function (req, res, next) {
 
 exports.index = function (req, res, next) {
     var result = {'userName':req.session.user.name};
+    var actions = {'setSectionUser': true, 'setSectionRoleUser': true};
+    result.actions = actions;
     section.getSections(function(sections){
         result.sections = sections;
         res.render('index',result);

@@ -138,8 +138,12 @@
                                     <li class="n-dropdown-menu-item-has-child">
                                         <a href="#"><span><%= section.name %></span><i class="icon icon-next"></i></a>
                                         <ul class="n-dropdown-sub-menu">
+                                            <% if(actions.setSectionUser){%>
                                             <li name="setSectionUserMenu" data-section-id="<%= section.id %>"><a href="#"><span>组员</span></a></li>
+                                            <% } %>
+                                            <% if(actions.setSectionRoleUser){%>
                                             <li name="setSectionRoleUserMenu" data-section-id="<%= section.id %>"><a href="#"><span>权限</span></a></li>
+                                            <% } %>
                                         </ul>
                                     </li>
                                     <%
@@ -221,8 +225,13 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
-                                                <span>添加权限</span>
+                                            <a href="#addRoleDialog" data-toggle="modal" data-backdrop="true">
+                                                <span>添加角色</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#listRoleDialog" data-toggle="modal" data-backdrop="true">
+                                                <span>角色列表</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -234,15 +243,9 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <%
-                                            sections.forEach(function(section,index){
-                                        %>
-                                        <li name="setGroupMenu" data-section-id="<%= section.id %>">
-                                            <a href="#"><span><%= section.name %></span></a>
-                                        </li>
-                                        <%
-                                            })
-                                        %>
+                                        <li id="setSectionUserMenu" ><a href="#"><span>组员</span></a></li>
+                                        <li id="setSectionRoleMenu"><a href="#"><span>角色</span></a></li>
+                                        <li id="setSectionRoleUserMenu"><a href="#"><span>权限</span></a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -310,6 +313,11 @@
 <div class="row">
     <div class="col-md-12">
         <% include group\addGroup.html %>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <% include role\addRole.html %>
     </div>
 </div>
 <div class="row">

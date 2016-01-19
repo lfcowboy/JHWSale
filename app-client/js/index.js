@@ -30,11 +30,19 @@ $("li[name='setGroupMenu']").click(function(){
     });
 });
 
-$("li[name='setSectionUserMenu']").click(function(){
+//$("li[name='setSectionUserMenu']").click(function(){
+//    $(".content-panel").hide();
+//    var data = {"sectionId": $(this).data("sectionId")};
+//    showContentPanel('showPanel_setSectionUser', data, function(){
+//        initUserListTable(data);
+//    });
+//});
+
+$("#setSectionUserMenu").click(function(){
     $(".content-panel").hide();
     var data = {"sectionId": $(this).data("sectionId")};
     showContentPanel('showPanel_setSectionUser', data, function(){
-        initUserListTable(data);
+        initSectionList(data);
     });
 });
 
@@ -42,9 +50,9 @@ $("li[name='setSectionRoleUserMenu']").click(function(){
     $(".content-panel").hide();
     var data = {"sectionId": $(this).data("sectionId")};
     showContentPanel('showPanel_setSectionRoleUser', data, function(){
+        initSectionRoleUserPanel();
     });
 });
-
 
 $("#setRoleMenu").click(function(){
     $(".content-panel").hide();

@@ -104,3 +104,23 @@ exports.addSectionUser = function(req, res){
         }
     });
 }
+
+exports.deleteSectionUser = function (req, res) {
+    var deleteRoleSQL = 'delete from section_user_role where sectionId = "' + req.body.sectionId + '" and userId = "' + req.body.userId + '"';
+    pool.query(deleteRoleSQL, function (err) {
+        if (err) {
+            res.json({success: false, errorHead: '失败', errorMsg: '组员移除失败！'});
+        }
+        else {
+            var deleteUserSQL = 'delete from section_user where sectionId = "' + req.body.sectionId + '" and userId = "' + req.body.userId + '"';
+            pool.query(deleteUserSQL, function (err) {
+                if (err) {
+                    res.json({success: false, errorHead: '失败', errorMsg: '组员移除失败！'});
+                }
+                else {
+                    res.json({success: true, msg: '组员移除成功！'});
+                }
+            });
+        }
+    });
+}

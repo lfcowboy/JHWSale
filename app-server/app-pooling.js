@@ -59,6 +59,7 @@ exports.insert = function (sql, callback) {
                     console.log(ierr);
                 }else{
                     console.log("INSERT == >" + sql);
+                    console.log(res);
                     callback(ierr, res);
                 }
             });

@@ -2,95 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdbba1d7-137a-4c60-a0f0-8d4d5b4aa1d5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/group/addGroup.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/group/addMember.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/js/controller_group.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jqxcombobox.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/group/sectionRoleUserDiv.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app-server/server_group.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/group/setGroup.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/group/setSectionRoleUser.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/group/setSectionUser.html" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\css\wulf-theme.css.map" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\css\wulf.css.map" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaIcons.eot" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaIcons.svg" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaIcons.ttf" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaPureHWeb_Bd.eot" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaPureHWeb_Bd.svg" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaPureHWeb_Lt.eot" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaPureHWeb_Lt.svg" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaPureHWeb_Rg.eot" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaPureHWeb_Rg.svg" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaPureHeadline_Bold.ttf" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaPureHeadline_Light.ttf" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\NokiaPureHeadline_Regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\fuelux.eot" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\fuelux.svg" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\fuelux.ttf" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\glyphicons-halflings-regular.eot" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\glyphicons-halflings-regular.svg" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\glyphicons-halflings-regular.ttf" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\museosans_500-webfont.eot" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\museosans_500-webfont.svg" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\museosans_500-webfont.ttf" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\fonts\museosans_500-webfont.woff" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\img\wulfusage.png" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\banner-responsiveness.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\calendar.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\charts.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\combobox.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\demos.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\dl-wizard.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\drilldown-without-arrow.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\drilldown.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\dropdowns.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\flyoutmenu.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\fontloader.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\gird.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\globalize.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\grid.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\highcharts.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\highcharts.src.latest.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\inputfield.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\jquery.bootstrap.wizard.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\jquery.mCustomScrollbar.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\link-disable.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\list-group.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\login.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\navbar.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\print.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\scroll.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\slider.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\tables.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\tree-checkbox.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\wulf-fontloader.js" afterPath="" />
-      <change type="DELETED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-client\wulfdist\js\wulf-fontloader.min.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/fonts/NokiaIcons.woff" afterPath="$PROJECT_DIR$/app-client/wulfdist/fonts/NokiaIcons.woff" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/js/common.js" afterPath="$PROJECT_DIR$/app-client/js/common.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/role/addRole.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-server/app-pooling.js" afterPath="$PROJECT_DIR$/app-server/app-pooling.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/js/controller_group.js" afterPath="$PROJECT_DIR$/app-client/js/controller_group.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/js/controller_role.js" afterPath="$PROJECT_DIR$/app-client/js/controller_role.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/js/customer.js" afterPath="$PROJECT_DIR$/app-client/js/customer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-server/customer.js" afterPath="$PROJECT_DIR$/app-server/customer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/css/fuelux.css" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/fuelux.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/fuelux.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/fuelux.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.html" afterPath="$PROJECT_DIR$/views/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/js/index.js" afterPath="$PROJECT_DIR$/app-client/js/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-server/index.js" afterPath="$PROJECT_DIR$/app-server/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jquery.bootstrap.wizard.min.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jquery.bootstrap.wizard.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/jquery.mask.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/jquery.mask.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/npm.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/npm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/js/quote.js" afterPath="$PROJECT_DIR$/app-client/js/quote.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes.js" afterPath="$PROJECT_DIR$/routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/role/setRole.html" afterPath="$PROJECT_DIR$/views/role/setRole.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-server/server_group.js" afterPath="$PROJECT_DIR$/app-server/server_group.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-server/server_role.js" afterPath="$PROJECT_DIR$/app-server/server_role.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/group/setSectionUser.html" afterPath="$PROJECT_DIR$/views/group/setSectionUser.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-server/user.js" afterPath="$PROJECT_DIR$/app-server/user.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/css/wulf-theme.css" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/wulf-theme.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/css/wulf-theme.min.css" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/wulf-theme.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/css/wulf.css" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/wulf.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/wulf.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/wulf.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/css/wulf.min.css" afterPath="$PROJECT_DIR$/app-client/wulfdist/css/wulf.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app-client/wulfdist/js/wulf.min.js" afterPath="$PROJECT_DIR$/app-client/wulfdist/js/wulf.min.js" />
-      <change type="MOVED" beforePath="D:\JAVA\WebstormProjects\JHWSale\app-server\sever_role.js" afterPath="$PROJECT_DIR$/app-server/server_role.js" />
     </list>
     <ignored path="JHW.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -111,13 +35,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="controller_group.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app-client/js/controller_group.js">
+      <file leaf-file-name="server_role.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app-server/server_role.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+              <caret line="7" column="53" selection-start-line="7" selection-start-column="53" selection-end-line="7" selection-end-column="53" />
               <folding>
-                <element signature="e#5921#6896#0" expanded="false" />
+                <element signature="e#0#41#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -127,41 +51,29 @@
         <entry file="file://$PROJECT_DIR$/routes.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="81" selection-start-line="20" selection-start-column="81" selection-end-line="20" selection-end-column="81" />
+              <caret line="43" column="59" selection-start-line="43" selection-start-column="59" selection-end-line="43" selection-end-column="59" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setSectionUser.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/group/setSectionUser.html">
+      <file leaf-file-name="user.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app-server/user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.107142">
-              <caret line="29" column="36" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="46" column="28" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server_group.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app-server/server_group.js">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8636364">
-              <caret line="29" column="44" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.42986426">
+              <caret line="33" column="67" selection-start-line="33" selection-start-column="67" selection-end-line="33" selection-end-column="67" />
               <folding>
-                <element signature="e#0#41#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="setSectionRoleUser.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/group/setSectionRoleUser.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.785714">
-              <caret line="10" column="58" selection-start-line="10" selection-start-column="58" selection-end-line="10" selection-end-column="58" />
-              <folding>
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#li#1;n#ul#0;n#div#1;n#div#1;n#div#4;n#nav#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -171,7 +83,7 @@
         <entry file="file://$PROJECT_DIR$/app-client/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
+              <caret line="46" column="3" selection-start-line="46" selection-start-column="3" selection-end-line="46" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -181,21 +93,52 @@
         <entry file="file://$PROJECT_DIR$/app-client/js/common.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="99" column="7" selection-start-line="99" selection-start-column="7" selection-end-line="99" selection-end-column="7" />
+              <caret line="79" column="46" selection-start-line="79" selection-start-column="42" selection-end-line="79" selection-end-column="46" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/index.html">
+      <file leaf-file-name="controller_group.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app-client/js/controller_group.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.642858">
-              <caret line="140" column="108" selection-start-line="140" selection-start-column="108" selection-end-line="140" selection-end-column="108" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
               <folding>
-                <element signature="n#li#3;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#4;n#nav#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#a#0;n#li#4;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#4;n#nav#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <marker date="1452694667232" expanded="true" signature="2348:2360" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="controller_role.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app-client/js/controller_role.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="47" column="27" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#41#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addQuote.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/quote/addQuote.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="46" column="57" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="57" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="setSectionUser.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/group/setSectionUser.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -217,18 +160,16 @@
         <option value="Feng Lv &lt;feng-jerod.lv@nokia.com&gt;" />
       </list>
     </option>
+    <option name="UPDATE_TYPE" value="REBASE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app-client/js/msgDlg.js" />
-        <option value="$PROJECT_DIR$/app-client/js/addQuote.js" />
         <option value="$PROJECT_DIR$/views/customer/addCompany.html" />
         <option value="$PROJECT_DIR$/views/customer/addCustomer.html" />
         <option value="$PROJECT_DIR$/app-client/wulfdist/js/grid.js" />
         <option value="$PROJECT_DIR$/views/quote/tmp.html" />
-        <option value="$PROJECT_DIR$/app-server/app-pooling.js" />
         <option value="$PROJECT_DIR$/views/infoPanel.html" />
         <option value="$PROJECT_DIR$/app-server/constants.js" />
         <option value="$PROJECT_DIR$/views/quote/addPrice.html" />
@@ -252,11 +193,9 @@
         <option value="$PROJECT_DIR$/app-client/js/controler_role.js" />
         <option value="$PROJECT_DIR$/views/quote/priceList.html" />
         <option value="$PROJECT_DIR$/app-server/sever_role.js" />
-        <option value="$PROJECT_DIR$/app-client/js/controller_role.js" />
         <option value="$PROJECT_DIR$/views/group/addMember.html" />
         <option value="$PROJECT_DIR$/views/group/add.html" />
         <option value="$PROJECT_DIR$/views/group/addGroup.html" />
-        <option value="$PROJECT_DIR$/app-server/index.js" />
         <option value="$PROJECT_DIR$/views/role/setRole.html" />
         <option value="$PROJECT_DIR$/views/group/sectionRoleUser.html" />
         <option value="$PROJECT_DIR$/app-client/js/customer.js" />
@@ -264,15 +203,20 @@
         <option value="$PROJECT_DIR$/app-client/js/common.js" />
         <option value="$PROJECT_DIR$/app-server/customer.js" />
         <option value="$PROJECT_DIR$/views/group/sectionRoleUserDiv.html" />
-        <option value="$PROJECT_DIR$/app-server/user.js" />
-        <option value="$PROJECT_DIR$/app-client/js/controller_group.js" />
         <option value="$PROJECT_DIR$/views/group/setGroup.html" />
         <option value="$PROJECT_DIR$/views/group/setSectionRoleUser.html" />
+        <option value="$PROJECT_DIR$/app-client/js/controller_group.js" />
+        <option value="$PROJECT_DIR$/app-server/server_group.js" />
+        <option value="$PROJECT_DIR$/views/role/addRole.html" />
+        <option value="$PROJECT_DIR$/app-server/app-pooling.js" />
+        <option value="$PROJECT_DIR$/app-server/server_role.js" />
+        <option value="$PROJECT_DIR$/app-server/index.js" />
         <option value="$PROJECT_DIR$/views/group/setSectionUser.html" />
+        <option value="$PROJECT_DIR$/app-client/js/controller_role.js" />
+        <option value="$PROJECT_DIR$/app-server/user.js" />
+        <option value="$PROJECT_DIR$/routes.js" />
         <option value="$PROJECT_DIR$/views/index.html" />
         <option value="$PROJECT_DIR$/app-client/js/index.js" />
-        <option value="$PROJECT_DIR$/routes.js" />
-        <option value="$PROJECT_DIR$/app-server/server_group.js" />
       </list>
     </option>
   </component>
@@ -312,8 +256,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -346,158 +288,10 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="role" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="quote" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="group" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="customer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="node_modules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app-server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app-client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wulfdist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app-client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="JHWSale" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app-client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -645,20 +439,20 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15438108" sideWeight="0.50253487" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31944445" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41724616" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24904943" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15159944" sideWeight="0.49746513" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32962447" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31849793" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -680,54 +474,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="23" />
+      <option name="time" value="26" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/views/group/addGroup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="99" selection-start-line="13" selection-start-column="99" selection-end-line="13" selection-end-column="99" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/group/setGroup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="37" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="109" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mongoose/node_modules/mongodb/node_modules/mongodb-core/node_modules/kerberos/node_modules/nan/appveyor.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="51" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app-client/pic/quoteHeader.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/chip/addChip.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.214286">
-          <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/customer/addCompany.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -791,13 +542,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app-server/app-pooling.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3326087">
-          <caret line="21" column="39" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app-server/constants.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -837,7 +581,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.7142856">
           <caret line="4" column="28" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -862,44 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/role/setRole.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31475905">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app-server/server_role.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#41#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/group/addMember.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.8245614">
-          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app-server/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app-client/js/controller_role.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app-client/js/chip.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -907,41 +612,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/group/addGroup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.0">
-          <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8352601">
           <caret line="43" column="32" selection-start-line="43" selection-start-column="32" selection-end-line="43" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app-server/chip.js">
+    <entry file="file://$PROJECT_DIR$/views/group/setGroup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4783237">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="-39.357143">
+          <caret line="58" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="67" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app-client/js/customer.js">
+    <entry file="file://$PROJECT_DIR$/views/group/setSectionRoleUser.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="11" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.437788">
+          <caret line="10" column="58" selection-start-line="10" selection-start-column="58" selection-end-line="10" selection-end-column="58" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app-server/customer.js">
+    <entry file="file://$PROJECT_DIR$/app-server/server_group.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="34" selection-end-column="13" />
-          <folding />
+        <state vertical-scroll-proportion="0.6298701">
+          <caret line="115" column="20" selection-start-line="115" selection-start-column="20" selection-end-line="115" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/webstorm.jar!/resources/html5-schema/html5/phrase.rnc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="9" column="16" selection-start-line="9" selection-start-column="16" selection-end-line="9" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -952,140 +654,156 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/quote/addQuote.html">
+    <entry file="file://$PROJECT_DIR$/app-client/js/customer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
-          <folding />
+          <caret line="39" column="11" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app-client/js/quote.js">
+    <entry file="file://$PROJECT_DIR$/views/group/addGroup.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="163" column="26" selection-start-line="163" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#41#0" expanded="false" />
-            <element signature="e#583#964#0" expanded="false" />
-            <element signature="e#615#860#0" expanded="false" />
-            <element signature="e#878#954#0" expanded="false" />
-            <element signature="e#1023#1069#0" expanded="false" />
-            <element signature="e#1118#1832#0" expanded="false" />
-            <element signature="e#1131#1828#0" expanded="false" />
-            <element signature="e#1290#1644#0" expanded="false" />
-            <element signature="e#1322#1555#0" expanded="false" />
-            <element signature="e#1444#1495#0" expanded="false" />
-            <element signature="e#1568#1599#0" expanded="false" />
-            <element signature="e#1703#1822#0" expanded="false" />
-            <element signature="e#1717#1748#0" expanded="false" />
-            <element signature="e#2405#2490#0" expanded="false" />
-            <element signature="e#2549#2560#0" expanded="false" />
-            <element signature="e#2927#3014#0" expanded="false" />
-            <element signature="e#3073#3084#0" expanded="false" />
-            <element signature="e#3603#3650#0" expanded="false" />
-            <element signature="e#4949#5851#0" expanded="false" />
-            <element signature="e#5957#7139#0" expanded="false" />
-            <element signature="e#6030#6088#0" expanded="false" />
-            <element signature="e#6110#6171#0" expanded="false" />
-            <element signature="e#6263#7123#0" expanded="false" />
-            <element signature="e#6516#6925#0" expanded="false" />
-            <element signature="e#6560#6730#0" expanded="false" />
-            <element signature="e#6760#6903#0" expanded="false" />
-            <element signature="e#6996#7105#0" expanded="false" />
-            <element signature="e#7647#7834#0" expanded="false" />
-            <element signature="e#7848#8035#0" expanded="false" />
-            <element signature="e#8049#8234#0" expanded="false" />
-            <element signature="e#8248#8429#0" expanded="false" />
-            <element signature="e#8443#8637#0" expanded="false" />
-            <element signature="e#8651#8814#0" expanded="false" />
-            <element signature="e#10051#10237#0" expanded="false" />
-            <element signature="e#10341#10934#0" expanded="false" />
-            <element signature="e#10664#10912#0" expanded="false" />
-            <element signature="e#11472#11548#0" expanded="false" />
-            <element signature="e#11617#11663#0" expanded="false" />
-            <element signature="e#11718#11765#0" expanded="false" />
-            <element signature="e#11848#11926#0" expanded="false" />
-            <element signature="e#12841#13164#0" expanded="false" />
-            <element signature="e#12881#12989#0" expanded="false" />
-            <element signature="e#13015#13146#0" expanded="false" />
-            <element signature="e#13231#13328#0" expanded="false" />
-            <element signature="e#13445#13610#0" expanded="false" />
-            <element signature="e#13620#13788#0" expanded="false" />
-            <element signature="e#13798#13966#0" expanded="false" />
-            <element signature="e#13976#14177#0" expanded="false" />
-            <element signature="e#14187#14385#0" expanded="false" />
-            <element signature="e#14395#14530#0" expanded="false" />
-            <element signature="e#16930#17011#0" expanded="false" />
-            <element signature="e#17523#17938#0" expanded="false" />
-            <element signature="e#18254#19194#0" expanded="false" />
-            <element signature="e#18264#18394#0" expanded="false" />
-            <element signature="e#18404#18527#0" expanded="false" />
-            <element signature="e#18537#18660#0" expanded="false" />
-            <element signature="e#18670#18794#0" expanded="false" />
-            <element signature="e#18804#18925#0" expanded="false" />
-            <element signature="e#18935#19070#0" expanded="false" />
-            <element signature="e#19080#19188#0" expanded="false" />
-            <element signature="e#19621#20207#0" expanded="false" />
-            <element signature="e#19634#20203#0" expanded="false" />
-            <element signature="e#19798#20092#0" expanded="false" />
-            <element signature="e#19830#19988#0" expanded="false" />
-            <element signature="e#20006#20082#0" expanded="false" />
-            <element signature="e#20151#20197#0" expanded="false" />
-            <element signature="e#20246#23441#0" expanded="false" />
-            <element signature="e#20269#21293#0" expanded="false" />
-            <element signature="e#20317#21261#0" expanded="false" />
-            <element signature="e#20373#20536#0" expanded="false" />
-            <element signature="e#21368#22996#0" expanded="false" />
-            <element signature="e#21378#21508#0" expanded="false" />
-            <element signature="e#21518#21641#0" expanded="false" />
-            <element signature="e#21651#21774#0" expanded="false" />
-            <element signature="e#21784#21908#0" expanded="false" />
-            <element signature="e#21918#22039#0" expanded="false" />
-            <element signature="e#22049#22184#0" expanded="false" />
-            <element signature="e#22194#22302#0" expanded="false" />
-            <element signature="e#22312#22416#0" expanded="false" />
-            <element signature="e#22426#22533#0" expanded="false" />
-            <element signature="e#22543#22650#0" expanded="false" />
-            <element signature="e#22660#22766#0" expanded="false" />
-            <element signature="e#22776#22879#0" expanded="false" />
-            <element signature="e#22889#22989#0" expanded="false" />
-            <element signature="e#23067#23385#0" expanded="false" />
-            <marker date="1452442205154" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1452442205154" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
+        <state vertical-scroll-proportion="-13.107142">
+          <caret line="21" column="67" selection-start-line="21" selection-start-column="67" selection-end-line="21" selection-end-column="67" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/group/sectionRoleUserDiv.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25753012">
-          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="-0.6785714">
+          <caret line="1" column="35" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/group/addMember.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.3571428">
+          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-client/wulfdist/js/jqxdatetimeinput.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="6" column="92729" selection-start-line="6" selection-start-column="92729" selection-end-line="6" selection-end-column="92729" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-server/chip.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-server/customer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mysql/lib/Pool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="71" column="62" selection-start-line="71" selection-start-column="62" selection-end-line="71" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-client/wulfdist/js/jquery.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33236995">
+          <caret line="3" column="13335" selection-start-line="3" selection-start-column="13335" selection-end-line="3" selection-end-column="13335" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript5.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28612718">
+          <caret line="155" column="16" selection-start-line="155" selection-start-column="16" selection-end-line="155" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app-server/quote.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="77" selection-end-column="1" />
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-server/app-pooling.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="37" selection-start-line="61" selection-start-column="37" selection-end-line="61" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/role/addRole.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.821428">
+          <caret line="25" column="51" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/role/setRole.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="9" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-server/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-client/js/quote.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="85" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-server/server_role.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="53" selection-start-line="7" selection-start-column="53" selection-end-line="7" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#41#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/quote/addQuote.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="57" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app-server/user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.015895953">
-          <caret line="13" column="85" selection-start-line="13" selection-start-column="85" selection-end-line="13" selection-end-column="85" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="28" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/group/setGroup.html">
+    <entry file="file://$PROJECT_DIR$/routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-39.357143">
-          <caret line="58" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="67" selection-end-column="6" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="59" selection-start-line="43" selection-start-column="59" selection-end-line="43" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/group/setSectionUser.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -1093,28 +811,27 @@
     <entry file="file://$PROJECT_DIR$/app-client/js/controller_group.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
           <folding>
-            <element signature="e#5921#6896#0" expanded="false" />
+            <marker date="1452694667232" expanded="true" signature="2348:2360" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.642858">
-          <caret line="140" column="108" selection-start-line="140" selection-start-column="108" selection-end-line="140" selection-end-column="108" />
-          <folding>
-            <element signature="n#li#3;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#4;n#nav#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#a#0;n#li#4;n#ul#0;n#div#0;n#div#1;n#div#1;n#div#4;n#nav#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes.js">
+    <entry file="file://$PROJECT_DIR$/app-client/js/controller_role.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="81" selection-start-line="20" selection-start-column="81" selection-end-line="20" selection-end-column="81" />
+          <caret line="47" column="27" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#41#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app-client/js/common.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="79" column="46" selection-start-line="79" selection-start-column="42" selection-end-line="79" selection-end-column="46" />
           <folding />
         </state>
       </provider>
@@ -1122,43 +839,17 @@
     <entry file="file://$PROJECT_DIR$/app-client/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
+          <caret line="46" column="3" selection-start-line="46" selection-start-column="3" selection-end-line="46" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app-client/js/common.js">
+    <entry file="file://$PROJECT_DIR$/views/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="99" column="7" selection-start-line="99" selection-start-column="7" selection-end-line="99" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/group/setSectionRoleUser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.785714">
-          <caret line="10" column="58" selection-start-line="10" selection-start-column="58" selection-end-line="10" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.42986426">
+          <caret line="33" column="67" selection-start-line="33" selection-start-column="67" selection-end-line="33" selection-end-column="67" />
           <folding>
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/group/setSectionUser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.107142">
-          <caret line="29" column="36" selection-start-line="29" selection-start-column="36" selection-end-line="29" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app-server/server_group.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8636364">
-          <caret line="29" column="44" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#41#0" expanded="false" />
+            <element signature="n#li#1;n#ul#0;n#div#1;n#div#1;n#div#4;n#nav#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -43,3 +43,9 @@ exports.addUser = function (req, res) {
         res.json({success: true, confirmHead: '成功', confirmMsg: '帐号新建成功！'});
     });
 }
+
+exports.getUserActionSection = function (req, res){
+    var selectSQL = 'select depart.id as id, depart.name as name from role_action, section_user_role, depart ' +
+        'where role_action.actionId = "' + req.body.actionId + '" and section_user_role.userId = "' + req.body.userId + '" ' +
+        'and role_action.roleId = section_user_role.roleId and depart.id = section_user_role.sectionId;';
+}

@@ -27,12 +27,16 @@ module.exports = function (app) {
     app.post('/addSectionRoleUser', section.addSectionRoleUser);
     app.post('/deleteSectionRoleUser', section.deleteSectionRoleUser);
     app.post('/addSectionUser', section.addSectionUser);
+    app.post('/deleteSectionUser', section.deleteSectionUser);
 
     //role
     app.get('/getRoles', role.getRoles);
+    app.get('/getActions', role.getActions);
+    app.post('/addRole', role.addRole);
 
     //user
     app.get('/getUsers', user.getUsers);
+    app.get('/getUserActionSection', user.getUserActionSection);
 
     app.get('/getQuote', quote.getQuote);
     app.post('/deleteQuote', quote.deleteQuote);
