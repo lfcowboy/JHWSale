@@ -48,7 +48,7 @@
                             <li>
                                 <a href="#">
                                     <i class="icon icon-profile"></i>
-                                    <%= userName %>
+                                    <%= user.name%>
                                 </a>
                             </li>
                             <li class="hidden-xs">
@@ -124,32 +124,6 @@
                             </li>
                             <li>
                                 <a href="#"><span>仓管</span></a>
-                            </li>
-                            <li class="dropdown">
-                                <a aria-expanded="false" data-toggle="dropdown" href="#" role="button">
-                                    <i class="icon icon-settings"></i>
-                                    <span>部门设置</span>
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <%
-                                    sections.forEach(function(section,index){
-                                    %>
-                                    <li class="n-dropdown-menu-item-has-child">
-                                        <a href="#"><span><%= section.name %></span><i class="icon icon-next"></i></a>
-                                        <ul class="n-dropdown-sub-menu">
-                                            <% if(actions.setSectionUser){%>
-                                            <li name="setSectionUserMenu" data-section-id="<%= section.id %>"><a href="#"><span>组员</span></a></li>
-                                            <% } %>
-                                            <% if(actions.setSectionRoleUser){%>
-                                            <li name="setSectionRoleUserMenu" data-section-id="<%= section.id %>"><a href="#"><span>权限</span></a></li>
-                                            <% } %>
-                                        </ul>
-                                    </li>
-                                    <%
-                                    })
-                                    %>
-                                </ul>
                             </li>
                             <li>
                                 <div class="dropdown n-banner-overflow-control">
@@ -236,6 +210,7 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <% if(actions.setSection){%>
                                 <li class="dropdown">
                                     <a aria-expanded="false" data-toggle="dropdown" href="#" role="button">
                                         <i class="icon icon-settings"></i>
@@ -243,11 +218,12 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li id="setSectionUserMenu" ><a href="#"><span>组员</span></a></li>
+                                        <li id="setSectionUserMenu" data-action-id="<%= actions.setSection.id %>"><a href="#"><span>组员</span></a></li>
                                         <li id="setSectionRoleMenu"><a href="#"><span>角色</span></a></li>
                                         <li id="setSectionRoleUserMenu"><a href="#"><span>权限</span></a></li>
                                     </ul>
                                 </li>
+                                <% } %>
                                 <li class="dropdown">
                                     <a aria-expanded="false" data-toggle="dropdown" href="#" role="button">
                                         <i class="icon icon-regions"></i>

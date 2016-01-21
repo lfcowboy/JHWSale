@@ -1,7 +1,7 @@
 /**
  * Created by fenglv on 2015/7/19.
  */
-var section = require('./server_group');
+var role = require('./server_role');
 
 exports.loginFilter = function (req, res, next) {
     if(req.session.user){
@@ -13,11 +13,13 @@ exports.loginFilter = function (req, res, next) {
 };
 
 exports.index = function (req, res, next) {
-    var result = {'userName':req.session.user.name};
-    var actions = {'setSectionUser': true, 'setSectionRoleUser': true};
-    result.actions = actions;
-    section.getSections(function(sections){
-        result.sections = sections;
+    var result = {'user':req.session.user};
+    role.getUserActions(req.session.user.id, function(qerr, rows, fields){
+        var actions = {};
+        rows.forEach(function(action){
+            actions[action.value] = action;
+        });
+        result.actions = actions;
         res.render('index',result);
     });
 };

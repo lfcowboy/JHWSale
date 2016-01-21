@@ -36,7 +36,7 @@ module.exports = function (app) {
 
     //user
     app.get('/getUsers', user.getUsers);
-    app.get('/getUserActionSection', user.getUserActionSection);
+    app.post('/getUserActionSection', user.getUserActionSection);
 
     app.get('/getQuote', quote.getQuote);
     app.post('/deleteQuote', quote.deleteQuote);

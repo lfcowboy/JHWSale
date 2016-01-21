@@ -42,12 +42,7 @@ $("#addRoleButton").click(function () {
     });
 });
 
-var initSectionList = function (userId, actionId, sectionId) {
-    var params = {
-        userId: userId,
-        actionId: actionId,
-        sectionId: sectionId
-    };
+var initSectionList = function (params) {
     $.ajax({
         data: params,
         url: '/getUserActionSection',

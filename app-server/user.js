@@ -46,6 +46,9 @@ exports.addUser = function (req, res) {
 
 exports.getUserActionSection = function (req, res){
     var selectSQL = 'select depart.id as id, depart.name as name from role_action, section_user_role, depart ' +
-        'where role_action.actionId = "' + req.body.actionId + '" and section_user_role.userId = "' + req.body.userId + '" ' +
+        'where role_action.actionId = "' + req.body.actionId + '" and section_user_role.userId = "' + req.session.user.id + '" ' +
         'and role_action.roleId = section_user_role.roleId and depart.id = section_user_role.sectionId;';
+    pool.query(selectSQL, function (err, rows, fields) {
+        res.json(rows);
+    })
 }

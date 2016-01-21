@@ -40,7 +40,7 @@ $("li[name='setGroupMenu']").click(function(){
 
 $("#setSectionUserMenu").click(function(){
     $(".content-panel").hide();
-    var data = {"sectionId": $(this).data("sectionId")};
+    var data = {"actionId": $(this).data("actionId")};
     showContentPanel('showPanel_setSectionUser', data, function(){
         initSectionList(data);
     });

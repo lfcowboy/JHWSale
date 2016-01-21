@@ -23,6 +23,13 @@ exports.getActions = function (req, res){
     })
 }
 
+exports.getUserActions = function(userId, callback){
+    var sql = 'select conf_action.id as id, conf_action.name as name, conf_action.value as value ' +
+        'from section_user_role, role_action, conf_action ' +
+        'where section_user_role.userId = "' + userId + '" and section_user_role.roleId = role_action.roleId and role_action.actionId = conf_action.id; '
+    pool.query(sql, callback);
+}
+
 exports.addRole = function (req, res) {
     var addRoleSQL = 'insert into role (name) values("' + req.body.name + '")';
     pool.insert(addRoleSQL, function (err, result) {
