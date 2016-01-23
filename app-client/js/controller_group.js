@@ -1,7 +1,44 @@
 /**
  * Created by fenglv on 2016/1/5.
  */
-var initUserListTable = function (data) {
+
+var initSectionList = function (params) {
+    var sectionSource =
+    {
+        datatype: "json",
+        data: params,
+        datafields: [
+            {name: 'id', type: 'string'},
+            {name: 'name', type: 'string'}
+        ],
+        url: '/getUserActionSection',
+        type: 'post'
+    };
+    var sectionDataAdapter = new $.jqx.dataAdapter(sectionSource);
+
+    $("#setSectionUser_section").jqxDropDownList({
+        source: sectionDataAdapter,
+        selectedIndex: 1,
+        width: '200',
+        height: '25',
+        displayMember: 'name',
+        valueMember: 'id'
+    });
+
+    $("#setSectionUser_section").on('select', function (event) {
+        if (event.args) {
+            var item = event.args.item;
+            if (item) {
+                initUserListTable(item.value);
+            }
+        }
+    });
+};
+
+var initUserListTable = function (sectionId) {
+    var data = {
+        "sectionId": sectionId
+    };
     var source =
     {
         data: data,
@@ -13,7 +50,10 @@ var initUserListTable = function (data) {
         ],
         url: '/getSectionUsers',
         deleterow: function (rowid, commit) {
-            var deleteData ={"userId": $('#userListTable').jqxGrid('getrowdata', rowid).id, "sectionId": data.sectionId};
+            var deleteData = {
+                "userId": $('#userListTable').jqxGrid('getrowdata', rowid).id,
+                "sectionId": data.sectionId
+            };
             $.ajax({
                 data: deleteData,
                 url: '/deleteSectionUser',
@@ -119,12 +159,12 @@ var initUserListTable = function (data) {
         });
     });
 
-    $('#setGroup_userSearch1').click(function () {
-        var paras = {sectionId: $(this).data("sectionId")};
+    $('#setSectionUser_sectionUserSearch').click(function () {
+        var paras = {'sectionId': $("#setSectionUser_section").jqxDropDownList('getSelectedItem').value};
 
         function addSectionUser(userId) {
             var params = {
-                sectionId: $('#setGroup_userSearch1').data('sectionId'),
+                sectionId: $('#setSectionUser_section').jqxDropDownList('getSelectedItem').value,
                 userId: userId
             };
             $.ajax({
@@ -151,7 +191,6 @@ var initUserListTable = function (data) {
         searchDropdown('setGroup_userList1', 'setGroup_userName1', paras, '/getUsers', addSectionUser);
     });
 }
-
 
 $("#addGroupButton").click(function () {
     var params = {

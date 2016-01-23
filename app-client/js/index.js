@@ -22,13 +22,13 @@ $("#addCompanyMenu").click(function(){
     $("#addCompanyPanel").show();
 });
 
-$("li[name='setGroupMenu']").click(function(){
-    $(".content-panel").hide();
-    var data = {"sectionId": $(this).data("sectionId")};
-    showContentPanel('showPanel_setGroup', data, function(){
-        initUserListTable(data);
-    });
-});
+//$("li[name='setGroupMenu']").click(function(){
+//    $(".content-panel").hide();
+//    var data = {"sectionId": $(this).data("sectionId")};
+//    showContentPanel('showPanel_setGroup', data, function(){
+//        initUserListTable(data);
+//    });
+//});
 
 //$("li[name='setSectionUserMenu']").click(function(){
 //    $(".content-panel").hide();
@@ -42,6 +42,14 @@ $("#setSectionUserMenu").click(function(){
     $(".content-panel").hide();
     var data = {"actionId": $(this).data("actionId")};
     showContentPanel('showPanel_setSectionUser', data, function(){
+        initSectionList(data);
+    });
+});
+
+$("#setSectionRoleMenu").click(function(){
+    $(".content-panel").hide();
+    var data = {"actionId": $(this).data("actionId")};
+    showContentPanel('showPanel_setSectionRole', data, function(){
         initSectionList(data);
     });
 });

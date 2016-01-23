@@ -18,6 +18,7 @@ module.exports = function (app) {
     app.post('/showPanel_setRole',role.showSetRolePanel);
     app.post('/showPanel_setGroup', section.showSetGroupPanel);
     app.post('/showPanel_setSectionUser', section.showSetSectionUserPanel);
+    app.post('/showPanel_setSectionRole', section.showSetSectionRolePanel);
     app.post('/showPanel_setSectionRoleUser', section.showSetSectionRoleUserPanel);
 
     //section

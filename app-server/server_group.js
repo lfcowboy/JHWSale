@@ -23,6 +23,16 @@ exports.showSetSectionUserPanel = function (req, res) {
     });
 }
 
+exports.showSetSectionRolePanel = function (req, res) {
+    var sql = 'select role.id as id, role.name as name from section_role, role where section_role.sectionId = "' + req.body.sectionId + '" and section_role.roleId = role.id';
+    pool.query(sql, function (qerr, rows, fields) {
+        var data = {"sectionRoles": rows, "sectionId": req.body.sectionId};
+        app.render('group/setSectionUser', data, function (err, html) {
+            res.json({success: true, htmlContent: html});
+        });
+    });
+}
+
 exports.showSetSectionRoleUserPanel = function (req, res) {
     var sql = 'select role.id as id, role.name as name from section_role, role where section_role.sectionId = "' + req.body.sectionId + '" and section_role.roleId = role.id';
     pool.query(sql, function (qerr, rows, fields) {

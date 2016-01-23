@@ -57,6 +57,9 @@ var initList = function(selectlist, menu, data, callback){
     }else{
         clearList(selectlist,menu);
     }
+    if(callback != null){
+        callback();
+    }
 };
 
 var showSuccess = function(msg){

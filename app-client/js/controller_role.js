@@ -12,11 +12,18 @@ var actionSource =
 };
 
 var actionDataAdapter = new $.jqx.dataAdapter(actionSource);
-$("#addRole_actionList").jqxListBox({width: '100%', source: actionDataAdapter, displayMember: "name", valueMember: "id", checkboxes: true, height: '100%'});
+$("#addRole_actionList").jqxListBox({
+    width: '100%',
+    source: actionDataAdapter,
+    displayMember: "name",
+    valueMember: "id",
+    checkboxes: true,
+    height: '100%'
+});
 
 $("#addRoleButton").click(function () {
     var actions = [];
-    $("#addRole_actionList").jqxListBox('getCheckedItems').forEach(function(action,index){
+    $("#addRole_actionList").jqxListBox('getCheckedItems').forEach(function (action, index) {
         actions.push(action.value);
     });
     var params = {
@@ -41,19 +48,3 @@ $("#addRoleButton").click(function () {
         }
     });
 });
-
-var initSectionList = function (params) {
-    $.ajax({
-        data: params,
-        url: '/getUserActionSection',
-        type: 'post',
-        dataType: 'json',
-        cache: false,
-        timeout: 5000,
-        success: function (data) {
-            initList('setSectionUser_section', 'setSectionUser_sectionList', data);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-        }
-    });
-};
