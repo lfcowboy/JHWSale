@@ -102,3 +102,28 @@ var showContentPanel = function( panelUrl,data,callback ){
         }
     });
 }
+
+var initSectionList = function (actionId) {
+    var params = {"actionId": actionId};
+    var sectionSource =
+    {
+        datatype: "json",
+        data: params,
+        datafields: [
+            {name: 'id', type: 'string'},
+            {name: 'name', type: 'string'}
+        ],
+        url: '/getUserActionSection',
+        type: 'post'
+    };
+    var sectionDataAdapter = new $.jqx.dataAdapter(sectionSource);
+
+    $("#setSectionUser_section").jqxDropDownList({
+        source: sectionDataAdapter,
+        selectedIndex: 1,
+        width: '200',
+        height: '25',
+        displayMember: 'name',
+        valueMember: 'id'
+    });
+};

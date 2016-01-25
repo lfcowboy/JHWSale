@@ -22,6 +22,10 @@ $("#addCompanyMenu").click(function(){
     $("#addCompanyPanel").show();
 });
 
+$("#addGroupMenu").click(function(){
+    $('#addGroupDialog').modal('show');
+    showNewSectionDialog();
+});
 //$("li[name='setGroupMenu']").click(function(){
 //    $(".content-panel").hide();
 //    var data = {"sectionId": $(this).data("sectionId")};
@@ -40,27 +44,38 @@ $("#addCompanyMenu").click(function(){
 
 $("#setSectionUserMenu").click(function(){
     $(".content-panel").hide();
-    var data = {"actionId": $(this).data("actionId")};
+    var actionId = $(this).data("actionId");
+    var data = {"actionId": actionId};
     showContentPanel('showPanel_setSectionUser', data, function(){
-        initSectionList(data);
+        initSetSectionUserPanel(actionId);
     });
 });
 
 $("#setSectionRoleMenu").click(function(){
     $(".content-panel").hide();
-    var data = {"actionId": $(this).data("actionId")};
+    var actionId = $(this).data("actionId");
+    var data = {"actionId": actionId};
     showContentPanel('showPanel_setSectionRole', data, function(){
-        initSectionList(data);
+        initSetSectionRolePanel(actionId);
     });
 });
 
-$("li[name='setSectionRoleUserMenu']").click(function(){
+$("#setSectionRoleUserMenu").click(function(){
     $(".content-panel").hide();
-    var data = {"sectionId": $(this).data("sectionId")};
+    var actionId = $(this).data("actionId");
+    var data = {"actionId": actionId};
     showContentPanel('showPanel_setSectionRoleUser', data, function(){
-        initSectionRoleUserPanel();
+        initSetSectionRoleUserPanel(actionId);
     });
 });
+
+//$("li[name='setSectionRoleUserMenu']").click(function(){
+//    $(".content-panel").hide();
+//    var data = {"sectionId": $(this).data("sectionId")};
+//    showContentPanel('showPanel_setSectionRoleUser', data, function(){
+//        initSectionRoleUserPanel();
+//    });
+//});
 
 $("#setRoleMenu").click(function(){
     $(".content-panel").hide();

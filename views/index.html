@@ -193,8 +193,8 @@
                                                 <span>添加帐号</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="#addGroupDialog" data-toggle="modal" data-backdrop="true">
+                                        <li id="addGroupMenu">
+                                            <a href="#">
                                                 <span>添加部门</span>
                                             </a>
                                         </li>
@@ -218,9 +218,10 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
+                                        <li id="setSectionAdminMenu" data-action-id="<%= actions.setSection.id %>"><a href="#"><span>管理员</span></a></li>
                                         <li id="setSectionUserMenu" data-action-id="<%= actions.setSection.id %>"><a href="#"><span>组员</span></a></li>
                                         <li id="setSectionRoleMenu" data-action-id="<%= actions.setSection.id %>"><a href="#"><span>角色</span></a></li>
-                                        <li id="setSectionRoleUserMenu"><a href="#"><span>权限</span></a></li>
+                                        <li id="setSectionRoleUserMenu" data-action-id="<%= actions.setSection.id %>"><a href="#"><span>权限</span></a></li>
                                     </ul>
                                 </li>
                                 <% } %>
@@ -360,7 +361,7 @@
 <script src="js/index.js"></script>
 <script src="js/msgDlg.js"></script>
 <script src="js/controller_role.js"></script>
-<script src="js/controller_group.js"></script>
+<script src="js/controller_section.js"></script>
 <script src="js/quote.js"></script>
 <script src="js/customer.js"></script>
 <script src="js/chip.js"></script>

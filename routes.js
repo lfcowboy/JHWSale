@@ -25,10 +25,14 @@ module.exports = function (app) {
     app.get('/getSectionUsers', section.getSectionUsers);
     app.get('/getSectionRoleUsers', section.getSectionUsers);
     app.get('/getSectionRoleUsersDiv', section.getSectionRoleUsersDiv);
+    app.get('/getSectionRoleDiv', section.getSectionRoleDiv);
+    app.get('/getSectionRolesDiv', section.getSectionRolesDiv);
     app.post('/addSectionRoleUser', section.addSectionRoleUser);
     app.post('/deleteSectionRoleUser', section.deleteSectionRoleUser);
     app.post('/addSectionUser', section.addSectionUser);
     app.post('/deleteSectionUser', section.deleteSectionUser);
+    app.post('/addSectionRole', section.addSectionRole);
+    app.post('/deleteSectionRole', section.deleteSectionRole);
 
     //role
     app.get('/getRoles', role.getRoles);
