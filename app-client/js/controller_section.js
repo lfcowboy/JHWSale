@@ -270,13 +270,13 @@ var showSectionRoles = function (sectionId) {
                     }
                 });
 
-                $('#setGroup_userSearch').click(function () {
+                $("a[name='setGroup_userSearch']").click(function () {
                     var paras = {sectionId: $(this).data("sectionId")};
-
+                    var roleId = $(this).data('roleId');
                     function addSectionRoleUser(userId) {
                         var params = {
-                            sectionId: $('#setGroup_userSearch').data('sectionId'),
-                            roleId: $('#setGroup_userSearch').data('roleId'),
+                            sectionId: $(this).data('sectionId'),
+                            roleId: $(this).data('roleId'),
                             userId: userId
                         };
                         $.ajax({
@@ -302,7 +302,7 @@ var showSectionRoles = function (sectionId) {
                             }
                         });
                     }
-                    searchDropdown('setGroup_userList', 'setGroup_userName', paras, '/getSectionUsers', addSectionRoleUser);
+                    searchDropdown('setGroup_userList' + roleId, 'setGroup_userName' + roleId, paras, '/getSectionUsers', addSectionRoleUser);
                 });
             }
         },
