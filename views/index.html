@@ -181,10 +181,11 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <% if(actions.admin){%>
                                 <li class="dropdown">
                                     <a aria-expanded="false" data-toggle="dropdown" href="#" role="button">
                                         <i class="icon icon-add"></i>
-                                        <span>新建</span>
+                                        <span>系统管理员</span>
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
@@ -210,6 +211,7 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <% } %>
                                 <% if(actions.setSection){%>
                                 <li class="dropdown">
                                     <a aria-expanded="false" data-toggle="dropdown" href="#" role="button">
@@ -218,7 +220,6 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li id="setSectionAdminMenu" data-action-id="<%= actions.setSection.id %>"><a href="#"><span>管理员</span></a></li>
                                         <li id="setSectionUserMenu" data-action-id="<%= actions.setSection.id %>"><a href="#"><span>组员</span></a></li>
                                         <li id="setSectionRoleMenu" data-action-id="<%= actions.setSection.id %>"><a href="#"><span>角色</span></a></li>
                                         <li id="setSectionRoleUserMenu" data-action-id="<%= actions.setSection.id %>"><a href="#"><span>权限</span></a></li>
@@ -284,12 +285,12 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <% include group\addMember.html %>
+        <% include section\addUser.html %>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        <% include group\addGroup.html %>
+        <% include section\addGroup.html %>
     </div>
 </div>
 <div class="row">

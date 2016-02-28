@@ -2,6 +2,8 @@
  * Created by fenglv on 2015/7/28.
  */
 var pool = require("./app-pooling");
+var sectionSever = require('./server_group');
+
 exports.loadLogin = function (req, res) {
     //res.render('index',{'userName':'周芸丽1'}, function(err, html) {
     //    console.log(html);
@@ -38,9 +40,12 @@ exports.getUsers = function (req, res) {
 }
 
 exports.addUser = function (req, res) {
-    var addSQL = 'insert into user (name,account,password) values("' + req.body.name + '","' + req.body.account + '","' + req.body.password + '")';
-    pool.insert(addSQL, function (err) {
-        res.json({success: true, confirmHead: '成功', confirmMsg: '帐号新建成功！'});
+    var addUserSQL = 'insert into user (name,account,password) values("' + req.body.name + '","' + req.body.account + '","' + req.body.password + '")';
+    pool.insert(addUserSQL, function (err, result) {
+        var addDefaultSectionSQL = 'insert into section_user(sectionId,userId) values ("0","' + result.insertId + '")';
+        pool.insert(addDefaultSectionSQL, function (err) {
+            res.json({success: true, confirmHead: '成功', confirmMsg: '帐号新建成功！'});
+        });
     });
 }
 
