@@ -1,15 +1,37 @@
 /**
  * Created by fenglv on 2015/8/8.
  */
-$("#addQuoteMenu").click(function(){
+$("#myQuoteNewMenu").click(function(){
     $(".content-panel").hide();
-    initAddQuote();
-    $("#addQuotePanel").show();
+    var actionId = $(this).data("actionId");
+    showContentPanel('showPanel_addQuote', null, function(){
+        initAddQuote(actionId);
+    });
+});
+
+$("#myQuoteListQueryMenu").click(function(){
+    $(".content-panel").hide();
+    var userId = $(this).data("userId");
+    showContentPanel('showPanel_myQuoteList', null, function(){
+        initMyQuoteListQueryPanel(userId);
+    });
+});
+
+$("#myQuoteListEditMenu").click(function(){
+    $(".content-panel").hide();
+    var userId = $(this).data("userId");
+    var actionId = $(this).data("actionId");
+    var param = {'reporterId': userId, 'actionId': actionId};
+    showContentPanel('showPanel_myQuoteList', null, function(){
+        initMyQuoteListEditPanel(param);
+    });
 });
 
 $("#quoteListMenu").click(function(){
     $(".content-panel").hide();
-    showQuoteListPanel();
+    showContentPanel('showPanel_myQuoteList', null, function(){
+        initQuoteListTable(null);
+    });
 });
 
 $("#priceListMenu").click(function(){
@@ -25,6 +47,34 @@ $("#addCompanyMenu").click(function(){
 $("#addGroupMenu").click(function(){
     $('#addGroupDialog').modal('show');
     showNewSectionDialog();
+});
+
+$("#sectionListMenu").click(function(){
+    $(".content-panel").hide();
+    showContentPanel('showPanel_sectionList', null, function(){
+        initSectionListPanel();
+    });
+});
+
+$("#companyListMenu").click(function(){
+    $(".content-panel").hide();
+    showContentPanel('showPanel_companyList', null, function(){
+        initCompanyListPanel();
+    });
+});
+
+$("#customerListMenu").click(function(){
+    $(".content-panel").hide();
+    showContentPanel('showPanel_customerList', null, function(){
+        initCustomerListPanel();
+    });
+});
+
+$("#roleListMenu").click(function(){
+    $(".content-panel").hide();
+    showContentPanel('showPanel_roleList', null, function(){
+        initRoleListPanel();
+    });
 });
 //$("li[name='setGroupMenu']").click(function(){
 //    $(".content-panel").hide();
@@ -80,5 +130,13 @@ $("#setSectionRoleUserMenu").click(function(){
 $("#setRoleMenu").click(function(){
     $(".content-panel").hide();
     showContentPanel('showPanel_setRole', function(){
+    });
+});
+
+$("#editRoleMenu").click(function(){
+    $(".content-panel").hide();
+    showContentPanel('showPanel_addRole', null, function(){
+        initAddRoleDialog(null);
+        $('#addRoleDialog').modal('show');
     });
 });

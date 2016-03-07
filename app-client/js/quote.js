@@ -1,71 +1,112 @@
 /**
  * Created by fenglv on 2015/8/9.
  */
-$("#addQuoteButton").click(function () {
-    var params = {
-        quoteNum: $("#addQuote_quoteNum").val(),
-        companyName: $("#addQuote_companyName").val(),
-        currency: $('input[name="currency"]:checked').val(),
-        customerId: $("#addQuote_customer").selectlist('selectedItem').value,
-        remark: $("#addQuote_remark").val()
-    };
-    $.ajax({
-        data: params,
-        url: '/addQuote',
-        type: 'post',
-        dataType: 'json',
-        cache: false,
-        timeout: 5000,
-        success: function (data) {
-            if (data.success) {
-                $("#addQuotePanel").hide();
-                $("#addPricePanel").html(data.htmlContent);
-                initPriceTable(data.quoteId);
-                $("#pricePanel").show();
-                showSuccess(data.msg);
-            }
-            else {
-                showErrorMsg(data.errorHead, data.errorMsg);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            showErrorMsgDefault();
-        }
-    });
-});
+var initAddQuote = function (actionId, quote) {
+    initSectionList(actionId);
+    initDefaultRemarkList();
 
-var initAddQuote = function init() {
+    $('#addQuote_companySearch').click(function () {
+        var params = {"companyName": $('#addQuote_companyName').val()};
+        searchDropdown('addQuote_companyList', 'addQuote_companyName', params, '/getCompany', function (companyId) {
+            initCustomerList(companyId);
+        });
+    });
+
+    $("#addQuoteButton").click(function () {
+        var url = '/addQuote';
+        var quoteId;
+        if(quote){
+            url = '/updateQuote';
+            quoteId = quote.id;
+        }
+
+        var params = {
+            id: quoteId,
+            quoteNum: $("#addQuote_quoteNum").val(),
+            sectionId: $("#commonDropdown_userActionSection").val(),
+            companyName: $("#addQuote_companyName").val(),
+            currency: $('input[name="currency"]:checked').val(),
+            customerId: $("#addQuote_customer").selectlist('selectedItem').value,
+            remark: $("#addQuote_remark").val()
+        };
+
+        $.ajax({
+            data: params,
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            cache: false,
+            timeout: 5000,
+            success: function (data) {
+                if (data.success) {
+                    var param = {"quoteId":data.quoteId};
+                    $(".content-panel").hide();
+                    showContentPanel('showPanel_editPriceList', param, function(){
+                        initPriceTable(param.quoteId);
+                    });
+                    showSuccess(data.msg);
+                }
+                else {
+                    showErrorMsg(data.errorHead, data.errorMsg);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                showErrorMsgDefault();
+            }
+        });
+    });
+
+    if(quote){
+        $("#addQuote_quoteNum").val(quote.quoteNum);
+        var item = $("#commonDropdown_userActionSection").jqxDropDownList('getItemByValue', quote.sectionId);
+        $("#commonDropdown_userActionSection").jqxDropDownList('selectItem', item);
+        $("#addQuote_companyName").val(quote.companyName);
+        initCustomerList(quote.companyId, function(){
+            $('#addQuote_customer').selectlist('selectByValue', quote.customerId);
+        });
+    }else{
+        $.ajax({
+            url: '/getNewQuoteNum',
+            type: 'get',
+            dataType: 'json',
+            cache: false,
+            timeout: 5000,
+            success: function (data) {
+                if (data.success) {
+                    $('#addQuote_quoteNum').val(data.newQuoteNum);
+                    //showConfirmMsg(data.confirmHead,data.confirmMsg);
+                    //$("#addQuotePanel").hide();
+                }
+                //var data = $.parseJSON(data);
+                //alert(data.message);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //alert("报价单创建失败，请重试或者联系管理员!");
+                //alert('error ' + textStatus + " " + errorThrown);
+            }
+        });
+    }
+}
+
+var initDefaultRemarkList = function () {
     $.ajax({
-        url: '/getNewQuoteNum',
+        url: '/getDefaultRemarks',
         type: 'get',
         dataType: 'json',
         cache: false,
         timeout: 5000,
         success: function (data) {
-            if (data.success) {
-                $('#addQuote_quoteNum').val(data.newQuoteNum);
-                initDefaultRemarkList();
-                //showConfirmMsg(data.confirmHead,data.confirmMsg);
-                //$("#addQuotePanel").hide();
-            }
-            //var data = $.parseJSON(data);
-            //alert(data.message);
+            initList('addQuote_addRemark', 'addQuote_addRemarkList', data);
+            $('#addQuote_addRemark').on('changed.fu.selectlist', function (event, data) {
+                $("#addQuote_remark").val($("#addQuote_remark").val() + data.text + '\n');
+            });
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            //alert("报价单创建失败，请重试或者联系管理员!");
-            //alert('error ' + textStatus + " " + errorThrown);
         }
     });
-}
+};
 
-$('#addQuote_companySearch').click(function () {
-    var params = {"companyName": $('#addQuote_companyName').val()};
-    searchDropdown('addQuote_companyList', 'addQuote_companyName', params, '/getCompany', function (companyId) {
-        initCustomerList(companyId);
-    });
-});
-
-var initCustomerList = function (companyId) {
+var initCustomerList = function (companyId, callback) {
     var params = {
         companyId: companyId
     };
@@ -77,7 +118,7 @@ var initCustomerList = function (companyId) {
         cache: false,
         timeout: 5000,
         success: function (data) {
-            initList('addQuote_customer', 'addQuote_customerList', data);
+            initList('addQuote_customer', 'addQuote_customerList', data, callback);
         },
         error: function (jqXHR, textStatus, errorThrown) {
         }
@@ -88,27 +129,6 @@ var clearCompany = function () {
     clearSelect('addQuote_companyName');
     clearList('addQuote_customer', 'addQuote_customerList');
 };
-
-var initDefaultRemarkList = function () {
-    $.ajax({
-        url: '/getDefaultRemarks',
-        type: 'get',
-        dataType: 'json',
-        cache: false,
-        timeout: 5000,
-        success: function (data) {
-            initList('addQuote_addRemark', 'addQuote_addRemarkList', data);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-        }
-    });
-};
-
-$('#addQuote_addRemark').on('changed.fu.selectlist', function (event, data) {
-    //alert($("#remark").val());
-    $("#remark").val($("#remark").val() + data.text + '\n');
-    //$("#remark").append(data.text + '\n');
-});
 
 var chipSource =
 {
@@ -157,7 +177,7 @@ var initPriceTable = function (quoteId) {
                 commit(true);
             },
             deleterow: function (rowid, commit) {
-                var data = $('#table-alternating-cell-selection').jqxGrid('getrowdata', rowid);
+                var data = $('#priceListEditTable').jqxGrid('getrowdata', rowid);
                 if (data.id === undefined) {
                     commit(true);
                 }else {
@@ -194,7 +214,7 @@ var initPriceTable = function (quoteId) {
                 else {
                     url = '/updatePrice';
                 }
-                newdata.quoteId = $('#pricePanel').data('quoteId');
+                newdata.quoteId = $('#addPricePanel').data('quoteId');
                 $.ajax({
                     data: newdata,
                     url: url,
@@ -277,7 +297,7 @@ var initPriceTable = function (quoteId) {
             }
         ]
         // initialize jqxGrid
-        $("#table-alternating-cell-selection").jqxGrid(
+        $("#priceListEditTable").jqxGrid(
             {
                 width: '100%',
                 height: '90%',
@@ -303,46 +323,96 @@ var initPriceTable = function (quoteId) {
                     // create new row.
                     $("#addrowbutton").on('click', function () {
                         var datarow = generaterow();
-                        var commit = $("#table-alternating-cell-selection").jqxGrid('addrow', null, datarow);
+                        var commit = $("#priceListEditTable").jqxGrid('addrow', null, datarow);
                     });
                     // delete row.
                     $("#deleterowbutton").on('click', function () {
-                        var selectedrowindex = $("#table-alternating-cell-selection").jqxGrid('getselectedrowindex');
-                        var rowscount = $("#table-alternating-cell-selection").jqxGrid('getdatainformation').rowscount;
+                        var selectedrowindex = $("#priceListEditTable").jqxGrid('getselectedrowindex');
+                        var rowscount = $("#priceListEditTable").jqxGrid('getdatainformation').rowscount;
                         if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-                            var id = $("#table-alternating-cell-selection").jqxGrid('getrowid', selectedrowindex);
-                            var commit = $("#table-alternating-cell-selection").jqxGrid('deleterow', id);
+                            var id = $("#priceListEditTable").jqxGrid('getrowid', selectedrowindex);
+                            var commit = $("#priceListEditTable").jqxGrid('deleterow', id);
                         }
                     });
                 }
             });
-        $('#table-alternating-cell-selection').jqxGrid({rowsheight: 28});
+        $('#priceListEditTable').jqxGrid({rowsheight: 28});
     }
 
-var showQuoteListPanel = function(){
-    $.ajax({
-        url: '/showQuoteListPanel',
-        type: 'post',
-        dataType: 'json',
-        cache: false,
-        timeout: 5000,
-        success: function (data) {
-            if (data.success) {
-                $("#quoteListPage").html(data.htmlContent);
-                initQuoteListTable();
-                $("#quoteListPanel").show();
-            }
-            else {
-                showErrorMsg(data.errorHead, data.errorMsg);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            showErrorMsgDefault();
+var initMyQuoteListQueryPanel = function(userId){
+    var param = {"reporterId": userId};
+
+    var rendertoolbar = function (toolbar) {
+        var container = createToolbarContiner();
+        toolbar.append(container);
+        showTableOperationButton(container, 'deleterowbutton', '删除', deleteQuote);
+        showTableOperationButton(container, 'printQuotebutton', '打印', printQuote);
+    }
+
+    var deleteQuote = function(){
+        var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
+        var rowscount = $("#quoteListTable").jqxGrid('getdatainformation').rowscount;
+        if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+            var id = $("#quoteListTable").jqxGrid('getrowid', selectedrowindex);
+            var commit = $("#quoteListTable").jqxGrid('deleterow', id);
         }
-    });
+    }
+
+    var printQuote = function(){
+        var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
+        var data = $('#quoteListTable').jqxGrid('getrowdata', selectedrowindex);
+        $.ajax({
+            data:data,
+            url: '/showPrintQuotePanel',
+            type: 'post',
+            dataType: 'json',
+            cache: false,
+            timeout: 5000,
+            success: function (data) {
+                if (data.success) {
+                    $("#printQuotePanel").html(data.htmlContent);
+                    $("#printQuoteDialog_printButton").click(function () {
+                        $("#quotePrintarea").printArea();
+                    });
+                    $("#printQuoteDialog").modal('show');
+                }
+                else {
+                    showErrorMsg(data.errorHead, data.errorMsg);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                showErrorMsgDefault();
+            }
+        });
+    }
+
+    initQuoteListTable(param, rendertoolbar);
 }
 
-var initQuoteListTable = function () {
+var initMyQuoteListEditPanel = function(param){
+    var editQuote = function () {
+        var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
+        var rowscount = $("#quoteListTable").jqxGrid('getdatainformation').rowscount;
+        if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+            var quote = $('#quoteListTable').jqxGrid('getrowdata', selectedrowindex);
+            var data = {"quoteId":quote.id};
+            $(".content-panel").hide();
+            showContentPanel('showPanel_addQuote', data, function(){
+                initAddQuote(param.actionId, quote);
+            });
+        }
+    }
+
+    var rendertoolbar = function (toolbar) {
+        var container = createToolbarContiner();
+        toolbar.append(container);
+        showTableOperationButton(container, 'editrowbutton', '更新', editQuote);
+    }
+
+    initQuoteListTable(param, rendertoolbar);
+}
+
+var initQuoteListTable = function (filterParam, rendertoolbar) {
     /*---------------- test data ----------------*/
     var data = new Array();
     data[0] = {};
@@ -355,6 +425,7 @@ var initQuoteListTable = function () {
 
     var source =
     {
+        data: filterParam,
         datatype: "json",
         datafields: [
             {name: 'id', type: 'string'},
@@ -362,10 +433,12 @@ var initQuoteListTable = function () {
             {name: 'quoteId', type: 'string'},
             {name: 'quoteNum', type: 'string'},
             {name: 'companyName', type: 'string'},
+            {name: 'companyId', type: 'string'},
             {name: 'customerName', type: 'string'},
             {name: 'customerId', type: 'string'},
             {name: 'reportDate', type: 'string'},
-            {name: 'reporter', type: 'string'}
+            {name: 'reporter', type: 'string'},
+            {name: 'sectionId', type: 'string'}
         ],
         url: '/getQuote',
         deleterow: function (rowid, commit) {
@@ -458,58 +531,15 @@ var initQuoteListTable = function () {
             columns: columns,
             scrollBarSize: 8,
             showtoolbar: true,
-            rendertoolbar: function (toolbar) {
-                var me = this;
-                var container = $("<div class='btn-group' style='margin: 5px;'></div>");
-                toolbar.append(container);
-                container.append('<button id="deleterowbutton" class="btn btn-small">删除</button>');
-                container.append('<button id="printQuotebutton" class="btn btn-small">打印</button>');
-                $("#deleterowbutton").jqxButton();
-                $("#printQuotebutton").jqxButton();
-                // delete row.
-                $("#deleterowbutton").on('click', function () {
-                    var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
-                    var rowscount = $("#quoteListTable").jqxGrid('getdatainformation').rowscount;
-                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-                        var id = $("#quoteListTable").jqxGrid('getrowid', selectedrowindex);
-                        var commit = $("#quoteListTable").jqxGrid('deleterow', id);
-                    }
-                });
-                //print quote.
-                $("#printQuotebutton").on('click', function () {
-                    showPrintQuotePanel();
-                });
-            }
+            rendertoolbar : rendertoolbar
+            //rendertoolbar: function (toolbar) {
+            //    var container = createToolbarContiner();
+            //    toolbar.append(container);
+            //    showTableOperationButton(container, 'deleterowbutton', '删除', deleteQuote);
+            //    showTableOperationButton(container, 'printQuotebutton', '打印', printQuote);
+            //}
         });
     $('#quoteListTable').jqxGrid({rowsheight: 28});
-
-    var showPrintQuotePanel = function(){
-        var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
-        var data = $('#quoteListTable').jqxGrid('getrowdata', selectedrowindex);
-        $.ajax({
-            data:data,
-            url: '/showPrintQuotePanel',
-            type: 'post',
-            dataType: 'json',
-            cache: false,
-            timeout: 5000,
-            success: function (data) {
-                if (data.success) {
-                    $("#printQuotePanel").html(data.htmlContent);
-                    $("#printQuoteDialog_printButton").click(function () {
-                        $("#quotePrintarea").printArea();
-                    });
-                    $("#printQuoteDialog").modal('show');
-                }
-                else {
-                    showErrorMsg(data.errorHead, data.errorMsg);
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                showErrorMsgDefault();
-            }
-        });
-    }
 
     initQuoteListSubTable();
     $("#quoteListTable").on('rowselect', function (event) {
@@ -904,7 +934,7 @@ var initPriceListTable = function () {
 //        }
 //    ]
 //    // initialize jqxGrid
-//    $("#table-alternating-cell-selection").jqxGrid(
+//    $("#priceListEditTable").jqxGrid(
 //        {
 //            width: '100%',
 //            height: '90%',
@@ -931,11 +961,11 @@ var initPriceListTable = function () {
 //                $("#updaterowbutton").jqxButton();
 //                // update row.
 //                $("#updaterowbutton").on('click', function () {
-//                    var selectedrowindex = $("#table-alternating-cell-selection").jqxGrid('getselectedrowindex');
-//                    var rowscount = $("#table-alternating-cell-selection").jqxGrid('getdatainformation').rowscount;
+//                    var selectedrowindex = $("#priceListEditTable").jqxGrid('getselectedrowindex');
+//                    var rowscount = $("#priceListEditTable").jqxGrid('getdatainformation').rowscount;
 //                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-//                        var datarow = $('#table-alternating-cell-selection').jqxGrid('getrowdata', 0);
-//                        var id = $("#table-alternating-cell-selection").jqxGrid('getrowid', selectedrowindex);
+//                        var datarow = $('#priceListEditTable').jqxGrid('getrowdata', 0);
+//                        var id = $("#priceListEditTable").jqxGrid('getrowid', selectedrowindex);
 //                        $.ajax({
 //                            data: datarow,
 //                            url: '/addPrice',
@@ -956,32 +986,32 @@ var initPriceListTable = function () {
 //                                showErrorMsgDefault();
 //                            }
 //                        });
-//                        //var commit = $("#table-alternating-cell-selection").jqxGrid('updaterow', id, datarow);
-//                        //$("#table-alternating-cell-selection").jqxGrid('ensurerowvisible', selectedrowindex);
+//                        //var commit = $("#priceListEditTable").jqxGrid('updaterow', id, datarow);
+//                        //$("#priceListEditTable").jqxGrid('ensurerowvisible', selectedrowindex);
 //                    }
 //                });
 //                // create new row.
 //                $("#addrowbutton").on('click', function () {
 //                    var datarow = generaterow();
-//                    var commit = $("#table-alternating-cell-selection").jqxGrid('addrow', null, datarow);
+//                    var commit = $("#priceListEditTable").jqxGrid('addrow', null, datarow);
 //                });
 //                // delete row.
 //                $("#deleterowbutton").on('click', function () {
-//                    var selectedrowindex = $("#table-alternating-cell-selection").jqxGrid('getselectedrowindex');
-//                    var rowscount = $("#table-alternating-cell-selection").jqxGrid('getdatainformation').rowscount;
+//                    var selectedrowindex = $("#priceListEditTable").jqxGrid('getselectedrowindex');
+//                    var rowscount = $("#priceListEditTable").jqxGrid('getdatainformation').rowscount;
 //                    alert(selectedrowindex);
 //                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-//                        var id = $("#table-alternating-cell-selection").jqxGrid('getrowid', selectedrowindex);
-//                        var commit = $("#table-alternating-cell-selection").jqxGrid('deleterow', id);
+//                        var id = $("#priceListEditTable").jqxGrid('getrowid', selectedrowindex);
+//                        var commit = $("#priceListEditTable").jqxGrid('deleterow', id);
 //                    }
 //                });
 //            }
 //        });
-//    $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'severity', 'editable', false);
-//    $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'alarmnumber', 'editable', false);
-//    $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'alarmtext', 'editable', false);
-//    $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'cancel', 'editable', false);
-//    $("#table-alternating-cell-selection").jqxGrid('setcolumnproperty', 'alarmtime', 'editable', false);
-//    $('#table-alternating-cell-selection').jqxGrid({rowsheight: 28});
-//    //$('#table-alternating-cell-selection').jqxGrid({ autoheight: true});
+//    $("#priceListEditTable").jqxGrid('setcolumnproperty', 'severity', 'editable', false);
+//    $("#priceListEditTable").jqxGrid('setcolumnproperty', 'alarmnumber', 'editable', false);
+//    $("#priceListEditTable").jqxGrid('setcolumnproperty', 'alarmtext', 'editable', false);
+//    $("#priceListEditTable").jqxGrid('setcolumnproperty', 'cancel', 'editable', false);
+//    $("#priceListEditTable").jqxGrid('setcolumnproperty', 'alarmtime', 'editable', false);
+//    $('#priceListEditTable').jqxGrid({rowsheight: 28});
+//    //$('#priceListEditTable').jqxGrid({ autoheight: true});
 //};

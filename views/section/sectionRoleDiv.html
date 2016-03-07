@@ -1,0 +1,12 @@
+<%
+roles.forEach(function(role,index){
+%>
+<div class="alert" style="width: auto; float: left; margin: 10px">
+    <%=role.name%>
+    <% if(!role.setBySys){ %>
+    <a href="#" class="n-close" name="removeSectionRole" data-role-id="<%=role.id%>" data-section-id="<%=sectionId%>" data-dismiss="alert"><span class="icon icon-close"></span></a>
+    <%}%>
+</div>
+<%
+})
+%>

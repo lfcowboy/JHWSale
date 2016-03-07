@@ -1,0 +1,34 @@
+<%
+sectionRoles.forEach(function(role,index){
+%>
+<div class="panel-section">
+    <h2><%= role.name %>
+        <button name="showSectionRoleUserButton" class="btn btn-icon n-toggle-button" data-toggle="button"
+                data-section-id="<%=sectionId%>"
+                data-role-id="<%= role.id %>">
+            <span class="icon icon-profile"></span>
+        </button>
+    </h2>
+    <div>
+        <dd>
+            <div class="n-search n-search-clearable">
+                <a class="n-search-icon dropdown-toggle" id="setGroup_userSearch<%=role.id%>" name="setGroup_userSearch"
+                   data-section-id="<%=sectionId%>" data-role-id="<%=role.id%>" data-toggle="dropdown"
+                   aria-expanded="false" href="javascript:void(0)">
+                    <span class="icon icon-search"></span>
+                    <span class="icon icon-arrow"></span></a>
+                <input id="setGroup_userName<%=role.id%>" type="text" class="n-inputfield n-search-input" placeholder="添加">
+                <a class="n-search-control-icon" href="javascript:void(0)">
+                    <span class="icon icon-close"></span></a>
+                <ul class="dropdown-menu" id="setGroup_userList<%=role.id%>" role="menu"
+                    aria-labelledby="setGroup_userSearch">
+                </ul>
+            </div>
+        </dd>
+    </div>
+    <div id="sectionRoleUserDiv<%=role.id%>" style="height: auto; overflow:hidden" hidden>
+    </div>
+</div>
+<%
+})
+%>

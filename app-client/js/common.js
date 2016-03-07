@@ -13,9 +13,14 @@ var searchDropdown = function (searchList, searchField, params, url, callback) {
         success: function (data) {
             var lis = '';
             for (var i in data) {
-                lis = lis + '<li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:selectItem(\'' + searchField + '\',\'' + data[i].id + '\',\'' + data[i].name + '\',' + callback + ')"><span>' + data[i].name + '</span></a></li>';
+                lis = lis + '<li role="presentation"><a name="searchListItemName" role="menuitem" tabindex="-1" data-id="' + data[i].id + '" data-name="' + data[i].name + '"><span>' + data[i].name + '</span></a></li>';
             }
             $('#' + searchList).append(lis);
+            $("a[name='searchListItemName']").click(function () {
+                var id = $(this).data("id");
+                var name = $(this).data("name");
+                selectItem(searchField, id, name, params, callback);
+            });
         },
         error: function (jqXHR, textStatus, errorThrown) {
         }
@@ -26,9 +31,9 @@ var clearSearch =  function(searchField){
     clearSelect(searchField);
 };
 
-var selectItem = function (searchField, itemValue, itemText, callback) {
+var selectItem = function (searchField, itemValue, itemText, params, callback) {
     $("#" + searchField).val(itemText);
-    callback(itemValue);
+    callback(itemValue, params);
 };
 
 var clearSelect = function(searchField){
@@ -80,11 +85,10 @@ var showError = function(msg){
     $("#infoPanel").jqxNotification("open");
 }
 
-var showContentPanel = function( panelUrl,data,callback ){
+var showContentPanel = function( panelUrl,param,callback ){
     $.ajax({
-        data: data,
+        data: param,
         url: panelUrl,
-        type: 'post',
         dataType: 'json',
         cache: false,
         timeout: 5000,
@@ -109,6 +113,7 @@ var initSectionList = function (actionId) {
     {
         datatype: "json",
         data: params,
+        async: false,
         datafields: [
             {name: 'id', type: 'string'},
             {name: 'name', type: 'string'}
@@ -118,7 +123,7 @@ var initSectionList = function (actionId) {
     };
     var sectionDataAdapter = new $.jqx.dataAdapter(sectionSource);
 
-    $("#setSectionUser_section").jqxDropDownList({
+    $("#commonDropdown_userActionSection").jqxDropDownList({
         source: sectionDataAdapter,
         selectedIndex: 1,
         width: '200',
@@ -127,3 +132,17 @@ var initSectionList = function (actionId) {
         valueMember: 'id'
     });
 };
+
+var showTableOperationButton = function( container, buttonId, buttonName, clickFunc){
+    container.append(getTabelButtonHTML(buttonId, buttonName));
+    $('#' + buttonId).jqxButton();
+    $('#' + buttonId).on('click', clickFunc);
+}
+
+var createToolbarContiner = function(){
+    return $('<div class="btn-group" style="margin: 5px;"></div>');
+}
+
+var getTabelButtonHTML = function(buttonId, buttonName){
+    return '<button id="' + buttonId + '" class="btn btn-small">' + buttonName + '</button>';
+}

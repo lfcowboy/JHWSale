@@ -12,16 +12,27 @@ var section = require('./app-server/server_group');
 module.exports = function (app) {
     app.get('/*', index.loginFilter);
     app.get('/', index.index);
-    app.post('/showQuoteListPanel', quote.showQuoteListPanel);
-    app.post('/showPriceListPanel', quote.showPriceListPanel);
+    app.get('/showPanel_quoteList', quote.showQuoteListPanel);
+    app.get('/showPanel_myQuoteList', quote.showQuoteListPanel);
+    app.get('/showPriceListPanel', quote.showPriceListPanel);
     app.post('/showPrintQuotePanel', quote.showPrintQuotePanel);
-    app.post('/showPanel_setRole',role.showSetRolePanel);
-    app.post('/showPanel_setGroup', section.showSetGroupPanel);
-    app.post('/showPanel_setSectionUser', section.showSetSectionUserPanel);
-    app.post('/showPanel_setSectionRole', section.showSetSectionRolePanel);
-    app.post('/showPanel_setSectionRoleUser', section.showSetSectionRoleUserPanel);
+    app.get('/showPanel_setRole',role.showSetRolePanel);
+    app.get('/showPanel_setGroup', section.showSetGroupPanel);
+    app.get('/showPanel_sectionList', section.showSectionListPanel);
+    app.get('/showPanel_roleList', role.showRoleListPanel);
+    app.get('/showPanel_roleActions', role.showRoleActionsPanel);
+    app.get('/showPanel_setSectionUser', section.showSetSectionUserPanel);
+    app.get('/showPanel_setSectionRole', section.showSetSectionRolePanel);
+    app.get('/showPanel_setSectionRoleUser', section.showSetSectionRoleUserPanel);
+    app.get('/showPanel_companyList', customer.showCompanyListPanel);
+    app.get('/showPanel_customerList', customer.showCustomerListPanel);
+    app.get('/showPanel_addQuote', quote.showAddQuotePanel);
+    app.get('/showPanel_editPriceList', quote.showEditPriceListPanel);
+
+    app.get('/showPanel_addRole', role.showAddRoleDialog);
 
     //section
+    app.get('/getSections', section.getSections);
     app.get('/getSectionUsers', section.getSectionUsers);
     app.get('/getSectionRoleUsers', section.getSectionUsers);
     app.get('/getSectionRoleUsersDiv', section.getSectionRoleUsersDiv);
@@ -37,7 +48,9 @@ module.exports = function (app) {
     //role
     app.get('/getRoles', role.getRoles);
     app.get('/getActions', role.getActions);
+    app.get('/getAllActionsByRoleId', role.getAllActionsByRoleId);
     app.post('/addRole', role.addRole);
+    app.post('/updateRole', role.updateRole);
 
     //user
     app.get('/getUsers', user.getUsers);
@@ -54,15 +67,20 @@ module.exports = function (app) {
     app.post('/addChip',chip.addChip);
     app.get('/getPackage',chip.getPackage);
     app.get('/getDefaultRemarks', quote.getDefaultRemarks);
-    app.post('/addCustomer',customer.addCustomer);
-    app.post('/getCustomer', customer.getCustomerByCompanyId);
-    app.post('/addCompany', customer.addCompany);
-    app.get('/getCompany', customer.getCompany);
     app.post("/addQuote", quote.addQuote);
+    app.post("/updateQuote", quote.updateQuote);
     app.get('/loadLogin', user.loadLogin);
     app.post('/doLogin', user.doLogin);
     app.get('/doLogout', user.doLogout);
     app.get("/getNewQuoteNum", quote.getNewQuoteNum);
     app.post("/addUser", user.addUser);
     app.post("/addGroup", section.addDepart);
+
+    //customer
+    app.post('/addCustomer',customer.addCustomer);
+    app.post('/getCustomer', customer.getCustomerByCompanyId);
+    app.post('/addCompany', customer.addCompany);
+    app.get('/getCompany', customer.getCompany);
+    app.get('/getCompanys', customer.getCompanys);
+    app.get('/getCustomers', customer.getCustomers);
 };

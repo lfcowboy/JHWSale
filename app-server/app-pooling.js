@@ -20,6 +20,7 @@ exports.iniPool = function () {
 
 //select
 exports.query = function (sql, callback) {
+    console.log("SELECT ==> " + sql);
     Pool.prototype.pool.getConnection(function (err, conn) {
         if (err) {
             console.log("POOL ==> " + err);
@@ -29,11 +30,10 @@ exports.query = function (sql, callback) {
             conn.query(sql, function (qerr, rows, fields) {
                 conn.release();
                 if (qerr) {
-                    console.log(err);
+                    console.log(qerr);
                     callback(qerr, null, null);
                 }
                 else {
-                    console.log("SELECT ==> " + sql);
                     for (var i in rows) {
                         console.log(rows[i]);
                     }
@@ -46,6 +46,7 @@ exports.query = function (sql, callback) {
 
 //insert
 exports.insert = function (sql, callback) {
+    console.log("INSERT == >" + sql);
     Pool.prototype.pool.getConnection(function (err, conn) {
         if (err) {
             console.log("POOL ==> " + err);
@@ -55,10 +56,9 @@ exports.insert = function (sql, callback) {
             conn.query(sql, function (ierr, res) {
                 conn.release();
                 if(ierr){
-                    callback(ierr, null);
                     console.log(ierr);
+                    callback(ierr, null);
                 }else{
-                    console.log("INSERT == >" + sql);
                     console.log(res);
                     callback(ierr, res);
                 }

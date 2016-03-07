@@ -1,9 +1,59 @@
 /**
  * Created by fenglv on 2016/1/5.
  */
+var initSectionListPanel = function () {
+    initSectionListTable();
+}
+
+var initSectionListTable = function () {
+    var source =
+    {
+        datatype: "json",
+        datafields: [
+            {name: 'id', type: 'string'},
+            {name: 'name', type: 'string'},
+            {name: 'owner', type: 'string'}
+        ],
+        url: '/getSections'
+    };
+
+    var dataAdapter = new $.jqx.dataAdapter(source);
+
+    var columns = [
+        {
+            text: '名字',
+            datafield: 'name',
+            filtertype: 'input',
+            width: '50%'
+        },
+        {
+            text: '管理员',
+            datafield: 'owner',
+            filtertype: 'input',
+            width: '50%'
+        }
+    ];
+
+    // initialize jqxGrid
+    $('#sectionListTable').jqxGrid(
+        {
+            width: '100%',
+            source: dataAdapter,
+            selectionmode: 'singlerow',
+            pageable: true,
+            autoheight: true,
+            filterable: true,
+            showfilterrow: true,
+            altRows: true,
+            columns: columns,
+            scrollBarSize: 8
+        });
+    $('#sectionListTable').jqxGrid({rowsheight: 28});
+}
+
 var initSetSectionUserPanel = function (actionId) {
     initSectionList(actionId);
-    $("#setSectionUser_section").on('select', function (event) {
+    $("#commonDropdown_userActionSection").on('select', function (event) {
         if (event.args) {
             var item = event.args.item;
             if (item) {
@@ -15,7 +65,7 @@ var initSetSectionUserPanel = function (actionId) {
 
 var initSetSectionRolePanel = function (actionId) {
     initSectionList(actionId);
-    $("#setSectionUser_section").on('select', function (event) {
+    $("#commonDropdown_userActionSection").on('select', function (event) {
         if (event.args) {
             var item = event.args.item;
             if (item) {
@@ -25,11 +75,11 @@ var initSetSectionRolePanel = function (actionId) {
     });
 
     $('#setSectionRole_sectionRoleSearch').click(function () {
-        var paras = {'sectionId': $("#setSectionUser_section").jqxDropDownList('getSelectedItem').value};
+        var paras = {'sectionId': $("#commonDropdown_userActionSection").jqxDropDownList('getSelectedItem').value};
 
         function addSectionRole(roleId) {
             var params = {
-                sectionId: $('#setSectionUser_section').jqxDropDownList('getSelectedItem').value,
+                sectionId: $('#commonDropdown_userActionSection').jqxDropDownList('getSelectedItem').value,
                 roleId: roleId
             };
             $.ajax({
@@ -60,7 +110,7 @@ var initSetSectionRolePanel = function (actionId) {
 var initSetSectionRoleUserPanel = function (actionId) {
     initSectionList(actionId);
 
-    $("#setSectionUser_section").on('select', function (event) {
+    $("#commonDropdown_userActionSection").on('select', function (event) {
         if (event.args) {
             var item = event.args.item;
             if (item) {
@@ -214,11 +264,11 @@ var initUserListTable = function (sectionId) {
     $('#userListTable').jqxGrid({rowsheight: 28});
 
     $('#setSectionUser_sectionUserSearch').click(function () {
-        var paras = {'sectionId': $("#setSectionUser_section").jqxDropDownList('getSelectedItem').value};
+        var paras = {'sectionId': $("#commonDropdown_userActionSection").jqxDropDownList('getSelectedItem').value};
 
         function addSectionUser(userId) {
             var params = {
-                sectionId: $('#setSectionUser_section').jqxDropDownList('getSelectedItem').value,
+                sectionId: $('#commonDropdown_userActionSection').jqxDropDownList('getSelectedItem').value,
                 userId: userId
             };
             $.ajax({
@@ -271,12 +321,13 @@ var showSectionRoles = function (sectionId) {
                 });
 
                 $("a[name='setGroup_userSearch']").click(function () {
-                    var paras = {sectionId: $(this).data("sectionId")};
                     var roleId = $(this).data('roleId');
-                    function addSectionRoleUser(userId) {
+                    var sectionId = $(this).data("sectionId");
+                    var paras = {sectionId: sectionId, roleId: roleId};
+                    function addSectionRoleUser(userId, otherParams) {;
                         var params = {
-                            sectionId: $(this).data('sectionId'),
-                            roleId: $(this).data('roleId'),
+                            sectionId: otherParams.sectionId,
+                            roleId: otherParams.roleId,
                             userId: userId
                         };
                         $.ajax({
@@ -289,8 +340,8 @@ var showSectionRoles = function (sectionId) {
                             success: function (data) {
                                 if (data.success) {
                                     showSuccess(data.confirmMsg);
-                                    if ($('#sectionRoleUserDiv').is(':visible')) {
-                                        showSectionRoleUserDiv(function () {
+                                    if ($('#sectionRoleUserDiv' + roleId).is(':visible')) {
+                                        showSectionRoleUserDiv(sectionId, roleId, function () {
                                         });
                                     }
                                 } else {

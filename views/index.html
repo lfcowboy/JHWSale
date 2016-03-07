@@ -100,6 +100,7 @@
                     <div class="row n-banner-2nd">
 
                         <ul class="nav n-banner-nav n-banner-tabs">
+                            <% if(actions.quote){%>
                             <li class="dropdown">
                                 <a aria-expanded="false" class="n-banner-dropdown-toggle" data-toggle="dropdown"
                                    href="#" role="button">
@@ -107,18 +108,39 @@
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li id="addQuoteMenu">
-                                        <a href="#"><span>新建报价单</span></a>
-                                    </li>
                                     <li class="n-dropdown-menu-item-has-child">
                                         <a href="#"><span>查询</span><i class="icon icon-next"></i></a>
                                         <ul class="n-dropdown-sub-menu">
+                                            <% if(actions.queryQuote){%>
                                             <li id="quoteListMenu"><a href="#"><span>报价单</span></a></li>
+                                            <%}%>
+                                            <% if(actions.queryChipPrice){%>
                                             <li id="priceListMenu"><a href="#"><span>芯片报价</span></a></li>
+                                            <%}%>
+                                        </ul>
+                                    </li>
+                                    <li class="n-dropdown-menu-item-has-child">
+                                        <a href="#"><span>我的报价单</span><i class="icon icon-next"></i></a>
+                                        <ul class="n-dropdown-sub-menu">
+                                            <% if(actions.newMyQuote){%>
+                                            <li id="myQuoteNewMenu" data-action-id="<%= actions.newMyQuote.id %>">
+                                                <a href="#"><span>新建</span></a>
+                                            </li>
+                                            <%}%>
+                                            <% if(actions.queryMyQuote){%>
+                                            <li id="myQuoteListQueryMenu" data-user-id="<%= user.id%>"><a href="#"><span>查询</span></a></li>
+                                            <%}%>
+                                            <% if(actions.editMyQuote){%>
+                                            <li id="myQuoteListEditMenu" data-user-id="<%= user.id%>" data-action-id="<%= actions.editMyQuote.id %>"><a href="#"><span>编辑</span></a></li>
+                                            <%}%>
+                                            <% if(actions.deleteMyQuote){%>
+                                            <li id="myQuoteListDeleteMenu"><a href="#"><span>删除</span></a></li>
+                                            <%}%>
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
+                            <% } %>
                             <li>
                                 <a href="#"><span>销售</span></a>
                             </li>
@@ -163,8 +185,10 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li id="addCompanyMenu"><a href="#"><span>客户公司</span></a></li>
-                                        <li><a href="#addCustomerDialog" data-backdrop="false" data-toggle="modal"><span>客户联系人</span></a></li>
+                                        <li id="addCompanyMenu"><a href="#"><span>新建客户公司</span></a></li>
+                                        <li><a href="#addCustomerDialog" data-backdrop="false" data-toggle="modal"><span>新建客户联系人</span></a></li>
+                                        <li id="companyListMenu"><a href="#"><span>客户公司总览</span></a></li>
+                                        <li id="customerListMenu"><a href="#"><span>客户联系人总览</span></a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -199,16 +223,13 @@
                                                 <span>添加部门</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="#addRoleDialog" data-toggle="modal" data-backdrop="true">
+                                        <li id="editRoleMenu">
+                                            <a href="#">
                                                 <span>添加角色</span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="#listRoleDialog" data-toggle="modal" data-backdrop="true">
-                                                <span>角色列表</span>
-                                            </a>
-                                        </li>
+                                        <li id="sectionListMenu"><a href="#"><span>部门总览</span></a></li>
+                                        <li id="roleListMenu"><a href="#"><span>角色总览</span></a></li>
                                     </ul>
                                 </li>
                                 <% } %>
@@ -295,29 +316,11 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <% include role\addRole.html %>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
         <% include chip\addChip.html %>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
-        <% include quote\addQuote.html %>
-    </div>
-</div>
-<div class="row">
     <div id="printQuotePanel" class="col-md-12">
-    </div>
-</div>
-<div class="row">
-    <div id="addPricePanel" class="col-md-12">
-    </div>
-</div>
-<div class="row">
-    <div id="quoteListPage" class="col-md-12">
     </div>
 </div>
 <div class="row">
@@ -355,6 +358,7 @@
 <script src="wulfdist/js/jqxgrid.pager.js"></script>
 <script src="jqx/js/jqxnotification.js"></script>
 <script src="jqx/js/jqxnumberinput.js"></script>
+<script src="jqx/js/jqxsplitter.js"></script>
 <script src="jquery/js/jquery.PrintArea.js"></script>
 <script src="wulfdist/js/wulf.js"></script>
 <script src="wulfdist/js/fuelux.js"></script>

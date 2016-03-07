@@ -1,0 +1,12 @@
+<%
+users.forEach(function(user,index){
+%>
+<div class="alert" style="width: auto; float: left; margin: 10px">
+    <%=user.name%>
+    <% if(!(roleId === '1' && user.id === sectionOwner) && !(roleId === '0' && user.id === 0)){%>
+    <a href="#" class="n-close" name="removeUserRole" data-user-id="<%=user.id%>" data-section-id="<%=sectionId%>" data-role-id="<%=roleId%>" data-dismiss="alert"><span class="icon icon-close"></span></a>
+    <%}%>
+</div>
+<%
+})
+%>

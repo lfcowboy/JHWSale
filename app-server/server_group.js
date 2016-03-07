@@ -59,10 +59,16 @@ exports.addDepart = function (req, res) {
     });
 }
 
-exports.getSections = function (callback) {
-    var sql = "select id, name from depart";
+exports.showSectionListPanel = function (req, res) {
+    app.render('section/sectionList', function (err, html) {
+        res.json({success: true, htmlContent: html});
+    });
+}
+
+exports.getSections = function (req, res) {
+    var sql = "select depart.id as id, depart.name as name, user.name as owner from depart, user where depart.owner = user.id";
     pool.query(sql, function (qerr, rows, fields) {
-        callback(rows);
+        res.json(rows);
     })
 }
 
@@ -74,7 +80,7 @@ exports.getSectionUsers = function (req, res) {
 }
 
 exports.getSectionRoleUsersDiv = function (req, res) {
-    var getSectionOwnerSQL = 'select id as sectionOwner from depart where id = "' + req.query.sectionId + '"';
+    var getSectionOwnerSQL = 'select owner as sectionOwner from depart where id = "' + req.query.sectionId + '"';
     console.log(getSectionOwnerSQL);
     pool.query(getSectionOwnerSQL, function (ownerErr, ownerRows, ownerFields) {
         var sectionOwner = ownerRows[0].sectionOwner;

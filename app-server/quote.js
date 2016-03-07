@@ -17,17 +17,16 @@ exports.addQuote = function (req, res) {
             }
             else {
                 var companyId = rows[0].id;
-                var addSQL = 'insert into quote (customerId, quoteNum, companyId, currency, remark, reporterId, reportDate) ' +
-                    'values ("' + req.body.customerId + '","' + req.body.quoteNum + '","' + companyId + '","' + req.body.currency + '","' + req.body.remark + '","' + req.session.user.id + '",curdate())';
+                var addSQL = 'insert into quote (customerId, quoteNum, companyId, currency, remark, reporterId, reportDate, sectionId) ' +
+                    'values ("' + req.body.customerId + '","' + req.body.quoteNum + '","' + companyId + '","' + req.body.currency + '",' +
+                    '"' + req.body.remark + '","' + req.session.user.id + '",curdate(),"' + req.body.sectionId + '")';
                 pool.insert(addSQL, function (err) {
                     if (err) {
                         res.json({success: false, errorHead: '失败', errorMsg: '报价单新建失败！'});
                     }
                     else {
                         pool.query(constants.SQL_LAST_INSERT_ID, function (qerr, rows, fields) {
-                            app.render('quote/addPrice', {'quoteId': rows[0].id}, function (err, html) {
-                                res.json({success: true, msg: '报价单新建成功！', htmlContent: html, quoteId: rows[0].id});
-                            });
+                            res.json({success: true, msg: '报价单新建成功！', quoteId: rows[0].id});
                         });
                     }
                 });
@@ -36,8 +35,32 @@ exports.addQuote = function (req, res) {
     });
 };
 
+exports.updateQuote = function (req, res) {
+    customer.getCompanyByName(req, res, function (err, rows, fields) {
+        if (err) {
+            res.json({success: false, errorHead: '失败', errorMsg: '报价单新建失败！'});
+        }
+        else {
+            if (rows.length === 0) {
+                res.json({success: false, errorHead: '失败', errorMsg: '请输入正确的客户公司！'});
+            }
+            else {
+                var companyId = rows[0].id;
+                var addQuoteSQL = 'update quote set customerId = "' + req.body.customerId + '", currency = "' + req.body.currency + '", ' +
+                    'companyId = "' + companyId + '", remark = "' + req.body.remark + '", sectionId = "' + req.body.sectionId + '" ' +
+                    'where id = "' + req.body.id + '"';
+                pool.insert(addQuoteSQL, function (addErr, result) {
+                    res.json({success: true, msg: '报价单变更成功！', quoteId: req.body.id});
+                });
+            }
+        }
+    });
+}
+
 exports.addPrice = function (req, res) {
-    var addSQL = 'insert into price (chipId,quoteId,min,max,price,tax,privateRemark,publicRemark) values (' + req.body.chipId + ',' + req.body.quoteId + ',' + req.body.min + ',' + req.body.max + ',' + req.body.price + ',' + req.body.tax + ',"' + req.body.privateRemark + '","' + req.body.publicRemark + '")';
+    var addSQL = 'insert into price (chipId,quoteId,min,max,price,tax,privateRemark,publicRemark) ' +
+        'values (' + req.body.chipId + ',' + req.body.quoteId + ',' + req.body.min + ',' + req.body.max + ',' + req.body.price + ',' +
+        req.body.tax + ',"' + req.body.privateRemark + '","' + req.body.publicRemark + '")';
     pool.insert(addSQL, function (err) {
         if (err) {
             res.json({success: false, errorHead: '失败', errorMsg: '报价新建失败！'});
@@ -97,7 +120,7 @@ exports.deleteQuote = function (req, res) {
     });
 }
 
-var queryPriceSQL = 'select price.chipId as chipId, chip.code as chipCode, quote.quoteNum as quoteNum, ' +
+var queryPriceSQL = 'select price.id as id, price.chipId as chipId, chip.code as chipCode, quote.quoteNum as quoteNum, ' +
     'price.min as min, price.max as max, price.price as price, price.tax as tax, price.privateRemark as privateRemark, ' +
     'price.publicRemark as publicRemark, quote.remark as remark, company.name as companyName, customer.name as customerName, ' +
     'user.name as reporter, date_format(quote.reportDate,"%Y-%m-%d") as reportDate from price, quote, chip, company, customer, user ' +
@@ -109,11 +132,13 @@ exports.getPrice = function (req, res) {
     })
 };
 
-var queryQuoteSQL = 'select quote.id as id, quote.quoteNum as quoteNum, quote.remark as remark, company.name as companyName, customer.id as customerId, customer.name as customerName, ' +
-    'user.name as reporter, date_format(quote.reportDate,"%Y-%m-%d") as reportDate from quote, company, customer, user ' +
-    'where quote.companyId = company.id and quote.customerId = customer.id and quote.reporterId = user.id';
-
 exports.getQuote = function (req, res) {
+    var queryQuoteSQL = 'select quote.id as id, quote.quoteNum as quoteNum, quote.remark as remark, company.name as companyName, company.id as companyId, customer.id as customerId, customer.name as customerName, ' +
+        'user.name as reporter, date_format(quote.reportDate,"%Y-%m-%d") as reportDate, quote.sectionId as sectionId from quote, company, customer, user ' +
+        'where quote.companyId = company.id and quote.customerId = customer.id and quote.reporterId = user.id';
+    if(req.query.reporterId){
+        queryQuoteSQL += ' and quote.reporterId = "' + req.query.reporterId + '"';
+    }
     pool.query(queryQuoteSQL, function (qerr, rows, fields) {
         res.json(rows);
     })
@@ -153,7 +178,30 @@ exports.getDefaultRemarks = function (req, res) {
     });
 }
 
+exports.showAddQuotePanel = function (req, res) {
+    var data = {'quote': new Object()};
+    if (req.query.quoteId) {
+        var getQuoteSQL = 'select * from quote where id = "' + req.query.quoteId + '"';
+        pool.query(getQuoteSQL, function (qerr, quote) {
+            data.quote = quote[0];
+            app.render('quote/addQuote', data, function (rerr, html) {
+                res.json({success: true, htmlContent: html});
+            });
+        });
+    }else{
+        app.render('quote/addQuote', data, function (rerr, html) {
+            res.json({success: true, htmlContent: html});
+        });
+    }
+}
+
 exports.showQuoteListPanel = function (req, res) {
+    app.render('quote/quoteList', function (err, html) {
+        res.json({success: true, htmlContent: html});
+    });
+}
+
+exports.showMyQuoteListPanel = function (req, res) {
     app.render('quote/quoteList', function (err, html) {
         res.json({success: true, htmlContent: html});
     });
@@ -161,6 +209,13 @@ exports.showQuoteListPanel = function (req, res) {
 
 exports.showPriceListPanel = function (req, res) {
     app.render('quote/priceList', function (err, html) {
+        res.json({success: true, htmlContent: html});
+    });
+}
+
+exports.showEditPriceListPanel = function (req, res) {
+    var param = {quoteId: req.query.quoteId};
+    app.render('quote/addPrice', param, function (err, html) {
         res.json({success: true, htmlContent: html});
     });
 }
