@@ -1,0 +1,15 @@
+body {
+    font-family: 'Arial','Microsoft YaHei','黑体','宋体',sans-serif;
+}
+
+.jqx-grid .jqx-widget-header .jqx-grid-column-header.jqx-widget-header {
+    font-family: 'Arial','Microsoft YaHei','黑体','宋体',sans-serif;
+}
+
+.jqx-grid .jqx-widget-content{
+    font-family: 'Arial','Microsoft YaHei','黑体','宋体',sans-serif;
+}
+
+.jqx-listbox, .jqx-fill-state-normal{
+    font-family: 'Arial','Microsoft YaHei','黑体','宋体',sans-serif;
+}

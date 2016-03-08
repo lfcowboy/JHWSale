@@ -3,6 +3,11 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app-client/jqx/js/jqxnumberinput.js" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app-client/wulfdist" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app-client/wulfdist/css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app-client/wulfdist/fonts" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app-client/wulfdist/img" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app-client/wulfdist/js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app-client/wulfdist/license" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app-server/index.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/quote/addQuote.html" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />

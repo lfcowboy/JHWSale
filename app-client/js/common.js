@@ -51,10 +51,10 @@ var clearList = function(selectlist,menu){
 
 var initList = function(selectlist, menu, data, callback){
     $('#' + menu).empty();
-    var lis = '';
+    var lis = '<li><a href="#">请选择==></a></li>';
     if(data.length > 0 ){
         for (var i in data) {
-            lis = lis + '<li data-value="' + data[i].id + '"><a href="#"><span>' + data[i].name + '</span></a></li>';
+            lis = lis + '<li data-value="' + data[i].id + '"><a href="#">' + data[i].name + '</a></li>';
         }
         $('#' + menu).append(lis);
         $('#' + selectlist).selectlist('enable');
@@ -106,6 +106,22 @@ var showContentPanel = function( panelUrl,param,callback ){
         }
     });
 }
+
+var initSectionListWULF = function (actionId, callback) {
+    var params = {"actionId": actionId};
+    $.ajax({
+        data: params,
+        url: '/getUserActionSection',
+        dataType: 'json',
+        cache: false,
+        timeout: 5000,
+        success: function (data) {
+            initList('addQuote_section', 'addQuote_sectionList', data, callback);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        }
+    });
+};
 
 var initSectionList = function (actionId) {
     var params = {"actionId": actionId};

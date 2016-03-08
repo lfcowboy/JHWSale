@@ -2,20 +2,22 @@
  * Created by fenglv on 2015/8/9.
  */
 var initAddQuote = function (actionId, quote) {
-    initSectionList(actionId);
+    initSectionListWULF(actionId);
     initDefaultRemarkList();
 
     $('#addQuote_companySearch').click(function () {
         var params = {"companyName": $('#addQuote_companyName').val()};
         searchDropdown('addQuote_companyList', 'addQuote_companyName', params, '/getCompany', function (companyId) {
-            initCustomerList(companyId);
+            initCustomerList(companyId, function(){
+                $('#addQuote_customer').selectlist('enable');
+            });
         });
     });
 
     $("#addQuoteButton").click(function () {
         var url = '/addQuote';
         var quoteId;
-        if(quote){
+        if (quote) {
             url = '/updateQuote';
             quoteId = quote.id;
         }
@@ -23,7 +25,7 @@ var initAddQuote = function (actionId, quote) {
         var params = {
             id: quoteId,
             quoteNum: $("#addQuote_quoteNum").val(),
-            sectionId: $("#commonDropdown_userActionSection").val(),
+            sectionId: $("#addQuote_section").selectlist('selectedItem').value,
             companyName: $("#addQuote_companyName").val(),
             currency: $('input[name="currency"]:checked').val(),
             customerId: $("#addQuote_customer").selectlist('selectedItem').value,
@@ -39,9 +41,9 @@ var initAddQuote = function (actionId, quote) {
             timeout: 5000,
             success: function (data) {
                 if (data.success) {
-                    var param = {"quoteId":data.quoteId};
+                    var param = {"quoteId": data.quoteId};
                     $(".content-panel").hide();
-                    showContentPanel('showPanel_editPriceList', param, function(){
+                    showContentPanel('showPanel_editPriceList', param, function () {
                         initPriceTable(param.quoteId);
                     });
                     showSuccess(data.msg);
@@ -56,15 +58,15 @@ var initAddQuote = function (actionId, quote) {
         });
     });
 
-    if(quote){
+    if (quote) {
         $("#addQuote_quoteNum").val(quote.quoteNum);
         var item = $("#commonDropdown_userActionSection").jqxDropDownList('getItemByValue', quote.sectionId);
         $("#commonDropdown_userActionSection").jqxDropDownList('selectItem', item);
         $("#addQuote_companyName").val(quote.companyName);
-        initCustomerList(quote.companyId, function(){
+        initCustomerList(quote.companyId, function () {
             $('#addQuote_customer').selectlist('selectByValue', quote.customerId);
         });
-    }else{
+    } else {
         $.ajax({
             url: '/getNewQuoteNum',
             type: 'get',
@@ -145,86 +147,51 @@ var chipDataAdapter = new $.jqx.dataAdapter(chipSource, {
 });
 
 var initPriceTable = function (quoteId) {
-        /*---------------- test data ----------------*/
-        var data = new Array();
-        data[0] = {};
+    /*---------------- test data ----------------*/
+    var data = new Array();
+    data[0] = {};
 
-        var generaterow = function (i) {
-            var row = {};
-            return row;
-        }
+    var generaterow = function (i) {
+        var row = {};
+        return row;
+    }
 
-        var source =
-        {
-            datatype: "json",
-            datafields: [
-                {name: 'id', type: 'string'},
-                {
-                    name: 'chip',
-                    value: 'chipId',
-                    values: {source: chipDataAdapter.records, value: 'id', name: 'code'}
-                },
-                {name: 'chipId', type: 'string'},
-                {name: 'min', type: 'number'},
-                {name: 'max', type: 'number'},
-                {name: 'price', type: 'number'},
-                {name: 'tax', type: 'number'},
-                {name: 'privateRemark', type: 'string'},
-                {name: 'publicRemark', type: 'Image'}
-            ],
-            url: '/getPriceByQuoteId?quoteId=' + quoteId,
-            addrow: function (rowid, rowdata, position, commit) {
-                commit(true);
+    var source =
+    {
+        datatype: "json",
+        datafields: [
+            {name: 'id', type: 'string'},
+            {
+                name: 'chip',
+                value: 'chipId',
+                values: {source: chipDataAdapter.records, value: 'id', name: 'code'}
             },
-            deleterow: function (rowid, commit) {
-                var data = $('#priceListEditTable').jqxGrid('getrowdata', rowid);
-                if (data.id === undefined) {
-                    commit(true);
-                }else {
-                    $.ajax({
-                        data: data,
-                        url: '/deletePrice',
-                        type: 'post',
-                        dataType: 'json',
-                        cache: false,
-                        timeout: 5000,
-                        success: function (data) {
-                            if (data.success) {
-                                showSuccess(data.msg);
-                                commit(true);
-                            }
-                            else {
-                                showErrorMsg(data.errorHead, data.errorMsg);
-                                commit(false);
-                            }
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            showErrorMsgDefault();
-                            commit(false);
-                        }
-                    });
-                }
-            }
-            ,
-            updaterow: function (rowid, newdata, commit) {
-                var url;
-                if (newdata.id === undefined) {
-                    url = '/addPrice';
-                }
-                else {
-                    url = '/updatePrice';
-                }
-                newdata.quoteId = $('#addPricePanel').data('quoteId');
+            {name: 'chipId', type: 'string'},
+            {name: 'min', type: 'number'},
+            {name: 'max', type: 'number'},
+            {name: 'price', type: 'number'},
+            {name: 'tax', type: 'number'},
+            {name: 'privateRemark', type: 'string'},
+            {name: 'publicRemark', type: 'Image'}
+        ],
+        url: '/getPriceByQuoteId?quoteId=' + quoteId,
+        addrow: function (rowid, rowdata, position, commit) {
+            commit(true);
+        },
+        deleterow: function (rowid, commit) {
+            var data = $('#priceListEditTable').jqxGrid('getrowdata', rowid);
+            if (data.id === undefined) {
+                commit(true);
+            } else {
                 $.ajax({
-                    data: newdata,
-                    url: url,
+                    data: data,
+                    url: '/deletePrice',
                     type: 'post',
                     dataType: 'json',
                     cache: false,
                     timeout: 5000,
                     success: function (data) {
                         if (data.success) {
-                            newdata.id = data.id;
                             showSuccess(data.msg);
                             commit(true);
                         }
@@ -239,119 +206,154 @@ var initPriceTable = function (quoteId) {
                     }
                 });
             }
-        };
-
-        var dataAdapter = new $.jqx.dataAdapter(source);
-
-        var columns = [
-            {
-                text: '芯片型号',
-                datafield: 'chipId',
-                displayfield: 'chip',
-                columntype: 'dropdownlist',
-                width: '10%',
-                createeditor: function (row, value, editor) {
-                    editor.jqxDropDownList({source: chipDataAdapter, displayMember: 'code', valueMember: 'id'});
-                }
-            },
-            {
-                text: '最小量',
-                columntype: 'numberinput',
-                datafield: 'min',
-                filtertype: 'input',
-                width: '10%'
-            },
-            {
-                text: '最大量',
-                columntype: 'numberinput',
-                datafield: 'max',
-                filtertype: 'input',
-                width: '10%'
-            },
-            {
-                text: '价格',
-                columntype: 'numberinput',
-                datafield: 'price',
-                cellsformat: "f2",
-                width: '5%'
-            },
-            {
-                text: '税',
-                columntype: 'numberinput',
-                datafield: 'tax',
-                cellsformat: "p",
-                width: '5%'
-            },
-            {
-                text: '内部备注',
-                columntype: 'textbox',
-                datafield: 'privateRemark',
-                filtertype: 'input',
-                width: '25%'
-            },
-            {
-                text: '外部备注',
-                columntype: 'textbox',
-                datafield: 'publicRemark',
-                filtertype: 'input'
+        }
+        ,
+        updaterow: function (rowid, newdata, commit) {
+            var url;
+            if (newdata.id === undefined) {
+                url = '/addPrice';
             }
-        ]
-        // initialize jqxGrid
-        $("#priceListEditTable").jqxGrid(
-            {
-                width: '100%',
-                height: '90%',
-                source: dataAdapter,
-                editable: true,
-                selectionmode: 'singlerow',
-                editmode: 'selectedrow',
-                enableBrowserSelection: false,
-                autoshowcolumnsmenubutton: true,
-                altRows: true,
-                columns: columns,
-                scrollBarSize: 8,
-                showtoolbar: true,
-                autosavestate: false,
-                rendertoolbar: function (toolbar) {
-                    var me = this;
-                    var container = $("<div class='btn-group' style='margin: 5px;'></div>");
-                    toolbar.append(container);
-                    container.append('<button id="addrowbutton" class="btn btn-small" >添加</button>');
-                    container.append('<button id="deleterowbutton" class="btn btn-small">删除</button>');
-                    $("#addrowbutton").jqxButton();
-                    $("#deleterowbutton").jqxButton();
-                    // create new row.
-                    $("#addrowbutton").on('click', function () {
-                        var datarow = generaterow();
-                        var commit = $("#priceListEditTable").jqxGrid('addrow', null, datarow);
-                    });
-                    // delete row.
-                    $("#deleterowbutton").on('click', function () {
-                        var selectedrowindex = $("#priceListEditTable").jqxGrid('getselectedrowindex');
-                        var rowscount = $("#priceListEditTable").jqxGrid('getdatainformation').rowscount;
-                        if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-                            var id = $("#priceListEditTable").jqxGrid('getrowid', selectedrowindex);
-                            var commit = $("#priceListEditTable").jqxGrid('deleterow', id);
-                        }
-                    });
+            else {
+                url = '/updatePrice';
+            }
+            newdata.quoteId = $('#addPricePanel').data('quoteId');
+            $.ajax({
+                data: newdata,
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                cache: false,
+                timeout: 5000,
+                success: function (data) {
+                    if (data.success) {
+                        newdata.id = data.id;
+                        showSuccess(data.msg);
+                        commit(true);
+                    }
+                    else {
+                        showErrorMsg(data.errorHead, data.errorMsg);
+                        commit(false);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    showErrorMsgDefault();
+                    commit(false);
                 }
             });
-        $('#priceListEditTable').jqxGrid({rowsheight: 28});
-    }
+        }
+    };
 
-var initMyQuoteListQueryPanel = function(param){
+    var dataAdapter = new $.jqx.dataAdapter(source);
+
+    var columns = [
+        {
+            text: '芯片型号',
+            datafield: 'chipId',
+            displayfield: 'chip',
+            columntype: 'dropdownlist',
+            width: '10%',
+            createeditor: function (row, value, editor) {
+                editor.jqxDropDownList({source: chipDataAdapter, displayMember: 'code', valueMember: 'id'});
+            }
+        },
+        {
+            text: '最小量',
+            columntype: 'numberinput',
+            datafield: 'min',
+            filtertype: 'input',
+            width: '10%'
+        },
+        {
+            text: '最大量',
+            columntype: 'numberinput',
+            datafield: 'max',
+            filtertype: 'input',
+            width: '10%'
+        },
+        {
+            text: '价格',
+            columntype: 'numberinput',
+            datafield: 'price',
+            cellsformat: "f2",
+            width: '5%'
+        },
+        {
+            text: '税',
+            columntype: 'numberinput',
+            datafield: 'tax',
+            cellsformat: "p",
+            width: '5%'
+        },
+        {
+            text: '内部备注',
+            columntype: 'textbox',
+            datafield: 'privateRemark',
+            filtertype: 'input',
+            width: '25%'
+        },
+        {
+            text: '外部备注',
+            columntype: 'textbox',
+            datafield: 'publicRemark',
+            filtertype: 'input'
+        }
+    ]
+    // initialize jqxGrid
+    $("#priceListEditTable").jqxGrid(
+        {
+            width: '100%',
+            height: '90%',
+            source: dataAdapter,
+            editable: true,
+            selectionmode: 'singlerow',
+            editmode: 'selectedrow',
+            enableBrowserSelection: false,
+            autoshowcolumnsmenubutton: true,
+            altRows: true,
+            columns: columns,
+            scrollBarSize: 8,
+            showtoolbar: true,
+            autosavestate: false,
+            rendertoolbar: function (toolbar) {
+                var me = this;
+                var container = $("<div class='btn-group' style='margin: 5px;'></div>");
+                toolbar.append(container);
+                container.append('<button id="addrowbutton" class="btn btn-small" >添加</button>');
+                container.append('<button id="deleterowbutton" class="btn btn-small">删除</button>');
+                $("#addrowbutton").jqxButton();
+                $("#deleterowbutton").jqxButton();
+                // create new row.
+                $("#addrowbutton").on('click', function () {
+                    var datarow = generaterow();
+                    var commit = $("#priceListEditTable").jqxGrid('addrow', null, datarow);
+                });
+                // delete row.
+                $("#deleterowbutton").on('click', function () {
+                    var selectedrowindex = $("#priceListEditTable").jqxGrid('getselectedrowindex');
+                    var rowscount = $("#priceListEditTable").jqxGrid('getdatainformation').rowscount;
+                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                        var id = $("#priceListEditTable").jqxGrid('getrowid', selectedrowindex);
+                        var commit = $("#priceListEditTable").jqxGrid('deleterow', id);
+                    }
+                });
+            }
+        });
+    $('#priceListEditTable').jqxGrid({rowsheight: 28});
+}
+
+var initMyQuoteListQueryPanel = function (param) {
     initQuoteListTable(param);
 }
 
-var initMyQuoteListEditPanel = function(param){
+var initMyQuoteListEditPanel = function (param) {
     var editQuote = function () {
         var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
         var rowscount = $("#quoteListTable").jqxGrid('getdatainformation').rowscount;
         if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
             var quote = $('#quoteListTable').jqxGrid('getrowdata', selectedrowindex);
-            var data = {"quoteId":quote.id};
+            var data = {"quoteId": quote.id};
             $(".content-panel").hide();
-            showContentPanel('showPanel_addQuote', data, function(){
+            showContentPanel('showPanel_addQuote', data, function () {
                 initAddQuote(param.actionId, quote);
             });
         }
@@ -366,8 +368,8 @@ var initMyQuoteListEditPanel = function(param){
     initQuoteListTable(param, rendertoolbar);
 }
 
-var initMyQuoteListDeletePanel = function(param){
-    var deleteQuote = function(){
+var initMyQuoteListDeletePanel = function (param) {
+    var deleteQuote = function () {
         var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
         var rowscount = $("#quoteListTable").jqxGrid('getdatainformation').rowscount;
         if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
@@ -386,18 +388,18 @@ var initMyQuoteListDeletePanel = function(param){
     initQuoteListTable(param, rendertoolbar);
 }
 
-var initMyQuoteListPrintPanel = function(param){
+var initMyQuoteListPrintPanel = function (param) {
     var rendertoolbar = function (toolbar) {
         var container = createToolbarContiner();
         toolbar.append(container);
         showTableOperationButton(container, 'printQuotebutton', '打印', printQuote);
     }
 
-    var printQuote = function(){
+    var printQuote = function () {
         var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
         var data = $('#quoteListTable').jqxGrid('getrowdata', selectedrowindex);
         $.ajax({
-            data:data,
+            data: data,
             url: '/showPrintQuotePanel',
             type: 'post',
             dataType: 'json',
@@ -544,7 +546,7 @@ var initQuoteListTable = function (filterParam, rendertoolbarfunc) {
         rowsheight: 28
     }
 
-    if(rendertoolbarfunc){
+    if (rendertoolbarfunc) {
         quoteTableProps.showtoolbar = true;
         quoteTableProps.rendertoolbar = rendertoolbarfunc;
     }
@@ -572,7 +574,7 @@ var initQuoteListTable = function (filterParam, rendertoolbarfunc) {
         var subDataAdapter = new $.jqx.dataAdapter(subSource);
 
         // update data source.
-        $("#quoteListSubTable").jqxGrid({ source: subDataAdapter });
+        $("#quoteListSubTable").jqxGrid({source: subDataAdapter});
     });
 }
 

@@ -7,15 +7,26 @@
             <form class="form-horizontal" action="/addQuote" method="post">
                 <div class="form-group">
                     <label for="addQuote_quoteNumDiv" class="col-sm-1 control-label">单号:</label>
-
                     <div id="addQuote_quoteNumDiv" class="col-sm-10">
                         <input type="text" class="form-control n-inputfield" readonly tabindex="-1"
                                id="addQuote_quoteNum" name="quoteNum" value="SDICBJYYYYMMDD00">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="commonDropdown_userActionSection" class="col-sm-1 control-label">部门:</label>
-                    <div id='commonDropdown_userActionSection' class="col-sm-10"></div>
+                    <label for="addQuote_customerDiv" class="col-sm-1 control-label">部门:</label>
+                    <div id="addQuote_sectionDiv" class="col-sm-8">
+                        <div class="btn-group selectlist" data-resize="auto" data-initialize="selectlist" id="addQuote_section">
+                            <button class="btn btn-default dropdown-toggle disabled" data-toggle="dropdown" type="button">
+                                <span class="selected-label"></span>
+                                <span class="selected-caret"><span class="caret"></span></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul id="addQuote_sectionList" class="dropdown-menu" role="menu">
+                                <li data-value="1"><a href="#"><span>无数据</span></a></li>
+                            </ul>
+                            <input class="hidden hidden-field" id="addQuote_sectionValue" readonly="readonly" aria-hidden="true" type="text"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="addQuote_companyDiv" class="col-sm-1 control-label">客户公司:</label>
@@ -39,17 +50,16 @@
                 </div>
                 <div class="form-group">
                     <label for="addQuote_customerDiv" class="col-sm-1 control-label">联系人:</label>
+
                     <div id="addQuote_customerDiv" class="col-sm-8">
-                        <div class="btn-group selectlist disabled" data-resize="auto" data-initialize="selectlist"
-                             id="addQuote_customer">
-                            <button class="btn btn-default dropdown-toggle disabled" data-toggle="dropdown"
-                                    type="button">
+                        <div class="btn-group selectlist" data-resize="auto" data-initialize="selectlist" id="addQuote_customer">
+                            <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button">
                                 <span class="selected-label"></span>
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
+                                <span class="selected-caret"><span class="caret"></span></span>
+                                <span class="sr-only"></span>
                             </button>
                             <ul id="addQuote_customerList" class="dropdown-menu" role="menu">
-                                <li data-value="1"><a href="#"><span>无数据</span></a></li>
+                                <li><a href="#">请选择==></a></li>
                             </ul>
                             <input class="hidden hidden-field" name="mySelectlist1" readonly="readonly" aria-hidden="true" type="text"/>
                         </div>
@@ -57,6 +67,7 @@
                 </div>
                 <div class="form-group">
                     <label class="col-sm-1 control-label">币种:</label>
+
                     <div class="col-sm-8">
                         <div class="radio">
                             <input id="addQuote_currencyRmb" name="currency" type="radio" value="rmb" checked>
@@ -71,7 +82,8 @@
                 <div class="form-group">
                     <label for="addQuote_remark"
                            class="col-sm-1 control-label">备注:</label>
-                    <div class="col-sm-8">
+
+                    <div class="col-sm-8" style="height: 150px">
                         <textarea id="addQuote_remark" class="n-textarea"><%= quote.remark %></textarea>
                         <div class="input-group input-append dropdown combobox" data-resize="auto"
                              data-initialize="combobox" id="myCombobox">
