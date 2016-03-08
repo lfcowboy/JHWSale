@@ -339,23 +339,58 @@ var initPriceTable = function (quoteId) {
         $('#priceListEditTable').jqxGrid({rowsheight: 28});
     }
 
-var initMyQuoteListQueryPanel = function(userId){
-    var param = {"reporterId": userId};
+var initMyQuoteListQueryPanel = function(param){
+    initQuoteListTable(param);
+}
+
+var initMyQuoteListEditPanel = function(param){
+    var editQuote = function () {
+        var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
+        var rowscount = $("#quoteListTable").jqxGrid('getdatainformation').rowscount;
+        if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+            var quote = $('#quoteListTable').jqxGrid('getrowdata', selectedrowindex);
+            var data = {"quoteId":quote.id};
+            $(".content-panel").hide();
+            showContentPanel('showPanel_addQuote', data, function(){
+                initAddQuote(param.actionId, quote);
+            });
+        }
+    }
 
     var rendertoolbar = function (toolbar) {
         var container = createToolbarContiner();
         toolbar.append(container);
-        showTableOperationButton(container, 'deleterowbutton', '删除', deleteQuote);
-        showTableOperationButton(container, 'printQuotebutton', '打印', printQuote);
+        showTableOperationButton(container, 'editrowbutton', '更新', editQuote);
     }
 
+    initQuoteListTable(param, rendertoolbar);
+}
+
+var initMyQuoteListDeletePanel = function(param){
     var deleteQuote = function(){
         var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
         var rowscount = $("#quoteListTable").jqxGrid('getdatainformation').rowscount;
         if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
             var id = $("#quoteListTable").jqxGrid('getrowid', selectedrowindex);
             var commit = $("#quoteListTable").jqxGrid('deleterow', id);
+            $("#quoteListSubTable").jqxGrid('clear');
         }
+    }
+
+    var rendertoolbar = function (toolbar) {
+        var container = createToolbarContiner();
+        toolbar.append(container);
+        showTableOperationButton(container, 'deleterowbutton', '删除', deleteQuote);
+    }
+
+    initQuoteListTable(param, rendertoolbar);
+}
+
+var initMyQuoteListPrintPanel = function(param){
+    var rendertoolbar = function (toolbar) {
+        var container = createToolbarContiner();
+        toolbar.append(container);
+        showTableOperationButton(container, 'printQuotebutton', '打印', printQuote);
     }
 
     var printQuote = function(){
@@ -389,30 +424,7 @@ var initMyQuoteListQueryPanel = function(userId){
     initQuoteListTable(param, rendertoolbar);
 }
 
-var initMyQuoteListEditPanel = function(param){
-    var editQuote = function () {
-        var selectedrowindex = $("#quoteListTable").jqxGrid('getselectedrowindex');
-        var rowscount = $("#quoteListTable").jqxGrid('getdatainformation').rowscount;
-        if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-            var quote = $('#quoteListTable').jqxGrid('getrowdata', selectedrowindex);
-            var data = {"quoteId":quote.id};
-            $(".content-panel").hide();
-            showContentPanel('showPanel_addQuote', data, function(){
-                initAddQuote(param.actionId, quote);
-            });
-        }
-    }
-
-    var rendertoolbar = function (toolbar) {
-        var container = createToolbarContiner();
-        toolbar.append(container);
-        showTableOperationButton(container, 'editrowbutton', '更新', editQuote);
-    }
-
-    initQuoteListTable(param, rendertoolbar);
-}
-
-var initQuoteListTable = function (filterParam, rendertoolbar) {
+var initQuoteListTable = function (filterParam, rendertoolbarfunc) {
     /*---------------- test data ----------------*/
     var data = new Array();
     data[0] = {};
@@ -517,29 +529,27 @@ var initQuoteListTable = function (filterParam, rendertoolbar) {
     ];
 
     // initialize jqxGrid
-    $("#quoteListTable").jqxGrid(
-        {
-            width: '100%',
-            source: dataAdapter,
-            editable: false,
-            selectionmode: 'singlerow',
-            filterable: true,
-            pageable: true,
-            autoheight: true,
-            showfilterrow: true,
-            altRows: true,
-            columns: columns,
-            scrollBarSize: 8,
-            showtoolbar: true,
-            rendertoolbar : rendertoolbar
-            //rendertoolbar: function (toolbar) {
-            //    var container = createToolbarContiner();
-            //    toolbar.append(container);
-            //    showTableOperationButton(container, 'deleterowbutton', '删除', deleteQuote);
-            //    showTableOperationButton(container, 'printQuotebutton', '打印', printQuote);
-            //}
-        });
-    $('#quoteListTable').jqxGrid({rowsheight: 28});
+    var quoteTableProps = {
+        source: dataAdapter,
+        columns: columns,
+        pageable: true,
+        width: '100%',
+        editable: false,
+        selectionmode: 'singlerow',
+        filterable: true,
+        autoheight: true,
+        showfilterrow: true,
+        altRows: true,
+        scrollBarSize: 8,
+        rowsheight: 28
+    }
+
+    if(rendertoolbarfunc){
+        quoteTableProps.showtoolbar = true;
+        quoteTableProps.rendertoolbar = rendertoolbarfunc;
+    }
+
+    $("#quoteListTable").jqxGrid(quoteTableProps);
 
     initQuoteListSubTable();
     $("#quoteListTable").on('rowselect', function (event) {
@@ -624,29 +634,6 @@ var initQuoteListSubTable = function () {
             scrollBarSize: 8
         });
     $('#quoteListSubTable').jqxGrid({rowsheight: 28});
-}
-
-var showPriceListPanel = function(){
-    $.ajax({
-        url: '/showPriceListPanel',
-        type: 'post',
-        dataType: 'json',
-        cache: false,
-        timeout: 5000,
-        success: function (data) {
-            if (data.success) {
-                $("#priceListPage").html(data.htmlContent);
-                initPriceListTable();
-                $("#priceListPanel").show();
-            }
-            else {
-                showErrorMsg(data.errorHead, data.errorMsg);
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            showErrorMsgDefault();
-        }
-    });
 }
 
 var initPriceListTable = function () {

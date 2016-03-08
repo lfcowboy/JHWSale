@@ -14,7 +14,7 @@ module.exports = function (app) {
     app.get('/', index.index);
     app.get('/showPanel_quoteList', quote.showQuoteListPanel);
     app.get('/showPanel_myQuoteList', quote.showQuoteListPanel);
-    app.get('/showPriceListPanel', quote.showPriceListPanel);
+    app.get('/showPanel_priceListReport', quote.showPriceListReportPanel);
     app.post('/showPrintQuotePanel', quote.showPrintQuotePanel);
     app.get('/showPanel_setRole',role.showSetRolePanel);
     app.get('/showPanel_setGroup', section.showSetGroupPanel);

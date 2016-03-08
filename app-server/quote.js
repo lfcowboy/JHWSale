@@ -20,14 +20,12 @@ exports.addQuote = function (req, res) {
                 var addSQL = 'insert into quote (customerId, quoteNum, companyId, currency, remark, reporterId, reportDate, sectionId) ' +
                     'values ("' + req.body.customerId + '","' + req.body.quoteNum + '","' + companyId + '","' + req.body.currency + '",' +
                     '"' + req.body.remark + '","' + req.session.user.id + '",curdate(),"' + req.body.sectionId + '")';
-                pool.insert(addSQL, function (err) {
+                pool.insert(addSQL, function (err, result) {
                     if (err) {
                         res.json({success: false, errorHead: '失败', errorMsg: '报价单新建失败！'});
                     }
                     else {
-                        pool.query(constants.SQL_LAST_INSERT_ID, function (qerr, rows, fields) {
-                            res.json({success: true, msg: '报价单新建成功！', quoteId: rows[0].id});
-                        });
+                        res.json({success: true, msg: '报价单新建成功！', quoteId: result.insertId});
                     }
                 });
             }
@@ -61,15 +59,15 @@ exports.addPrice = function (req, res) {
     var addSQL = 'insert into price (chipId,quoteId,min,max,price,tax,privateRemark,publicRemark) ' +
         'values (' + req.body.chipId + ',' + req.body.quoteId + ',' + req.body.min + ',' + req.body.max + ',' + req.body.price + ',' +
         req.body.tax + ',"' + req.body.privateRemark + '","' + req.body.publicRemark + '")';
-    pool.insert(addSQL, function (err) {
+    pool.insert(addSQL, function (err, result) {
         if (err) {
             res.json({success: false, errorHead: '失败', errorMsg: '报价新建失败！'});
         }
         else {
-            var querySQL = 'select LAST_INSERT_ID() as id';
-            pool.query(querySQL, function (qerr, rows, fields) {
-                res.json({success: true, id: rows[0].id, msg: '报价新建成功！'});
-            });
+            //var querySQL = 'select LAST_INSERT_ID() as id';
+            //pool.query(querySQL, function (qerr, rows, fields) {
+            res.json({success: true, id: result.insertId, msg: '报价新建成功！'});
+            //});
         }
     });
 };
@@ -207,7 +205,7 @@ exports.showMyQuoteListPanel = function (req, res) {
     });
 }
 
-exports.showPriceListPanel = function (req, res) {
+exports.showPriceListReportPanel = function (req, res) {
     app.render('quote/priceList', function (err, html) {
         res.json({success: true, htmlContent: html});
     });

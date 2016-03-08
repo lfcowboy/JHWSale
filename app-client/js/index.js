@@ -12,8 +12,9 @@ $("#myQuoteNewMenu").click(function(){
 $("#myQuoteListQueryMenu").click(function(){
     $(".content-panel").hide();
     var userId = $(this).data("userId");
+    var param = {'reporterId': userId};
     showContentPanel('showPanel_myQuoteList', null, function(){
-        initMyQuoteListQueryPanel(userId);
+        initMyQuoteListQueryPanel(param);
     });
 });
 
@@ -27,6 +28,24 @@ $("#myQuoteListEditMenu").click(function(){
     });
 });
 
+$("#myQuoteListDeleteMenu").click(function(){
+    $(".content-panel").hide();
+    var userId = $(this).data("userId");
+    var param = {'reporterId': userId};
+    showContentPanel('showPanel_myQuoteList', null, function(){
+        initMyQuoteListDeletePanel(param);
+    });
+});
+
+$("#myQuoteListPrintMenu").click(function(){
+    $(".content-panel").hide();
+    var userId = $(this).data("userId");
+    var param = {'reporterId': userId};
+    showContentPanel('showPanel_myQuoteList', null, function(){
+        initMyQuoteListPrintPanel(param);
+    });
+});
+
 $("#quoteListMenu").click(function(){
     $(".content-panel").hide();
     showContentPanel('showPanel_myQuoteList', null, function(){
@@ -36,7 +55,9 @@ $("#quoteListMenu").click(function(){
 
 $("#priceListMenu").click(function(){
     $(".content-panel").hide();
-    showPriceListPanel();
+    showContentPanel('showPanel_priceListReport', null, function(){
+        initPriceListTable();
+    });
 });
 
 $("#addCompanyMenu").click(function(){
