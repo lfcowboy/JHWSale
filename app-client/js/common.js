@@ -134,8 +134,7 @@ var initSectionList = function (actionId) {
             {name: 'id', type: 'string'},
             {name: 'name', type: 'string'}
         ],
-        url: '/getUserActionSection',
-        type: 'post'
+        url: '/getUserActionSection'
     };
     var sectionDataAdapter = new $.jqx.dataAdapter(sectionSource);
 

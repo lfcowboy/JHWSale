@@ -5,10 +5,11 @@ var role = require('./server_role');
 
 exports.loginFilter = function (req, res, next) {
     if(req.session.user){
+        console.log(req.session.user.account);
         next();
         //res.render('index',{'userName':req.session.user.name});
     }else{
-        res.render('login');
+        res.render('login',{'msg': ''});
     }
 };
 

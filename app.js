@@ -13,7 +13,7 @@ var quotation = require('./app-server/model/Quotation');
 var pool = require("./app-server/app-pooling");
 app = express();
 app.use(express.static(path.join(__dirname, 'app-client')));
-app.listen(8080);
+app.listen(8070);
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));

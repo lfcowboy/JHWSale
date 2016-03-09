@@ -66,8 +66,11 @@ $("#addCompanyMenu").click(function(){
 });
 
 $("#addGroupMenu").click(function(){
-    $('#addGroupDialog').modal('show');
-    showNewSectionDialog();
+    $(".content-panel").hide();
+    showContentPanel('showPanel_addSection', null, function(){
+        showNewSectionDialog();
+        $('#addGroupDialog').modal('show');
+    });
 });
 
 $("#sectionListMenu").click(function(){

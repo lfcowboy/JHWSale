@@ -5,24 +5,21 @@ var pool = require("./app-pooling");
 var sectionSever = require('./server_group');
 
 exports.loadLogin = function (req, res) {
-    //res.render('index',{'userName':'周芸丽1'}, function(err, html) {
-    //    console.log(html);
-    //    //res.json({success: true, confirmHead: '成功', confirmMsg: '报价新建成功1！', htmlContent: html});
-    //    res.send(html);
-    //});
-    res.render('login', {'userName': '未登录'});
+    res.render('login', {'msg': ''});
 };
 exports.doLogin = function (req, res) {
     var selectSQL = 'select * from user where account = "' + req.body.username + '"';
     pool.query(selectSQL, function (err, rows, fields) {
-        console.log("username:" + req.body.username);
-        //if(req.body.username===user.username && req.body.password===user.password){
-        req.session.user = rows[0];
-        res.redirect("/");
-        //res.render('index',{'userName':req.session.user.username});
-        //} else {
-        //    res.render('index',{'userName':'未登录'});
-        //}
+        if(rows.length === 1 ){
+            var user = rows[0];
+            if(req.body.username == user.account && req.body.password == user.password) {
+                req.session.user = user;
+                res.redirect('/');
+                return;
+            }
+        }
+        var data = {'msg': '用户名或密码错误，请重新输入!'};
+        res.render('login', data);
     });
 };
 

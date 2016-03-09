@@ -2,7 +2,11 @@
  * Created by fenglv on 2015/8/9.
  */
 var initAddQuote = function (actionId, quote) {
-    initSectionListWULF(actionId);
+    initSectionListWULF(actionId, function(){
+        if(quote){
+            $('#addQuote_section').selectlist('selectByValue', quote.sectionId);
+        }
+    });
     initDefaultRemarkList();
 
     $('#addQuote_companySearch').click(function () {
@@ -13,6 +17,34 @@ var initAddQuote = function (actionId, quote) {
             });
         });
     });
+    if (quote) {
+        $("#addQuote_quoteNum").val(quote.quoteNum);
+        $("#addQuote_companyName").val(quote.companyName);
+        initCustomerList(quote.companyId, function () {
+            $('#addQuote_customer').selectlist('selectByValue', quote.customerId);
+        });
+    } else {
+        $.ajax({
+            url: '/getNewQuoteNum',
+            type: 'get',
+            dataType: 'json',
+            cache: false,
+            timeout: 5000,
+            success: function (data) {
+                if (data.success) {
+                    $('#addQuote_quoteNum').val(data.newQuoteNum);
+                    //showConfirmMsg(data.confirmHead,data.confirmMsg);
+                    //$("#addQuotePanel").hide();
+                }
+                //var data = $.parseJSON(data);
+                //alert(data.message);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //alert("报价单创建失败，请重试或者联系管理员!");
+                //alert('error ' + textStatus + " " + errorThrown);
+            }
+        });
+    }
 
     $("#addQuoteButton").click(function () {
         var url = '/addQuote';
@@ -57,37 +89,6 @@ var initAddQuote = function (actionId, quote) {
             }
         });
     });
-
-    if (quote) {
-        $("#addQuote_quoteNum").val(quote.quoteNum);
-        var item = $("#commonDropdown_userActionSection").jqxDropDownList('getItemByValue', quote.sectionId);
-        $("#commonDropdown_userActionSection").jqxDropDownList('selectItem', item);
-        $("#addQuote_companyName").val(quote.companyName);
-        initCustomerList(quote.companyId, function () {
-            $('#addQuote_customer').selectlist('selectByValue', quote.customerId);
-        });
-    } else {
-        $.ajax({
-            url: '/getNewQuoteNum',
-            type: 'get',
-            dataType: 'json',
-            cache: false,
-            timeout: 5000,
-            success: function (data) {
-                if (data.success) {
-                    $('#addQuote_quoteNum').val(data.newQuoteNum);
-                    //showConfirmMsg(data.confirmHead,data.confirmMsg);
-                    //$("#addQuotePanel").hide();
-                }
-                //var data = $.parseJSON(data);
-                //alert(data.message);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                //alert("报价单创建失败，请重试或者联系管理员!");
-                //alert('error ' + textStatus + " " + errorThrown);
-            }
-        });
-    }
 }
 
 var initDefaultRemarkList = function () {
@@ -210,7 +211,7 @@ var initPriceTable = function (quoteId) {
         ,
         updaterow: function (rowid, newdata, commit) {
             var url;
-            if (newdata.id === undefined) {
+            if (newdata.id === undefined || newdata.id =='' || newdata.id == null) {
                 url = '/addPrice';
             }
             else {

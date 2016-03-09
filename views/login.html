@@ -18,6 +18,11 @@
 
                 <div class="n-login-panel-fields">
                     <form class="form-horizontal" action="/doLogin" method="post">
+                        <% if(msg){ %>
+                        <div class="alert-error">
+                            <span class="icon icon-error"><%= msg %></span>
+                        </div>
+                        <%}%>
                         <div class="form-group n-login-textfields">
                             <div class="col-sm-6 input-required">
                                 <input name="username" type="text" tabindex="110" class="form-control n-inputfield"
@@ -38,10 +43,7 @@
                             <div class="n-login-forget-password">
                                 <a href="#">忘记密码</a><span class="icon icon-breadcrumb"></span>
                             </div>
-                            <button type="submit" class="btn btn-action btn-standard n-login-button"
-                                    id="applicationLoginButton"
-                                    disabled="true">登录
-                            </button>
+                            <button type="submit" class="btn btn-action btn-standard n-login-button" id="applicationLoginButton" disabled="true">登录</button>
                         </div>
                     </form>
                 </div>
@@ -57,5 +59,6 @@
 <script src="./wulfdist/js/dependencies/jquery.mousewheel.min.js"></script>
 <script src="./wulfdist/js/dependencies/jquery.mCustomScrollbar.js"></script>
 <script src="./wulfdist/js/wulf.min.js"></script>
+<script src="./js/login.js"></script>
 </body>
 </html>

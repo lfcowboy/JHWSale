@@ -30,6 +30,7 @@ module.exports = function (app) {
     app.get('/showPanel_editPriceList', quote.showEditPriceListPanel);
 
     app.get('/showPanel_addRole', role.showAddRoleDialog);
+    app.get('/showPanel_addSection', section.showAddSectionDialog);
 
     //section
     app.get('/getSections', section.getSections);

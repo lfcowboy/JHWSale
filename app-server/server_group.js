@@ -65,6 +65,12 @@ exports.showSectionListPanel = function (req, res) {
     });
 }
 
+exports.showAddSectionDialog = function (req, res) {
+    app.render('section/addGroup', function (err, html) {
+        res.json({success: true, htmlContent: html});
+    });
+}
+
 exports.getSections = function (req, res) {
     var sql = "select depart.id as id, depart.name as name, user.name as owner from depart, user where depart.owner = user.id";
     pool.query(sql, function (qerr, rows, fields) {
