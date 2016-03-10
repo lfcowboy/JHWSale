@@ -29,6 +29,12 @@ exports.doLogout = function (req, res) {
     res.redirect("/");
 };
 
+exports.showAddUserDialog = function (req, res) {
+    app.render('user/addUser', function (err, html) {
+        res.json({success: true, htmlContent: html});
+    });
+}
+
 exports.getUsers = function (req, res) {
     var selectSQL = 'select id, name, account from user';
     pool.query(selectSQL, function (err, rows, fields) {

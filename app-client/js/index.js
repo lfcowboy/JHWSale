@@ -151,16 +151,24 @@ $("#setSectionRoleUserMenu").click(function(){
 //    });
 //});
 
-$("#setRoleMenu").click(function(){
-    $(".content-panel").hide();
-    showContentPanel('showPanel_setRole', function(){
-    });
-});
-
 $("#editRoleMenu").click(function(){
     $(".content-panel").hide();
     showContentPanel('showPanel_addRole', null, function(){
         initAddRoleDialog(null);
         $('#addRoleDialog').modal('show');
+    });
+});
+
+$("#addUserMenu").click(function(){
+    $(".content-panel").hide();
+    showContentPanel('showPanel_addUser', null, function(){
+        $('#addUserDialog').modal('show');
+    });
+});
+
+$("#editUserMenu").click(function(){
+    $(".content-panel").hide();
+    showContentPanel('showPanel_addUser', null, function(){
+        $('#addUserDialog').modal('show');
     });
 });

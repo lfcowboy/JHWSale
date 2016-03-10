@@ -64,18 +64,10 @@
                                     <i class="icon icon-arrow"></i>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li>
+                                    <li id="editUserMenu">
                                         <a href="#">
                                             <span>个人设置</span>
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>部门</span>
-                                        </a>
-                                    </li>
-                                    <li id="setRoleMenu">
-                                        <a href="#"><span>权限</span></a>
                                     </li>
                                 </ul>
                             </li>
@@ -221,8 +213,8 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="#addAccountDialog" data-toggle="modal" data-backdrop="true">
+                                        <li id="addUserMenu">
+                                            <a href="#addUserDialog">
                                                 <span>添加帐号</span>
                                             </a>
                                         </li>
@@ -310,11 +302,6 @@
 <div class="row">
     <div class="col-md-12">
         <% include customer\addCustomer.html %>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <% include section\addUser.html %>
     </div>
 </div>
 <div class="row">

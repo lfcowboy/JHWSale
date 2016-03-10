@@ -1,18 +1,20 @@
 <div class="modal" id="addChipDialog" role="dialog" aria-hidden="true" tabindex='-1'>
     <form class="form-horizontal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="n-dialog-header-fg-filler"></div>
+        <div class="modal-dialog modal-resize-dialog">
+            <div class="modal-content" data-resize="True">
+                <div class="modal-header" data-drag="True">
                     <div class="n-dialog-header-bg-filler"></div>
-                    <div class="n-dialog-header-curve">
-                        <div class="fg-mask"></div>
-                        <div class="bg-mask"></div>
-                        <div class="fg-corner"></div>
-                        <div class="bg-corner"></div>
+                    <div class="n-dialog-header-resize">
+                        <div class="n-dialog-header-fg-filler"></div>
+                        <div class="n-dialog-header-curve">
+                            <div class="fg-mask"></div>
+                            <div class="bg-mask"></div>
+                            <div class="fg-corner"></div>
+                            <div class="bg-corner"></div>
+                        </div>
+                        <h1 class="modal-title" id="myModalLabel">芯片新建</h1>
                     </div>
-                    <i class="icon icon-close-rounded" data-dismiss="modal" aria-label="Close"></i>
-                    <h1 class="modal-title" id="myModalLabel">芯片新建</h1>
+                    <i role="button" class="icon icon-close-rounded" data-dismiss="modal" aria-label="Close dialog"></i>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">

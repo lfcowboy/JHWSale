@@ -19,12 +19,6 @@ exports.showRoleActionsPanel = function (req, res) {
     });
 }
 
-exports.showSetRolePanel = function (req, res) {
-    app.render('role/setRole', function (err, html) {
-        res.json({success: true, htmlContent: html});
-    });
-}
-
 exports.showAddRoleDialog = function (req, res) {
     var data = {'roleId': req.query.roleId, 'roleName': req.query.roleName};
     app.render('role/addRole', data, function (err, html) {
