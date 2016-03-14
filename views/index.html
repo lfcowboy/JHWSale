@@ -49,7 +49,7 @@
                             <li>
                                 <a href="#">
                                     <i class="icon icon-profile"></i>
-                                    <%= user.name%>
+                                    <span id="userName"><%= user.name%></span>
                                 </a>
                             </li>
                             <li class="hidden-xs">
@@ -64,7 +64,7 @@
                                     <i class="icon icon-arrow"></i>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li id="editUserMenu">
+                                    <li id="editUserMenu" data-user-id="<%= user.id%>">
                                         <a href="#">
                                             <span>个人设置</span>
                                         </a>
@@ -356,6 +356,7 @@
 <script src="js/msgDlg.js"></script>
 <script src="js/controller_role.js"></script>
 <script src="js/controller_section.js"></script>
+<script src="js/controller_user.js"></script>
 <script src="js/quote.js"></script>
 <script src="js/customer.js"></script>
 <script src="js/chip.js"></script>

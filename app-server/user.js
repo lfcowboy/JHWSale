@@ -30,7 +30,15 @@ exports.doLogout = function (req, res) {
 };
 
 exports.showAddUserDialog = function (req, res) {
-    app.render('user/addUser', function (err, html) {
+    var data = {user: new Object()};
+    app.render('user/addUser', data, function (err, html) {
+        res.json({success: true, htmlContent: html});
+    });
+}
+
+exports.showEditUserDialog = function (req, res) {
+    var data = {user: req.session.user};
+    app.render('user/addUser', data, function (err, html) {
         res.json({success: true, htmlContent: html});
     });
 }
@@ -42,6 +50,13 @@ exports.getUsers = function (req, res) {
     });
 }
 
+exports.getUserById = function (id, callback){
+    var selectSQL = 'select id, name, account from user where id = ' + id;
+    pool.query(selectSQL, function (err, rows, fields) {
+        callback(rows);
+    });
+}
+
 exports.addUser = function (req, res) {
     var addUserSQL = 'insert into user (name,account,password) values("' + req.body.name + '","' + req.body.account + '","' + req.body.password + '")';
     pool.insert(addUserSQL, function (err, result) {
@@ -50,6 +65,17 @@ exports.addUser = function (req, res) {
             res.json({success: true, confirmHead: '成功', confirmMsg: '帐号新建成功！'});
         });
     });
+}
+
+exports.updateUser = function (req, res) {
+    var updateUserSQL = 'update user set name = "' + req.body.name + '" where id = "' + req.session.user.id + '"';
+    pool.insert(updateUserSQL, function(uerr, result){
+        console.log(req.session.user.id);
+        exports.getUserById(req.session.user.id, function(user){
+            req.session.user = user[0];
+            res.json({success: true, msg: '用户信息变更成功！'});
+        });
+    })
 }
 
 exports.getUserActionSection = function (req, res){

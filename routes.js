@@ -29,6 +29,7 @@ module.exports = function (app) {
     app.get('/showPanel_editPriceList', quote.showEditPriceListPanel);
 
     app.get('/showPanel_addUser', user.showAddUserDialog);
+    app.get('/showPanel_editUser', user.showEditUserDialog);
     app.get('/showPanel_addRole', role.showAddRoleDialog);
     app.get('/showPanel_addSection', section.showAddSectionDialog);
 
@@ -75,6 +76,7 @@ module.exports = function (app) {
     app.get('/doLogout', user.doLogout);
     app.get("/getNewQuoteNum", quote.getNewQuoteNum);
     app.post("/addUser", user.addUser);
+    app.post('/updateUser', user.updateUser);
     app.post("/addGroup", section.addDepart);
 
     //customer

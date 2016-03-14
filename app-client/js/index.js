@@ -162,13 +162,16 @@ $("#editRoleMenu").click(function(){
 $("#addUserMenu").click(function(){
     $(".content-panel").hide();
     showContentPanel('showPanel_addUser', null, function(){
+        initAddUserDialog();
         $('#addUserDialog').modal('show');
     });
 });
 
 $("#editUserMenu").click(function(){
     $(".content-panel").hide();
-    showContentPanel('showPanel_addUser', null, function(){
+    var param = {'userId': $(this).data("userId")};
+    showContentPanel('showPanel_editUser', param, function(){
+        initAddUserDialog(param);
         $('#addUserDialog').modal('show');
     });
 });

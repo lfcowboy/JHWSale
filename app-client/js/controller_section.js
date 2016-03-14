@@ -446,29 +446,3 @@ var showNewSectionDialog =  function(){
     });
 }
 
-$("#addAccountButton").click(function () {
-    var params = {
-        account: $('#addAccount_account').val(),
-        name: $('#addAccount_name').val(),
-        password: $('#addAccount_password').val()
-    };
-    $.ajax({
-        data: params,
-        url: '/addUser',
-        type: 'post',
-        dataType: 'json',
-        cache: false,
-        timeout: 5000,
-        success: function (data) {
-            if (data.success) {
-                showConfirmMsg(data.confirmHead, data.confirmMsg);
-                $('#addAccountDialog').modal('hide');
-                //dataAdapter.dataBind();
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            showErrorMsgDefault();
-        }
-    });
-});
-

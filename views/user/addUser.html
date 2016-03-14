@@ -1,5 +1,8 @@
 <div class="modal" id="addUserDialog" role="dialog" data-user-id="<%= user.id%>" aria-hidden="true" tabindex='-1'>
     <form class="form-horizontal">
+        <div class="alert-error" id="addAccount_msg">
+            <span class="icon icon-error">fdafdsafdsafdsafdsafd</span>
+        </div>
         <div class="modal-dialog" modal-resize-dialog>
             <div class="modal-content" data-resize="True">
                 <div class="modal-header" data-drag="True">
@@ -22,6 +25,7 @@
                         <div class="col-sm-8">
                             <input type="text" class="form-control n-inputfield" id="addAccount_account" name="account"
                                    value="<%= user.account%>" placeholder="<输入帐号>">
+                            <a class="form-control-feedback form-control-feedback"><span class="icon"></span></a>
                         </div>
                     </div>
                     <div class="form-group">
@@ -30,24 +34,29 @@
                         <div class="col-sm-8">
                             <input type="text" class="form-control n-inputfield" id="addAccount_name" name="name"
                                    value="<%= user.name%>" placeholder="<输入名称>">
+                            <a class="form-control-feedback form-control-feedback"><span class="icon"></span></a>
                         </div>
                     </div>
+                    <% if(!user.id && user.id!=0) {%>
                     <div class="form-group">
                         <label for="addAccount_password" class="col-sm-2 control-label">密码:</label>
 
                         <div class="col-sm-8">
-                            <input type="text" class="form-control n-inputfield" id="addAccount_password" name="password"
+                            <input type="password" class="form-control n-inputfield" id="addAccount_password" name="password"
                                    value="" placeholder="<输入密码>">
+                            <a class="form-control-feedback form-control-feedback"><span class="icon"></span></a>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="addAccount_passwordConfirm" class="col-sm-2 control-label">确认密码:</label>
 
                         <div class="col-sm-8">
-                            <input type="text" class="form-control n-inputfield" id="addAccount_passwordConfirm"
+                            <input type="password" class="form-control n-inputfield" id="addAccount_passwordConfirm"
                                    value="" placeholder="<重新输入密码>">
+                            <a class="form-control-feedback form-control-feedback"><span class="icon"></span></a>
                         </div>
                     </div>
+                    <%}%>
                     <div class="form-group">
                         <label for="addAccount_tel" class="col-sm-2 control-label">电话:</label>
 
@@ -66,7 +75,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="addAccountButton" type="button" class="btn btn btn-standard ">保存</button>
+                    <button id="addAccountButton" type="button" class="btn btn btn-standard" disabled="true">保存</button>
                     <button class="btn btn btn-standard" data-dismiss="modal">取消</button>
                 </div>
             </div>

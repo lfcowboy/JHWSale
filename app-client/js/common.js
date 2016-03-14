@@ -161,3 +161,7 @@ var createToolbarContiner = function(){
 var getTabelButtonHTML = function(buttonId, buttonName){
     return '<button id="' + buttonId + '" class="btn btn-small">' + buttonName + '</button>';
 }
+
+var isEmptyString = function(strProp){
+    return (strProp === null || strProp === undefined || strProp === '');
+}
