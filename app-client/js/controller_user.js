@@ -56,14 +56,16 @@ var initAddUserDialog = function(userId){
     $("#addAccountButton").click(function () {
 
         if(isAdd && $('#addAccount_passwordConfirm').val() != $('#addAccount_password').val()){
-            alert('两次密码输入不一致，请重新输入!');
-            //$("#addAccount_msg").show();
+            $("#addAccount_msg").html('两次密码输入不一致，请重新输入!');
+            $("#addAccount_msgBox").show();
             return false;
         }
 
         var params = {
             account: $('#addAccount_account').val(),
-            name: $('#addAccount_name').val()
+            name: $('#addAccount_name').val(),
+            tel: $('#addAccount_tel').val(),
+            email: $('#addAccount_email').val()
         };
         var url = '/updateUser';
         if(isAdd){
@@ -80,7 +82,9 @@ var initAddUserDialog = function(userId){
             timeout: 5000,
             success: function (data) {
                 if (data.success) {
-                    $('#userName').html($('#addAccount_name').val());
+                    if(!isAdd) {
+                        $('#userName').html($('#addAccount_name').val());
+                    }
                     showSuccess(data.msg);
                     $('#addUserDialog').modal('hide');
                     //dataAdapter.dataBind();

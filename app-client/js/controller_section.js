@@ -176,7 +176,9 @@ var initUserListTable = function (sectionId) {
         datafields: [
             {name: 'id', type: 'string'},
             {name: 'account', type: 'string'},
-            {name: 'name', type: 'string'}
+            {name: 'name', type: 'string'},
+            {name: 'tel', type: 'string'},
+            {name: 'email', type: 'string'}
         ],
         url: '/getSectionUsers',
         deleterow: function (rowid, commit) {
@@ -216,13 +218,25 @@ var initUserListTable = function (sectionId) {
             text: '帐号',
             datafield: 'account',
             filtertype: 'input',
-            width: '50%'
+            width: '25%'
         },
         {
             text: '名字',
             datafield: 'name',
             filtertype: 'input',
-            width: '50%'
+            width: '25%'
+        },
+        {
+            text: '电话',
+            datafield: 'tel',
+            filtertype: 'input',
+            width: '25%'
+        },
+        {
+            text: '电邮',
+            datafield: 'email',
+            filtertype: 'input',
+            width: '25%'
         }
     ];
 

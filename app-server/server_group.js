@@ -79,7 +79,8 @@ exports.getSections = function (req, res) {
 }
 
 exports.getSectionUsers = function (req, res) {
-    var selectSQL = 'select user.id as id, user.name as name, user.account as account from section_user,user where section_user.sectionId = "' + req.query.sectionId + '" and section_user.userId = user.id';
+    var selectSQL = 'select user.id as id, user.name as name, user.account as account, user.tel as tel, user.email as email ' +
+        'from section_user,user where section_user.sectionId = "' + req.query.sectionId + '" and section_user.userId = user.id';
     pool.query(selectSQL, function (err, rows, fields) {
         res.json(rows);
     });

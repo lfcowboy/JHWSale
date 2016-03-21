@@ -51,24 +51,26 @@ exports.getUsers = function (req, res) {
 }
 
 exports.getUserById = function (id, callback){
-    var selectSQL = 'select id, name, account from user where id = ' + id;
+    var selectSQL = 'select id, name, account, tel, email from user where id = ' + id;
     pool.query(selectSQL, function (err, rows, fields) {
         callback(rows);
     });
 }
 
 exports.addUser = function (req, res) {
-    var addUserSQL = 'insert into user (name,account,password) values("' + req.body.name + '","' + req.body.account + '","' + req.body.password + '")';
+    var addUserSQL = 'insert into user (name,account,password,tel,email) ' +
+        'values("' + req.body.name + '","' + req.body.account + '","' + req.body.password + '","' + req.body.tel + '","' + req.body.email + '")';
     pool.insert(addUserSQL, function (err, result) {
         var addDefaultSectionSQL = 'insert into section_user(sectionId,userId) values ("0","' + result.insertId + '")';
         pool.insert(addDefaultSectionSQL, function (err) {
-            res.json({success: true, confirmHead: '成功', confirmMsg: '帐号新建成功！'});
+            res.json({success: true, msg: '帐号新建成功！'});
         });
     });
 }
 
 exports.updateUser = function (req, res) {
-    var updateUserSQL = 'update user set name = "' + req.body.name + '" where id = "' + req.session.user.id + '"';
+    var updateUserSQL = 'update user set name = "' + req.body.name + '", tel = "' + req.body.tel + '", email = "' + req.body.email + '" ' +
+        'where id = "' + req.session.user.id + '"';
     pool.insert(updateUserSQL, function(uerr, result){
         console.log(req.session.user.id);
         exports.getUserById(req.session.user.id, function(user){
