@@ -165,3 +165,12 @@ var getTabelButtonHTML = function(buttonId, buttonName){
 var isEmptyString = function(strProp){
     return (strProp === null || strProp === undefined || strProp === '');
 }
+
+var addInputValidation = function(){
+    $( '.validation-eng-num-slash-input').on( 'keyup change', function() {
+        this.value = this.value.replace(/[^a-zA-Z0-9-]/g,'');
+    } );
+    $( '.validation-num-input').on( 'keyup change', function() {
+        this.value = this.value.replace(/[^0-9]/g,'');
+    } );
+}
