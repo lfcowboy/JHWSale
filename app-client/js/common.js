@@ -174,3 +174,14 @@ var addInputValidation = function(){
         this.value = this.value.replace(/[^0-9]/g,'');
     } );
 }
+
+var mandatoryIconControl = function(component, controlComponent){
+    if(!component.val()){
+        if(controlComponent){
+            controlComponent.prop( 'disabled', true );
+        }
+        component.next().children( 'span' ).addClass( 'icon-mandatory' );
+    }else{
+        component.next().children( 'span' ).removeClass( 'icon-mandatory' );
+    }
+}

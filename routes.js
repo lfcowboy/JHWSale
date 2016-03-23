@@ -77,7 +77,7 @@ module.exports = function (app) {
     app.get("/getNewQuoteNum", quote.getNewQuoteNum);
     app.post("/addUser", user.addUser);
     app.post('/updateUser', user.updateUser);
-    app.post("/addGroup", section.addDepart);
+    app.post("/addSection", section.addDepart);
 
     //customer
     app.post('/addCustomer',customer.addCustomer);

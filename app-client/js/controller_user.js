@@ -6,40 +6,15 @@ var initAddUserDialog = function(userId){
     var isAdd = !userId && userId != 0;
 
     var mandatoryValidation =  function(){
-        $('#addAccountButton').prop( 'disabled', false );
+        var addAccountButton = $('#addAccountButton');
+        addAccountButton.prop( 'disabled', false );
 
-        var name = $('#addAccount_name').val();
-        if(!name){
-            $('#addAccountButton').prop( 'disabled', true );
-            $('#addAccount_name').next().children( 'span' ).addClass( 'icon-mandatory' );
-        }else{
-            $('#addAccount_name').next().children( 'span' ).removeClass( 'icon-mandatory' );
-        }
+        mandatoryIconControl($('#addAccount_name'), addAccountButton);
 
         if(isAdd){
-            var account = $('#addAccount_account').val();
-            if(!account){
-                $('#addAccountButton').prop( 'disabled', true );
-                $('#addAccount_account').next().children( 'span' ).addClass( 'icon-mandatory' );
-            }else{
-                $('#addAccount_account').next().children( 'span' ).removeClass( 'icon-mandatory' );
-            }
-
-            var password = $('#addAccount_password').val();
-            if(!password){
-                $('#addAccountButton').prop( 'disabled', true );
-                $('#addAccount_password').next().children( 'span' ).addClass( 'icon-mandatory' );
-            }else{
-                $('#addAccount_password').next().children( 'span' ).removeClass( 'icon-mandatory' );
-            }
-
-            var passwordConfirm = $('#addAccount_passwordConfirm').val();
-            if(!passwordConfirm){
-                $('#addAccountButton').prop( 'disabled', true );
-                $('#addAccount_passwordConfirm').next().children( 'span' ).addClass( 'icon-mandatory' );
-            }else{
-                $('#addAccount_passwordConfirm').next().children( 'span' ).removeClass( 'icon-mandatory' );
-            }
+            mandatoryIconControl($('#addAccount_account'), addAccountButton);
+            mandatoryIconControl($('#addAccount_password'), addAccountButton);
+            mandatoryIconControl($('#addAccount_passwordConfirm'), addAccountButton);
         }
     }
 

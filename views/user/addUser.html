@@ -30,7 +30,7 @@
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control n-inputfield" id="addAccount_name" name="name"
-                                   value="<%= user.name%>" placeholder="<输入名称>">
+                                   value="<%= user.name%>" placeholder="<输入名称>" maxlength="30">
                             <a class="form-control-feedback form-control-feedback"><span class="icon"></span></a>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
 
                         <div class="col-sm-8">
                             <input type="password" class="form-control n-inputfield" id="addAccount_password" name="password"
-                                   value="" placeholder="<输入密码>">
+                                   value="" placeholder="<输入密码>" maxlength="20">
                             <a class="form-control-feedback form-control-feedback"><span class="icon"></span></a>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
 
                         <div class="col-sm-8">
                             <input type="password" class="form-control n-inputfield" id="addAccount_passwordConfirm"
-                                   value="" placeholder="<重新输入密码>">
+                                   value="" placeholder="<重新输入密码>" maxlength="20">
                             <a class="form-control-feedback form-control-feedback"><span class="icon"></span></a>
                         </div>
                     </div>
@@ -58,16 +58,16 @@
                         <label for="addAccount_tel" class="col-sm-2 control-label">电话:</label>
 
                         <div class="col-sm-8">
-                            <input type="text" class="form-control n-inputfield validation-num-input" id="addAccount_tel" name="tel"
-                                   value="<%= user.tel%>" placeholder="<输入电话>">
+                            <input type="tel" class="form-control n-inputfield validation-num-input" id="addAccount_tel" name="tel"
+                                   value="<%= user.tel%>" placeholder="<输入电话>" maxlength="20">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="addAccount_email" class="col-sm-2 control-label">电邮:</label>
 
                         <div class="col-sm-8">
-                            <input type="text" class="form-control n-inputfield" id="addAccount_email" name="email"
-                                   value="<%= user.email%>" placeholder="<输入电邮>">
+                            <input type="email" class="form-control n-inputfield" id="addAccount_email" name="email"
+                                   value="<%= user.email%>" placeholder="<输入电邮>" maxlength="40">
                         </div>
                     </div>
                     <div class="alert-error" id="addAccount_msgBox" hidden>

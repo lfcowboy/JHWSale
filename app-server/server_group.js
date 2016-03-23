@@ -66,7 +66,7 @@ exports.showSectionListPanel = function (req, res) {
 }
 
 exports.showAddSectionDialog = function (req, res) {
-    app.render('section/addGroup', function (err, html) {
+    app.render('section/addSection', function (err, html) {
         res.json({success: true, htmlContent: html});
     });
 }

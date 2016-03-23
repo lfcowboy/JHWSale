@@ -428,6 +428,16 @@ var showSectionRoleUserDiv = function (sectionId, roleId, callback) {
 }
 
 var showNewSectionDialog =  function(){
+    var mandatoryValidation = function () {
+        var addSectionButton = $('#addSectionButton');
+        addSectionButton.prop('disabled', false);
+        mandatoryIconControl($('#addSection_name'), addSectionButton);
+    }
+    mandatoryValidation();
+    $( '#addSection_name').on( 'keyup change', function( e ) {
+        mandatoryValidation();
+    } );
+
     $('#addSection_ownerSearch').click(function () {
         var params = {"ownerName": $('#addSection_ownerName').val()};
         searchDropdown('addSection_ownerList', 'addSection_ownerName', params, '/getUsers', function (userId) {
@@ -435,14 +445,14 @@ var showNewSectionDialog =  function(){
         });
     });
 
-    $("#addGroupButton").click(function () {
+    $("#addSectionButton").click(function () {
         var params = {
-            name: $('#addGroup_name').val(),
+            name: $('#addSection_name').val(),
             owner: $('#addSection_ownerId').val()
         };
         $.ajax({
             data: params,
-            url: '/addGroup',
+            url: '/addSection',
             type: 'post',
             dataType: 'json',
             cache: false,
@@ -450,7 +460,7 @@ var showNewSectionDialog =  function(){
             success: function (data) {
                 if (data.success) {
                     showConfirmMsg(data.confirmHead, data.confirmMsg);
-                    $('#addGroupDialog').modal('hide');
+                    $('#addSectionDialog').modal('hide');
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {

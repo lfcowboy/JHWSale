@@ -65,11 +65,11 @@ $("#addCompanyMenu").click(function(){
     $("#addCompanyPanel").show();
 });
 
-$("#addGroupMenu").click(function(){
+$("#addSectionMenu").click(function(){
     $(".content-panel").hide();
     showContentPanel('showPanel_addSection', null, function(){
         showNewSectionDialog();
-        $('#addGroupDialog').modal('show');
+        $('#addSectionDialog').modal('show');
     });
 });
 
