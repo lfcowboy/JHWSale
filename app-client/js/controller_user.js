@@ -15,6 +15,8 @@ var initAddUserDialog = function(userId){
             mandatoryIconControl($('#addAccount_account'), addAccountButton);
             mandatoryIconControl($('#addAccount_password'), addAccountButton);
             mandatoryIconControl($('#addAccount_passwordConfirm'), addAccountButton);
+            mandatoryIconControl($('#addAccount_tel'), addAccountButton);
+            mandatoryIconControl($('#addAccount_email'), addAccountButton);
         }
     }
 
@@ -25,7 +27,7 @@ var initAddUserDialog = function(userId){
         $('#addAccount_account').addClass( 'n-inputfield-uneditable' );
     }
 
-    $( '#addAccount_account,#addAccount_name,#addAccount_password,#addAccount_passwordConfirm').on( 'keyup change', function( e ) {
+    $( '#addAccount_account,#addAccount_name,#addAccount_password,#addAccount_passwordConfirm,#addAccount_tel,#addAccount_email').on( 'keyup change', function( e ) {
         mandatoryValidation();
     } );
 

@@ -52,26 +52,18 @@ var initSectionListTable = function () {
 }
 
 var initSetSectionUserPanel = function (actionId) {
-    initSectionList(actionId);
-    $("#commonDropdown_userActionSection").on('select', function (event) {
-        if (event.args) {
-            var item = event.args.item;
-            if (item) {
-                initUserListTable(item.value);
-            }
-        }
+    initSectionListWULF(actionId, 'setSectionUser');
+    $('#setSectionUser_section').on('changed.fu.selectlist', function () {
+        var sectionId = $("#setSectionUser_section").selectlist('selectedItem').value;
+        initUserListTable(sectionId);
     });
 }
 
 var initSetSectionRolePanel = function (actionId) {
-    initSectionList(actionId);
-    $("#commonDropdown_userActionSection").on('select', function (event) {
-        if (event.args) {
-            var item = event.args.item;
-            if (item) {
-                showSectionRole(item.value);
-            }
-        }
+    initSectionListWULF(actionId, 'setSectionRole');
+    $('#setSectionRole_section').on('changed.fu.selectlist', function () {
+        var sectionId = $("#setSectionRole_section").selectlist('selectedItem').value;
+        showSectionRole(sectionId);
     });
 
     $('#setSectionRole_sectionRoleSearch').click(function () {
@@ -108,15 +100,10 @@ var initSetSectionRolePanel = function (actionId) {
 }
 
 var initSetSectionRoleUserPanel = function (actionId) {
-    initSectionList(actionId);
-
-    $("#commonDropdown_userActionSection").on('select', function (event) {
-        if (event.args) {
-            var item = event.args.item;
-            if (item) {
-                showSectionRoles(item.value);
-            }
-        }
+    initSectionListWULF(actionId, 'setSectionRoleUser');
+    $('#setSectionRoleUser_section').on('changed.fu.selectlist', function () {
+        var sectionId = $("#setSectionRoleUser_section").selectlist('selectedItem').value;
+        showSectionRoles(sectionId);
     });
 }
 
@@ -338,7 +325,9 @@ var showSectionRoles = function (sectionId) {
                     var roleId = $(this).data('roleId');
                     var sectionId = $(this).data("sectionId");
                     var paras = {sectionId: sectionId, roleId: roleId};
-                    function addSectionRoleUser(userId, otherParams) {;
+
+                    function addSectionRoleUser(userId, otherParams) {
+                        ;
                         var params = {
                             sectionId: otherParams.sectionId,
                             roleId: otherParams.roleId,
@@ -367,6 +356,7 @@ var showSectionRoles = function (sectionId) {
                             }
                         });
                     }
+
                     searchDropdown('setGroup_userList' + roleId, 'setGroup_userName' + roleId, paras, '/getSectionUsers', addSectionRoleUser);
                 });
             }
@@ -427,16 +417,16 @@ var showSectionRoleUserDiv = function (sectionId, roleId, callback) {
     });
 }
 
-var showNewSectionDialog =  function(){
+var showNewSectionDialog = function () {
     var mandatoryValidation = function () {
         var addSectionButton = $('#addSectionButton');
         addSectionButton.prop('disabled', false);
         mandatoryIconControl($('#addSection_name'), addSectionButton);
     }
     mandatoryValidation();
-    $( '#addSection_name').on( 'keyup change', function( e ) {
+    $('#addSection_name').on('keyup change', function (e) {
         mandatoryValidation();
-    } );
+    });
 
     $('#addSection_ownerSearch').click(function () {
         var params = {"ownerName": $('#addSection_ownerName').val()};

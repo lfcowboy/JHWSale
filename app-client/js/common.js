@@ -107,7 +107,7 @@ var showContentPanel = function( panelUrl,param,callback ){
     });
 }
 
-var initSectionListWULF = function (actionId, callback) {
+var initSectionListWULF = function (actionId, panelName, callback) {
     var params = {"actionId": actionId};
     $.ajax({
         data: params,
@@ -116,7 +116,7 @@ var initSectionListWULF = function (actionId, callback) {
         cache: false,
         timeout: 5000,
         success: function (data) {
-            initList('addQuote_section', 'addQuote_sectionList', data, callback);
+            initList(panelName + '_section', panelName + '_sectionList', data, callback);
         },
         error: function (jqXHR, textStatus, errorThrown) {
         }

@@ -2,7 +2,7 @@
  * Created by fenglv on 2015/8/9.
  */
 var initAddQuote = function (actionId, quote) {
-    initSectionListWULF(actionId, function(){
+    initSectionListWULF(actionId, 'addQuote', function(){
         if(quote){
             $('#addQuote_section').selectlist('selectByValue', quote.sectionId);
         }
