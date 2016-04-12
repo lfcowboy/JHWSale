@@ -74,3 +74,67 @@ var initAddUserDialog = function(userId){
         });
     });
 }
+
+var initUserListPanel = function () {
+    initUserListTable();
+}
+
+var initUserListTable = function (sectionId) {
+    var source =
+    {
+        datatype: "json",
+        datafields: [
+            {name: 'id', type: 'string'},
+            {name: 'account', type: 'string'},
+            {name: 'name', type: 'string'},
+            {name: 'tel', type: 'string'},
+            {name: 'email', type: 'string'}
+        ],
+        url: '/getUsers'
+    };
+
+    var dataAdapter = new $.jqx.dataAdapter(source);
+
+    var columns = [
+        {
+            text: '帐号',
+            datafield: 'account',
+            filtertype: 'input',
+            width: '25%'
+        },
+        {
+            text: '名字',
+            datafield: 'name',
+            filtertype: 'input',
+            width: '25%'
+        },
+        {
+            text: '电话',
+            datafield: 'tel',
+            filtertype: 'input',
+            width: '25%'
+        },
+        {
+            text: '电邮',
+            datafield: 'email',
+            filtertype: 'input',
+            width: '25%'
+        }
+    ];
+
+    // initialize jqxGrid
+    $('#userListTable').jqxGrid(
+        {
+            width: '100%',
+            source: dataAdapter,
+            selectionmode: 'singlerow',
+            pageable: true,
+            autoheight: true,
+            filterable: true,
+            showfilterrow: true,
+            altRows: true,
+            columns: columns,
+            scrollBarSize: 8
+        });
+    $('#userListTable').jqxGrid({rowsheight: 28});
+}

@@ -15,6 +15,18 @@ exports.showCustomerListPanel = function (req, res) {
     });
 }
 
+exports.showAddCompanyPanel = function (req, res) {
+    app.render('customer/addCompany', function (err, html) {
+        res.json({success: true, htmlContent: html});
+    });
+}
+
+exports.showAddCustomerPanel = function (req, res) {
+    app.render('customer/addCustomer', function (err, html) {
+        res.json({success: true, htmlContent: html});
+    });
+}
+
 exports.addCompany = function (req, res) {
     var addSQL = 'insert into company (name) values ("' + req.body.name + '")';
     pool.insert(addSQL,function(err) {

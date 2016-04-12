@@ -1,57 +1,89 @@
 /**
  * Created by fenglv on 2015/8/9.
  */
- $("#addCompanyButton").click(function(){
-    var params ={
-        name: $("#addCompany_name").val()
-    };
-    $.ajax({
-        data: params,
-        url: '/addCompany',
-        type: 'post',
-        dataType: 'json',
-        cache: false,
-        timeout: 5000,
-        success: function(data){
-            if(data.success){
-                showConfirmMsg(data.confirmHead,data.confirmMsg);
-                $("#addCompanyPanel").hide();
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            showErrorMsgDefault();
-        }
-    });
-});
 
- $("#addCustomerButton").click(function(){
-    var params ={
-        companyName: $('#addCustomer_companyName').val(),
-        name: $("#addCustomer_name").val()
-    };
-    $.ajax({
-        data: params,
-        url: '/addCustomer',
-        type: 'post',
-        dataType: 'json',
-        cache: false,
-        timeout: 5000,
-        success: function(data){
-            if(data.success){
-                showConfirmMsg(data.confirmHead,data.confirmMsg);
-                $('#addCustomerDialog').modal('hide');
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-            showErrorMsgDefault();
-        }
-    });
-});
+var initAddCompanyPanel = function(){
+    var addCompanyButton = $('#addCompanyButton');
 
- $('#addCustomer_companySearch').click(function(){
-     var params = {"companyName": $('#addCustomer_companyName').val()};
-    searchDropdown('addCustomer_companyList', 'addCustomer_companyName', params, '/getCompany', function(){});
-});
+    var mandatoryValidation =  function(){
+        addCompanyButton.prop( 'disabled', false );
+        mandatoryIconControl($('#addCompany_name'), addCompanyButton);
+    }
+
+    mandatoryValidation();
+
+    $( '#addCompany_name').on( 'keyup change', function( e ) {
+        mandatoryValidation();
+    } );
+
+    addCompanyButton.click(function(){
+        var params ={
+            name: $("#addCompany_name").val()
+        };
+        $.ajax({
+            data: params,
+            url: '/addCompany',
+            type: 'post',
+            dataType: 'json',
+            cache: false,
+            timeout: 5000,
+            success: function(data){
+                if(data.success){
+                    showConfirmMsg(data.confirmHead,data.confirmMsg);
+                    $("#addCompanyPanel").hide();
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                showErrorMsgDefault();
+            }
+        });
+    });
+}
+
+var initAddCustomerPanel = function(){
+    var addCustomerButton = $('#addCustomerButton');
+
+    var mandatoryValidation =  function(){
+        addCustomerButton.prop( 'disabled', false );
+        mandatoryIconControl($('#addCustomer_name'), addCustomerButton);
+        mandatoryIconControl($('#addCustomer_tel'), addCustomerButton);
+    }
+
+    mandatoryValidation();
+
+    $( '#addCustomer_name,#addCustomer_tel').on( 'keyup change', function( e ) {
+        mandatoryValidation();
+    } );
+
+    $('#addCustomer_companySearch').click(function(){
+        var params = {"companyName": $('#addCustomer_companyName').val()};
+        searchDropdown('addCustomer_companyList', 'addCustomer_companyName', params, '/getCompany', function(){});
+    });
+
+    addCustomerButton.click(function(){
+        var params ={
+            companyName: $('#addCustomer_companyName').val(),
+            name: $("#addCustomer_name").val()
+        };
+        $.ajax({
+            data: params,
+            url: '/addCustomer',
+            type: 'post',
+            dataType: 'json',
+            cache: false,
+            timeout: 5000,
+            success: function(data){
+                if(data.success){
+                    showConfirmMsg(data.confirmHead,data.confirmMsg);
+                    $('#addCustomerDialog').modal('hide');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                showErrorMsgDefault();
+            }
+        });
+    });
+}
 
 var initCompanyListPanel = function () {
     initCompanyListTable();

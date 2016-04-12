@@ -17,6 +17,7 @@ module.exports = function (app) {
     app.get('/showPanel_priceListReport', quote.showPriceListReportPanel);
     app.post('/showPrintQuotePanel', quote.showPrintQuotePanel);
     app.get('/showPanel_setGroup', section.showSetGroupPanel);
+    app.get('/showPanel_userList', user.showUserListPanel);
     app.get('/showPanel_sectionList', section.showSectionListPanel);
     app.get('/showPanel_roleList', role.showRoleListPanel);
     app.get('/showPanel_roleActions', role.showRoleActionsPanel);
@@ -27,6 +28,8 @@ module.exports = function (app) {
     app.get('/showPanel_customerList', customer.showCustomerListPanel);
     app.get('/showPanel_addQuote', quote.showAddQuotePanel);
     app.get('/showPanel_editPriceList', quote.showEditPriceListPanel);
+    app.get('/showPanel_addCompany', customer.showAddCompanyPanel);
+    app.get('/showPanel_addCustomer', customer.showAddCustomerPanel);
 
     app.get('/showPanel_addUser', user.showAddUserDialog);
     app.get('/showPanel_editUser', user.showEditUserDialog);

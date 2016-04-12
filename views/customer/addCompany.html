@@ -1,4 +1,4 @@
-<div id="addCompanyPanel" class="panel panel-shadow content-panel" hidden>
+<div id="addCompanyPanel" class="panel panel-shadow content-panel">
     <div class="panel-heading">
         <h1>新建客户公司</h1>
     </div>
@@ -9,10 +9,10 @@
                     <label for="addCompany_name" class="col-sm-2 control-label">名称:</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control n-inputfield" id="addCompany_name" name="name"
-                               value="" placeholder="<输入公司名称>">
+                               value="" placeholder="<输入公司名称>" maxlength="20">
+                        <a class="form-control-feedback form-control-feedback"><span class="icon"></span></a>
                     </div>
                 </div>
-                <button id="addCustomerButton1" type="button" class="btn">添加联系人</button>
                 <button id="addCompanyButton" type="button" class="btn pull-right">保存</button>
             </form>
         </div>

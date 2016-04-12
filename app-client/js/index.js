@@ -62,7 +62,16 @@ $("#priceListMenu").click(function(){
 
 $("#addCompanyMenu").click(function(){
     $(".content-panel").hide();
-    $("#addCompanyPanel").show();
+    showContentPanel('showPanel_addCompany', null, function(){
+        initAddCompanyPanel();
+    });
+});
+
+$("#addCustomerMenu").click(function(){
+    $(".content-panel").hide();
+    showContentPanel('showPanel_addCustomer', null, function(){
+        initAddCustomerPanel();
+    });
 });
 
 $("#addSectionMenu").click(function(){
@@ -70,6 +79,13 @@ $("#addSectionMenu").click(function(){
     showContentPanel('showPanel_addSection', null, function(){
         showNewSectionDialog();
         $('#addSectionDialog').modal('show');
+    });
+});
+
+$("#userListMenu").click(function(){
+    $(".content-panel").hide();
+    showContentPanel('showPanel_userList', null, function(){
+        initUserListPanel();
     });
 });
 

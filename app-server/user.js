@@ -43,8 +43,14 @@ exports.showEditUserDialog = function (req, res) {
     });
 }
 
+exports.showUserListPanel = function (req, res) {
+    app.render('user/userList', function (err, html) {
+        res.json({success: true, htmlContent: html});
+    });
+}
+
 exports.getUsers = function (req, res) {
-    var selectSQL = 'select id, name, account from user';
+    var selectSQL = 'select user.id as id, user.name as name, user.account as account, user.tel as tel, user.email as email from user';
     pool.query(selectSQL, function (err, rows, fields) {
         res.json(rows);
     });
