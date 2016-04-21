@@ -1,5 +1,5 @@
 /*!
- * WULF v1.0.50 (http://networks.nokia.com/)
+ * WULF v1.1.0 (http://wulf-demo.dynamic.nsn-net.net/)
  * Copyright 2016 Nokia Solutions and Networks. All rights Reserved.
  */
 
@@ -11,27 +11,30 @@
 			'fuelux/datepicker',
 			'fuelux/selectlist',
 			'fuelux/tree',
+			'fuelxu/combobox',
+			'fuelux/spinbox',
 			'jquery-mousewheel',
 			'malihu-custom-scrollbar-plugin',
 			'twitter-bootstrap-wizard',
-			'jqwidgets/jqxcore',
-			'jqwidgets/jqxdata',
-			'jqwidgets/jqxbuttons',
-			'jqwidgets/jqxscrollbar',
-			'jqwidgets/jqxmenu',
-			'jqwidgets/jqxcheckbox',
-			'jqwidgets/jqxlistbox',
-			'jqwidgets/jqxdropdownlist',
-			'jqwidgets/jqxgrid',
-			'jqwidgets/jqxgrid.filter',
-			'jqwidgets/jqxgrid.pager',
-			'jqwidgets/jqxgrid.sort',
-			'jqwidgets/jqxgrid.edit',
-			'jqwidgets/jqxgrid.selection',
-			'jqwidgets/jqxpanel',
-			'jqwidgets/jqxcombobox',
-			'jqwidgets/jqxdatatable',
-			'jqwidgets/jqxtreegrid'
+			'jqxcore',
+			'jqxdata',
+			'jqxbuttons',
+			'jqxscrollbar',
+			'jqxmenu',
+			'jqxcheckbox',
+			'jqxlistbox',
+			'jqxdropdownlist',
+			'jqxgrid',
+			'jqxgrid.filter',
+			'jqxgrid.pager',
+			'jqxgrid.sort',
+			'jqxgrid.edit',
+			'jqxgrid.selection',
+			'jqxgrid.columnsresize',
+			'jqxpanel',
+			'jqxcombobox',
+			'jqxdatatable',
+			'jqxtreegrid'
 		], factory );
 	} else if ( typeof module === 'object' && module.exports ) {
 		module.exports = function( root, jQuery ) {
@@ -75,9 +78,15 @@
 				}
 			} );
 		} );
+		$( '.n-hover-popover' ).on( 'mouseover.wf.balloon', function() {
+			$( this ).off( 'click' );
+			$( this ).data( 'bs.popover' ).show();
+		} ).on( 'mouseout.wf.balloon', function() {
+			$( this ).data( 'bs.popover' ).hide();
+		} );
 
 		//stop propagation if click is triggered on tips
-		$( '[data-toggle^="popover"]' ).one( 'shown.bs.popover', function( e ) {
+		$( '[data-toggle^="popover"]' ).one( 'shown.bs.popover', function() {
 			$( this ).data( 'bs.popover' ).tip().on( 'click.wf.balloon', function( e ) {
 				e.stopPropagation();
 			} );
@@ -85,8 +94,8 @@
 
 		// resize windown reposition the popover
 		// TODO:Jonathan, the resize events should be throttled.
-		$( window ).on( 'resize', function( e ) {
-			$( '[data-toggle^="popover"]' ).each( function( idx, el ) {
+		$( window ).on( 'resize', function() {
+			$( '[data-toggle^="popover"]' ).each( function() {
 				var popover = $( this ).data( 'bs.popover' );
 				var $tip = popover.tip();
 				if ( $tip.hasClass( 'in' ) ) {
@@ -95,19 +104,14 @@
 			} );
 		} );
 
-
 	} )( $ );
 
 
 	//banner-responsiveness.js
 	( function( $ ) {
-
 		var bannerBlueDetachEvent = "n.banner.blue.block.detached";
 		var bannerBlueAttachEvent = "n.banner.blue.block.attached";
 		var $bannersInPage = $( ".n-banner" );
-		// responsive banner behavior when blue areas in 2 rows are detached
-		$( document ).ready( triggerCollapseBanner );
-		$( window ).resize( triggerCollapseBanner );
 
 		function triggerCollapseBanner() {
 			//loop through every banner on the page
@@ -210,6 +214,10 @@
 			navLinksSubmenu.removeClass( 'n-collapse-dropdown-sub-menu' );
 		}
 
+		// responsive banner behavior when blue areas in 2 rows are detached
+		$( document ).ready( triggerCollapseBanner );
+		$( window ).resize( triggerCollapseBanner );
+
 	} )( $ );
 
 
@@ -238,6 +246,10 @@
 
 		var classNoRadiusLb = 'n-inputfield-nonradius-lb';
 
+		if ( typeof $.fn.datepicker !== "function" ) {
+			return;
+		}
+
 		$( document )
 			.on( 'shown.bs.dropdown hidden.bs.dropdown', '.n-calendar', function() {
 				$( this ).children( 'input' ).toggleClass( classNoRadiusLb );
@@ -255,8 +267,9 @@
 			//the focus will be switched to the title after clicking on back or select button.
 			.on( 'click.wf.calendar', '.datepicker-wheels-footer .datepicker-wheels-back', focusToHeaderTitle )
 			.on( 'click.wf.calendar', '.datepicker-wheels-footer .datepicker-wheels-select', focusToHeaderTitle )
-			.on( 'click.wf.calendar', '.n-calendar button.dropdown-toggle', relocateDatePicker )
-			.on( 'scroll.wf.calendar', closeDatePickerOnScroll );
+			.on( 'shown.bs.dropdown', '.n-calendar .input-group-btn', relocateDatePicker )
+			.on( 'scroll.wf.calendar', closeDatePickerOnScroll )
+			.on( 'changed.fu.datepicker', '.datepicker', updateTimer );
 
 		$( window ).on( 'resize.wf.calendar', closeDatePickerOnScroll );
 
@@ -276,21 +289,21 @@
 			evt.stopPropagation();
 		}
 
-		function relocateDatePicker( evt ) {
+		function relocateDatePicker() {
 			/*jshint validthis:true */
 			var dateInput = $( this ).closest( '.n-calendar' ).find( 'input' );
 			if ( dateInput.data( 'position' ) === 'fixed' ) {
-				var wrap = $( this ).parent().find( '.datepicker-calendar-wrapper' );
+				var wrap = $( this ).find( '.datepicker-calendar-wrapper' );
 				if ( wrap.length !== 0 ) {
 					wrap.css( 'position', 'fixed' );
-					wrap.css( 'top', $( this ).offset().top + $( this ).parent().height() - $( document ).scrollTop() );
-					wrap.css( 'left', $( this ).offset().left - wrap.width() + $( this ).parent().width() );
+					wrap.css( 'top', $( this ).offset().top + $( this ).height() - $( document ).scrollTop() );
+					wrap.css( 'left', $( this ).offset().left - wrap.width() + $( this ).width() - $( document ).scrollLeft() );
 					wrap.css( 'right', 'auto' );
 				}
 			}
 		}
 
-		function closeDatePickerOnScroll( evt ) {
+		function closeDatePickerOnScroll() {
 			$( '.datepicker-calendar-wrapper' ).each( function() {
 				if ( $( this ).css( 'display' ) === 'block' ) {
 					var input = $( this ).closest( '.n-calendar' ).find( 'input' );
@@ -315,6 +328,18 @@
 				}
 			} );
 
+			$( '[data-markup^="timer_calendar"]' ).each( function() {
+				if ( $( this ).parent().find( '.datepicker-calendar-wrapper' ).length === 0 ) {
+					$( this ).after( '<div class=\"input-group-btn\"><button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\">  <span class=\"glyphicon glyphicon-calendar\"></span>  <span class=\"sr-only\">Toggle Calendar</span></button><div class=\"dropdown-menu dropdown-menu-right datepicker-calendar-wrapper\" role=\"menu\">  <div class=\"datepicker-calendar\"><div class=\"datepicker-calendar-header\"><button type=\"button\" class=\"prev\"><span class=\"glyphicon glyphicon-chevron-left\"></span><span class=\"sr-only\">Previous Month</span></button><button type=\"button\" class=\"next\"><span class=\"glyphicon glyphicon-chevron-right\"></span><span class=\"sr-only\">Next Month</span></button><button type=\"button\" class=\"title\"><span class=\"month\">  <span data-month=\"0\">January</span>  <span data-month=\"1\">February</span>  <span data-month=\"2\">March</span>  <span data-month=\"3\">April</span>  <span data-month=\"4\">May</span>  <span data-month=\"5\">June</span>  <span data-month=\"6\">July</span>  <span data-month=\"7\">August</span>  <span data-month=\"8\">September</span>  <span data-month=\"9\">October</span>  <span data-month=\"10\">November</span>  <span data-month=\"11\">December</span></span> <span class=\"year\"></span></button></div><table class=\"datepicker-calendar-days\"><thead><tr><th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th></tr></thead><tbody></tbody></table><div class=\"datepicker-calendar-timer\"><div class=\"spinner-container datepicker-calendar-hour\"><div class=\"spinbox\" data-initialize=\"spinbox\"><input type=\"text\" class=\"form-control spinbox-input n-inputfield\"><div class=\"spinbox-buttons btn-group btn-group-vertical\"><button type=\"button\" class=\"btn btn-default spinbox-up btn-xs\"><span class=\"icon icon-arrow-up\"></span><span class=\"sr-only\">Increase</span></button><button type=\"button\" class=\"btn btn-default spinbox-down btn-xs\"><span class=\"icon icon-arrow\"></span><span class=\"sr-only\">Decrease</span></button></div></div></div><div class=\"spinner-container datepicker-calendar-minute\"><div class=\"spinbox\" data-initialize=\"spinbox\"><input type=\"text\" class=\"form-control spinbox-input n-inputfield\"><div class=\"spinbox-buttons btn-group btn-group-vertical\"><button type=\"button\" class=\"btn btn-default spinbox-up btn-xs\"><span class=\"icon icon-arrow-up\"></span><span class=\"sr-only\">Increase</span></button><button type=\"button\" class=\"btn btn-default spinbox-down btn-xs\"><span class=\"icon icon-arrow\"></span><span class=\"sr-only\">Decrease</span></button></div></div></div><div class=\"spinner-container datepicker-calendar-AMPM\"><div class=\"spinbox\" data-initialize=\"spinbox\"><input id=\"s-normal\" type=\"text\" tabIndex=\"-1\" class=\"form-control spinbox-input n-inputfield n-inputfield-uneditable\" readonly><div class=\"spinbox-buttons btn-group btn-group-vertical\"><button type=\"button\" class=\"btn btn-default spinbox-up btn-xs\"><span class=\"icon icon-arrow-up\"></span><span class=\"sr-only\">Increase</span></button><button type=\"button\" class=\"btn btn-default spinbox-down btn-xs\"><span class=\"icon icon-arrow\"></span><span class=\"sr-only\">Decrease</span></button></div></div><input type=\"text\" tabIndex=\"-1\" class=\"form-control spinbox-input n-inputfield ampm n-inputfield-uneditable\" readonly></div><div class=\"operator-btn\"><button type=\"button\" class=\"btn btn-small now\">Now</button> <button type=\"button\" class=\"btn btn-action btn-small done\">Done</button></div></div></div><div class=\"datepicker-wheels\" aria-hidden=\"true\"><div class=\"datepicker-wheels-month\"><h2 class=\"header\">Month</h2><ul><li data-month=\"0\"><button type=\"button\">Jan</button></li><li data-month=\"1\"><button type=\"button\">Feb</button></li><li data-month=\"2\"><button type=\"button\">Mar</button></li><li data-month=\"3\"><button type=\"button\">Apr</button></li><li data-month=\"4\"><button type=\"button\">May</button></li><li data-month=\"5\"><button type=\"button\">Jun</button></li><li data-month=\"6\"><button type=\"button\">Jul</button></li><li data-month=\"7\"><button type=\"button\">Aug</button></li><li data-month=\"8\"><button type=\"button\">Sep</button></li><li data-month=\"9\"><button type=\"button\">Oct</button></li><li data-month=\"10\"><button type=\"button\">Nov</button></li><li data-month=\"11\"><button type=\"button\">Dec</button></li></ul></div><div class=\"datepicker-wheels-year\"><h2 class=\"header\">Year</h2><ul></ul></div><div class=\"datepicker-wheels-footer clearfix\"><button type=\"button\" class=\"btn datepicker-wheels-back\"><span class=\"icon icon-left\"></span><span class=\"sr-only\">Return to Calendar</span></button><button type=\"button\" class=\"btn datepicker-wheels-select\">Select <span class=\"sr-only\">Month and Year</span></button></div></div></div></div> </div></div>' );
+				}
+			} );
+
+			$( '[data-markup^="disabled_timer_calendar"]' ).each( function() {
+				if ( $( this ).parent().find( '.datepicker-calendar-wrapper' ).length === 0 ) {
+					$( this ).after( '<div class=\"input-group-btn\"><button type=\"button\" class=\"btn btn-default dropdown-toggle\" data-toggle=\"dropdown\" disabled>  <span class=\"glyphicon glyphicon-calendar\"></span>  <span class=\"sr-only\">Toggle Calendar</span></button><div class=\"dropdown-menu dropdown-menu-right datepicker-calendar-wrapper\" role=\"menu\">  <div class=\"datepicker-calendar\"><div class=\"datepicker-calendar-header\"><button type=\"button\" class=\"prev\"><span class=\"glyphicon glyphicon-chevron-left\"></span><span class=\"sr-only\">Previous Month</span></button><button type=\"button\" class=\"next\"><span class=\"glyphicon glyphicon-chevron-right\"></span><span class=\"sr-only\">Next Month</span></button><button type=\"button\" class=\"title\"><span class=\"month\">  <span data-month=\"0\">January</span>  <span data-month=\"1\">February</span>  <span data-month=\"2\">March</span>  <span data-month=\"3\">April</span>  <span data-month=\"4\">May</span>  <span data-month=\"5\">June</span>  <span data-month=\"6\">July</span>  <span data-month=\"7\">August</span>  <span data-month=\"8\">September</span>  <span data-month=\"9\">October</span>  <span data-month=\"10\">November</span>  <span data-month=\"11\">December</span></span> <span class=\"year\"></span></button></div><table class=\"datepicker-calendar-days\"><thead><tr><th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th><th>FRI</th><th>SAT</th></tr></thead><tbody></tbody></table><div class=\"datepicker-calendar-timer\"><div class=\"spinner-container datepicker-calendar-hour\"><div class=\"spinbox\" data-initialize=\"spinbox\"><input type=\"text\" class=\"form-control spinbox-input n-inputfield\"><div class=\"spinbox-buttons btn-group btn-group-vertical\"><button type=\"button\" class=\"btn btn-default spinbox-up btn-xs\"><span class=\"icon icon-arrow-up\"></span><span class=\"sr-only\">Increase</span></button><button type=\"button\" class=\"btn btn-default spinbox-down btn-xs\"><span class=\"icon icon-arrow\"></span><span class=\"sr-only\">Decrease</span></button></div></div></div><div class=\"spinner-container datepicker-calendar-minute\"><div class=\"spinbox\" data-initialize=\"spinbox\"><input type=\"text\" class=\"form-control spinbox-input n-inputfield\"><div class=\"spinbox-buttons btn-group btn-group-vertical\"><button type=\"button\" class=\"btn btn-default spinbox-up btn-xs\"><span class=\"icon icon-arrow-up\"></span><span class=\"sr-only\">Increase</span></button><button type=\"button\" class=\"btn btn-default spinbox-down btn-xs\"><span class=\"icon icon-arrow\"></span><span class=\"sr-only\">Decrease</span></button></div></div></div><div class=\"spinner-container datepicker-calendar-AMPM\"><div class=\"spinbox\" data-initialize=\"spinbox\"><input id=\"s-normal\" type=\"text\" tabIndex=\"-1\" class=\"form-control spinbox-input n-inputfield n-inputfield-uneditable\" readonly><div class=\"spinbox-buttons btn-group btn-group-vertical\"><button type=\"button\" class=\"btn btn-default spinbox-up btn-xs\"><span class=\"icon icon-arrow-up\"></span><span class=\"sr-only\">Increase</span></button><button type=\"button\" class=\"btn btn-default spinbox-down btn-xs\"><span class=\"icon icon-arrow\"></span><span class=\"sr-only\">Decrease</span></button></div></div><input type=\"text\" tabIndex=\"-1\" class=\"form-control spinbox-input n-inputfield ampm n-inputfield-uneditable\" readonly></div><div class=\"operator-btn\"><button type=\"button\" class=\"btn btn-small now\">Now</button> <button type=\"button\" class=\"btn btn-action btn-small done\">Done</button></div></div></div><div class=\"datepicker-wheels\" aria-hidden=\"true\"><div class=\"datepicker-wheels-month\"><h2 class=\"header\">Month</h2><ul><li data-month=\"0\"><button type=\"button\">Jan</button></li><li data-month=\"1\"><button type=\"button\">Feb</button></li><li data-month=\"2\"><button type=\"button\">Mar</button></li><li data-month=\"3\"><button type=\"button\">Apr</button></li><li data-month=\"4\"><button type=\"button\">May</button></li><li data-month=\"5\"><button type=\"button\">Jun</button></li><li data-month=\"6\"><button type=\"button\">Jul</button></li><li data-month=\"7\"><button type=\"button\">Aug</button></li><li data-month=\"8\"><button type=\"button\">Sep</button></li><li data-month=\"9\"><button type=\"button\">Oct</button></li><li data-month=\"10\"><button type=\"button\">Nov</button></li><li data-month=\"11\"><button type=\"button\">Dec</button></li></ul></div><div class=\"datepicker-wheels-year\"><h2 class=\"header\">Year</h2><ul></ul></div><div class=\"datepicker-wheels-footer clearfix\"><button type=\"button\" class=\"btn datepicker-wheels-back\"><span class=\"icon icon-left\"></span><span class=\"sr-only\">Return to Calendar</span></button><button type=\"button\" class=\"btn datepicker-wheels-select\">Select <span class=\"sr-only\">Month and Year</span></button></div></div></div></div> </div></div>' );
+				}
+			} );
+
 			//This is just a workaround method to off the focus event for input field
 			//fuelux should provide an option to not to listen it.
 			setTimeout( function() {
@@ -323,6 +348,184 @@
 
 		} );
 
+		$.fn.datepicker.Constructor.prototype.initTimer = function() {
+			//set time setting is shown
+			this.options.showTime = true;
+
+			//show timer setting panel
+			$( this.$element.find( '.datepicker-calendar-timer' ) ).css( 'display', 'block' );
+
+			this.$input.off( 'blur.fu.datepicker' );
+			this.$input = this.$element.find( 'input:first' );
+			this.$input.on( 'blur.fu.datepicker', $.proxy( this.inputBlurred, this ) );
+
+			this.$hour = this.$element.find( '.datepicker-calendar-hour .spinbox' );
+			this.$minute = this.$element.find( '.datepicker-calendar-minute .spinbox' );
+			this.$ampm = this.$element.find( '.datepicker-calendar-AMPM .spinbox' );
+
+			this.$hour.spinbox( 'max', 12 );
+			this.$hour.spinbox( 'min', 1 );
+			this.$minute.spinbox( 'max', 59 );
+			this.$minute.spinbox( 'min', 0 );
+			this.$ampm.spinbox( 'max', 1 );
+			this.$ampm.spinbox( 'min', 0 );
+
+			this.$element.find( '.now' ).on( 'click', showNow );
+			this.$element.find( '.done' ).on( 'click', timeDone );
+
+			this.resetTimer();
+
+			//show time format when it is 12h
+			if ( this.is12HoursFormat() ) { //24 hours H/HH
+				$( this.$element.find( '.datepicker-calendar-AMPM' ) ).css( 'display', 'inline-block' );
+			} else {
+				this.$hour.spinbox( 'max', 23 );
+				this.$hour.spinbox( 'min', 0 );
+			}
+
+			//add default button action for done
+			this.$element.on( 'keyup', '.n-calendar', function( e ) {
+				var ENTER_KEY = 13;
+				if ( e.which === ENTER_KEY ) {
+					timeDone( e );
+				}
+			} );
+		};
+
+		$.fn.datepicker.Constructor.prototype.dateClicked = function( e ) {
+			var $td = $( e.currentTarget ).parents( 'td:first' );
+			var date;
+
+			if ( $td.hasClass( 'restricted' ) ) {
+				return;
+			}
+
+			this.$days.find( 'td.selected' ).removeClass( 'selected' );
+			$td.addClass( 'selected' );
+
+			date = new Date( $td.attr( 'data-year' ), $td.attr( 'data-month' ), $td.attr( 'data-date' ) );
+			this.selectedDate = date;
+
+			if ( this.options.showTime ) {
+				e.stopPropagation();
+			} else {
+				this.$input.val( this.formatDate( date ) );
+				this.inputValue = this.$input.val();
+				this.$input.focus();
+				this.$element.trigger( 'dateClicked.fu.datepicker', date );
+			}
+		};
+
+		$.fn.datepicker.Constructor.prototype.resetTimer = function() {
+			setTime( this.$hour, this.$minute, this.$ampm, new Date(), this.is12HoursFormat() );
+		};
+
+		$.fn.datepicker.Constructor.prototype.is12HoursFormat = function() {
+			return ( this.options.momentConfig.format.indexOf( 'H' ) < 0 );
+		};
+
+		$.fn.spinbox.Constructor.prototype.output = function( value, updateField ) {
+			var ampm = $( this.$element ).parent().find( '.ampm' );
+			if ( ampm.length > 0 ) {
+				$( ampm[ 0 ] ).val( value % 2 === 0 ? 'PM' : 'AM' );
+			}
+			value = ( value + '' ).split( '.' ).join( this.options.decimalMark );
+			updateField = ( updateField || true );
+
+			if ( updateField ) {
+				this.$input.val( value );
+			}
+
+			return value;
+		};
+
+		$.fn.spinbox.Constructor.prototype.max = function( maxValue ) {
+			this.options.max = maxValue;
+		};
+
+		$.fn.spinbox.Constructor.prototype.min = function( minValue ) {
+			this.options.min = minValue;
+		};
+
+		function setTime( hour, minute, ampm, date, is12HourFormat ) {
+			var hours = date.getHours();
+			var minutes = date.getMinutes();
+			var ampmValue = 0;
+
+			if ( is12HourFormat ) {
+				if ( hours >= 12 ) {
+					ampmValue = 0;
+				} else {
+					ampmValue = 1;
+				}
+
+				if ( hours > 12 ) {
+					hours = hours - 12;
+				}
+			}
+
+			hour.spinbox( 'value', hours );
+			minute.spinbox( 'value', minutes );
+			ampm.spinbox( 'value', ampmValue );
+		}
+
+		function showNow( e ) {
+			var calendar = $( e.currentTarget ).parents( '.datepicker' );
+			var is12HoursFormat = calendar.datepicker( 'is12HoursFormat' );
+			var currentDate = new Date();
+
+			//show the correct date
+			calendar.datepicker( 'setDate', currentDate );
+
+			//show the correct time
+			var timer = $( e.currentTarget ).parents( '.datepicker-calendar-timer' );
+			var hour = timer.find( '.datepicker-calendar-hour .spinbox' );
+			var minute = timer.find( '.datepicker-calendar-minute .spinbox' );
+			var ampm = timer.find( '.datepicker-calendar-AMPM .spinbox' );
+			setTime( hour, minute, ampm, currentDate, is12HoursFormat );
+		}
+
+		function timeDone( e ) {
+			var calendar = $( e.currentTarget ).parents( '.datepicker' );
+			var is12HoursFormat = calendar.datepicker( 'is12HoursFormat' );
+			var d = calendar.datepicker( 'getDate' );
+
+			var timer = calendar.find( '.datepicker-calendar-timer' );
+			var hour = timer.find( '.datepicker-calendar-hour input' );
+			var minute = timer.find( '.datepicker-calendar-minute input' );
+			var ampm = timer.find( '.datepicker-calendar-AMPM .spinbox input' );
+			var hours = parseInt( hour.val() );
+
+			if ( is12HoursFormat && ampm.val() === '0' ) {
+				hours += 12;
+			}
+
+			d.setHours( hours );
+			d.setMinutes( minute.val() );
+			calendar.datepicker( 'setDate', d );
+
+			closeCalendar( calendar );
+		}
+
+		function closeCalendar( calendar ) {
+			calendar.find( '.input-group-btn' ).removeClass( 'open' );
+			var $input = calendar.find( 'input:first' );
+			$input.next().find( ".dropdown-toggle" ).attr( "aria-expanded", "false" );
+			if ( $input.hasClass( classNoRadiusLb ) ) {
+				$input.removeClass( classNoRadiusLb );
+			}
+		}
+
+		function updateTimer( e ) {
+			var calendar = $( e.currentTarget );
+			var date = calendar.datepicker( 'getDate' );
+			var is12HoursFormat = calendar.datepicker( 'is12HoursFormat' );
+			var hour = calendar.find( '.datepicker-calendar-hour .spinbox' );
+			var minute = calendar.find( '.datepicker-calendar-minute .spinbox' );
+			var ampm = calendar.find( '.datepicker-calendar-AMPM .spinbox' );
+
+			setTime( hour, minute, ampm, date, is12HoursFormat );
+		}
 
 	} )( $ );
 
@@ -369,12 +572,16 @@
 		} );
 
 		$( document ).on( 'keydown', '.combobox input', function( e ) {
+			var comboBox = $( this ).parent( ".combobox" );
 			if ( e.which === 38 || e.which === 40 ) {
 				e.preventDefault();
 				var a = jQuery.Event( "keydown" );
 				a.which = e.which;
-				$( this ).parent( ".combobox" ).find( "button.dropdown-toggle" ).trigger( a );
-				$( this ).parent( ".combobox" ).find( "button.dropdown-toggle" ).focus();
+				comboBox.find( "button.dropdown-toggle" ).trigger( a );
+				comboBox.find( "button.dropdown-toggle" ).focus();
+			}
+			if ( comboBox.hasClass( "combobox-filter" ) && !comboBox.hasClass( "combobox-open" ) ) {
+				comboBox.find( "button.dropdown-toggle" ).trigger( "click" );
 			}
 		} );
 
@@ -520,7 +727,7 @@
 					e.preventDefault();
 				}
 
-				function stopDrag( e ) {
+				function stopDrag() {
 					$drag.removeClass( 'draggable' ).css( 'z-index', zIdx );
 					document.documentElement.removeEventListener( 'mousemove', doDrag, false );
 					document.documentElement.removeEventListener( 'mouseup', stopDrag, false );
@@ -571,6 +778,41 @@
 		$( document ).ready( function() {
 			applyDataDrag( 'div' );
 		} );
+
+	} )( $ );
+
+
+	//drawer.js
+	( function( $ ) {
+
+		$( '.n-flyout' ).on( 'click', '.n-drawer-tabs a', function() {
+			var $li = $( this ).parent( 'li' );
+			var id = $( this ).attr( 'href' );
+			setTimeout( function() {
+				$li.parent( 'ul' ).find( 'li' ).each( function() {
+					$( this ).removeClass( 'selected' ).removeClass( 'before-selected' ).removeClass( 'after-selected' );
+				} );
+				$li.addClass( 'selected' );
+				$li.next( 'li' ).addClass( 'after-selected' );
+				$li.prev( 'li' ).addClass( 'before-selected' );
+
+				$( '.n-flyout-container' ).hide();
+				id = id.replace( '#', '' );
+				$( '#' + id ).show();
+			}, 50 );
+
+		} );
+
+		$( '.n-flyout' ).on( 'click', '.drawer-toggle-up', function() {
+			$( this ).removeClass( 'drawer-toggle-up' ).addClass( 'drawer-toggle-down' );
+			$( '.n-flyout-open' ).trigger( 'click' );
+		} );
+
+		$( '.n-flyout' ).on( 'click', '.drawer-toggle-down', function() {
+			$( this ).removeClass( 'drawer-toggle-down' ).addClass( 'drawer-toggle-up' );
+			$( '.n-flyout-open' ).find( '.selected' ).trigger( 'click' );
+		} );
+
 
 	} )( $ );
 
@@ -743,17 +985,8 @@
 
 		$.fn.extend( {
 			adaptiveSelectlist: function() {
-				var $select = $( this );
-				$select.selectlist();
-				var $dropDownMecu = $select.find( '> .dropdown-menu' );
-				var DROP_DOWN_MIN_WIDTH_IN_PX = $dropDownMecu.css( 'min-width' ).replace( /[^-\d\.]/g, '' );
-				$select.on( 'changed.fu.selectlist', function() {
-					var adaptedWidth = $select.width();
-					if ( adaptedWidth > DROP_DOWN_MIN_WIDTH_IN_PX ) {
-						$dropDownMecu.css( 'width', adaptedWidth );
-					} else {
-						$dropDownMecu.css( 'width', 'auto' );
-					}
+				$( this ).on( 'shown.bs.dropdown', function() {
+					adjustDropdownMenuWidth( $( this ) );
 				} );
 			}
 		} );
@@ -762,31 +995,58 @@
 			$( ".n-dropdown-menu-scroll" ).on( "click", ".mCSB_dragger_bar", function( e ) {
 				e.stopPropagation();
 			} );
-			var nPulldownMultiple = '<p class="prompt">Please select items</p>';
+			var nPulldownMultiple = '<p class="prompt">--Select items--</p>';
 			$( '.selectlist-multiple' ).find( '.selected-label' ).empty().append( nPulldownMultiple );
 			$( '.selectlist-multiple ul' ).on( 'click', function( e ) {
 				e.stopPropagation();
 			} );
 			$( '.selectlist-multiple input[type="checkbox"]' ).on( 'click', function() {
-				var title = $( this ).next().children().text() + ', ';
+				var html,
+					tooltip = "",
+					title = $( this ).next().children().text(),
+					$multiSelect = $( this ).closest( '.selectlist-multiple' );
 				if ( $( this ).is( ':checked' ) ) {
-					var html = '<span title="' + title + '">' + title + '</span>';
-					$( this ).closest( '.selectlist-multiple' ).find( '.prompt' ).hide();
-					$( this ).closest( '.selectlist-multiple' ).find( '.selected-label' ).append( html );
+					if ( $multiSelect.find( '.selected-label' ).find( 'span' ).length > 0 ) {
+						html = '<span wulf-title="' + title + '">' + ", " + title + '</span>';
+					} else {
+						html = '<span wulf-title="' + title + '">' + title + '</span>';
+					}
+					$multiSelect.find( '.prompt' ).hide();
+					$multiSelect.find( '.selected-label' ).append( html );
+					$multiSelect.find( 'button' ).find( 'span[wulf-title]' ).each( function() {
+						tooltip = tooltip + $( this ).text();
+					} );
+					$multiSelect.find( 'button' ).attr( 'title', tooltip );
 				} else {
-					$( this ).closest( '.selectlist-multiple' ).find( 'span[title="' + title + '"]' ).remove();
-					if ( $( this ).closest( '.selectlist-multiple' ).find( '.selected-label' ).children().length === 1 ) {
-						$( this ).closest( '.selectlist-multiple' ).find( '.prompt' ).show();
+					$multiSelect.find( 'span[wulf-title="' + title + '"]' ).remove();
+					var $firstSelectedItem = $( $multiSelect.find( 'span' ).find( 'span' ).get( 0 ) );
+					if ( $firstSelectedItem.text().indexOf( ", " ) === 0 ) {
+						$firstSelectedItem.text( $firstSelectedItem.text().slice( 2 ) );
+					}
+					$multiSelect.find( 'button' ).find( 'span[wulf-title]' ).each( function() {
+						tooltip = tooltip + $( this ).text();
+					} );
+					$multiSelect.find( 'button' ).attr( 'title', tooltip );
+					if ( $multiSelect.find( '.selected-label' ).children().length === 1 ) {
+						$multiSelect.find( '.prompt' ).show();
+						$multiSelect.find( 'button' ).removeAttr( 'title' );
 					}
 				}
 			} );
 		} );
 
 		$( document )
-			.on( 'click.wf.dropdown', '.n-table .selectlist .dropdown-toggle', relocateDropdown )
+			.on( 'shown.bs.dropdown', '.n-table .selectlist', relocateDropdown )
 			.on( 'scroll.wf.dropdown', closeDropdownOnScroll );
 
 		$( window ).on( 'resize.wf.dropdown', closeDropdownOnScroll );
+		$( window ).on( 'resize.wf.dropdown', function() {
+			$( '.selectlist' ).each( function() {
+				if ( $( this ).hasClass( 'open' ) ) {
+					adjustDropdownMenuWidth( $( this ) );
+				}
+			} );
+		} );
 
 		function relocateDropdown() {
 			/*jshint validthis:true */
@@ -794,7 +1054,7 @@
 			if ( $( this ).closest( '.selectlist' ).data( 'position' ) === 'fixed' ) {
 				ul.css( 'position', 'fixed' );
 				ul.css( 'top', $( this ).offset().top + $( this ).parent().height() - $( document ).scrollTop() );
-				ul.css( 'left', 'auto' );
+				ul.css( 'left', $( this ).offset().left - $( document ).scrollLeft() );
 				ul.width( $( this ).parent().width() );
 			}
 		}
@@ -807,6 +1067,161 @@
 					}
 				}
 			} );
+		}
+
+		function adjustDropdownMenuWidth( $select ) {
+			var offset = $select.offset().left;
+			var $dropDownMecu = $select.find( '> .dropdown-menu' );
+			$dropDownMecu.css( 'width', 'auto' );
+			var dropdownWidth = $dropDownMecu.width();
+			var windowWidth = $( window ).width();
+			if ( offset + dropdownWidth > windowWidth ) {
+				$dropDownMecu.width( windowWidth - offset - 20 );
+			}
+		}
+
+	} )( $ );
+
+
+	//flyout.js
+	( function( $ ) {
+
+		$( function() {
+			$( '[data-markup^="flyout"]' ).each( function() {
+				var $flyout = $( this );
+				var $container = $flyout.find( ".n-flyout-container" );
+				var contaierWidth = $container.outerWidth();
+				var containerHeight = $container.outerHeight();
+				var direction = $flyout.data( 'direction' );
+
+				switch ( direction ) {
+					case 'top':
+						$flyout.css( "bottom", ( -containerHeight ) + "px" );
+						break;
+					case 'bottom':
+						$flyout.css( "top", ( -containerHeight ) + "px" );
+						break;
+					case 'left':
+						$flyout.css( "right", ( -contaierWidth ) + "px" );
+						break;
+					case 'right':
+						$flyout.css( "left", ( -contaierWidth ) + "px" );
+						var $openAnchor = $flyout.find( ".n-flyout-open" );
+						var openHeight = $openAnchor.outerHeight();
+						$openAnchor.css( "left", ( contaierWidth + 1 ) + "px" );
+						$openAnchor.css( "top", Math.ceil( ( containerHeight - openHeight ) / 2 ) + "px" );
+						break;
+				}
+
+				// Generate the scroll content (if there is) before container hide.
+				$( '.scrollbars' ).scrollbars();
+				$container.hide();
+
+				$flyout.find( 'ul li' ).eq( 0 ).addClass( 'selected' );
+				$flyout.find( 'ul li' ).eq( 1 ).addClass( 'after-selected' );
+			} );
+		} );
+
+		$( '.n-flyout' ).on( 'click', '.n-flyout-open', function( event ) {
+			var $clickTarget = $( event.target );
+			var $openAnchor = $( this );
+			var $flyout = $openAnchor.parent();
+			var $container = $flyout.find( '.n-flyout-container' );
+			var direction = $flyout.data( 'direction' );
+
+			if ( $openAnchor.hasClass( 'n-drawer-tabs' ) ) {
+				if ( $container.is( ':visible' ) ) {
+					if ( $clickTarget.closest( 'li' ).hasClass( 'selected' ) ) {
+						hideFlyout( $flyout, direction );
+					}
+				} else {
+					showFlyout( $flyout, direction );
+				}
+			} else {
+				if ( $container.is( ':visible' ) ) {
+					hideFlyout( $flyout, direction );
+				} else {
+					showFlyout( $flyout, direction );
+				}
+			}
+		} );
+
+		$( 'body' ).click( function( e ) {
+			if ( $( e.target ).closest( '.n-flyout' ).length === 0 ) {
+				var $flyout = $( '.n-flyout' );
+				var direction = $flyout.data( 'direction' );
+				hideFlyout( $flyout, direction );
+			}
+		} );
+
+		function hideFlyout( $flyout, direction ) {
+			var $container = $flyout.find( '.n-flyout-container' );
+			var menuHeight = $container.outerHeight();
+			var menuWidth = $container.outerWidth();
+			switch ( direction ) {
+				case 'top':
+					$container.parent( ".n-flyout" ).animate( {
+						bottom: -menuHeight
+					}, 400, function() {
+						$container.hide();
+					} );
+					break;
+				case 'bottom':
+					$container.parent( ".n-flyout" ).animate( {
+						top: -menuHeight
+					}, 400, function() {
+						$container.hide();
+					} );
+					break;
+				case 'left':
+					$container.parent( ".n-flyout" ).animate( {
+						right: -menuWidth
+					}, 400, function() {
+						$container.hide();
+					} );
+					break;
+				case 'right':
+					$container.parent( ".n-flyout" ).animate( {
+						left: -menuWidth
+					}, 400, function() {
+						$container.hide();
+					} );
+					break;
+			}
+			$flyout.attr( 'data-expand', 'false' );
+			$flyout.find( '.drawer-toggle-down' ).removeClass( 'drawer-toggle-down' ).addClass( 'drawer-toggle-up' );
+			$flyout.find( '.drawer-shadow' ).fadeOut( 400 );
+		}
+
+		function showFlyout( $flyout, direction ) {
+			var $container = $flyout.find( '.n-flyout-container' );
+			$container.show();
+			switch ( direction ) {
+				case 'top':
+					$container.parent( ".n-flyout" ).animate( {
+						bottom: 0
+					}, 400 );
+					break;
+				case 'bottom':
+					$container.parent( ".n-flyout" ).animate( {
+						top: 0
+					}, 400 );
+					break;
+				case 'left':
+					$container.parent( ".n-flyout" ).animate( {
+						right: 0
+					}, 400 );
+					break;
+				case 'right':
+					$container.parent( ".n-flyout" ).animate( {
+						left: 0
+					}, 400 );
+					break;
+			}
+			$flyout.attr( 'data-expand', 'true' );
+			$flyout.find( '.drawer-toggle-up' ).removeClass( 'drawer-toggle-up' ).addClass( 'drawer-toggle-down' );
+			$flyout.find( '.drawer-shadow' ).fadeIn( 400 );
+			$container.find( "a:first" ).focus();
 		}
 
 	} )( $ );
@@ -826,7 +1241,6 @@
 				// set flyout open top position
 				var $openAnchor = $flyout.find( ".n-flyout-open" );
 				var openHeight = $openAnchor.outerHeight();
-				var menuLenght = $flyout.find( ".n-flyout-container > ul" ).children( "li" ).length;
 				$openAnchor.css( "left", ( menuWidth + 1 ) + "px" );
 				$openAnchor.css( "top", Math.ceil( ( menuHeight - openHeight ) / 2 ) + "px" );
 				// hide container
@@ -834,7 +1248,10 @@
 			}
 		} );
 
-		$( ".n-flyout" ).on( "click", ".n-flyout-open", function() {
+		//TODO Jonathan: The following code should be wrapped in ready() method. Code refinement is needed for this JS file.
+
+		$( ".n-flyout" ).on( "click", ".n-flyout-open", function( event ) {
+			event.preventDefault();
 			var $flyoutContainer = $( this ).prev( ".n-flyout-container" );
 			if ( $flyoutContainer.is( ":visible" ) ) {
 				hideFlyout( $flyoutContainer );
@@ -846,15 +1263,16 @@
 		$( document ).keydown( function( e ) {
 			// click esc to hide flyout menu if it is open
 			var $flyoutContainer = $( ".n-flyout>.n-flyout-container" );
+			var $flyoutOpen = $( ".n-flyout-open" );
 			if ( e.keyCode === 27 && $flyoutContainer.is( ":visible" ) && ( $( ".n-flyout" ).find( ":focus" ).length > 0 ) ) {
 				hideFlyout( $flyoutContainer );
 			}
-			if ( e.keyCode === 32 && $flyoutContainer.is( ":visible" ) && $( ".n-flyout-open" ).is( ":focus" ) ) {
+			if ( e.keyCode === 32 && $flyoutContainer.is( ":visible" ) && $flyoutOpen.is( ":focus" ) ) {
 				hideFlyout( $flyoutContainer );
 				return false;
 			}
 
-			if ( e.keyCode === 32 && !$flyoutContainer.is( ":visible" ) && $( ".n-flyout-open" ).is( ":focus" ) ) {
+			if ( e.keyCode === 32 && !$flyoutContainer.is( ":visible" ) && $flyoutOpen.is( ":focus" ) ) {
 				showFlyout( $flyoutContainer );
 				return false;
 			}
@@ -884,19 +1302,26 @@
 	//grid.js
 	( function( $ ) {
 
+		jQuery.browser = {};
+		jQuery.browser.mozilla = /mozilla/.test( navigator.userAgent.toLowerCase() ) && !/webkit/.test( navigator.userAgent.toLowerCase() );
+		jQuery.browser.webkit = /webkit/.test( navigator.userAgent.toLowerCase() );
+		jQuery.browser.opera = /opera/.test( navigator.userAgent.toLowerCase() );
+		jQuery.browser.msie = /msie/.test( navigator.userAgent.toLowerCase() );
+
+
 		$.grid = {
 			/*---------------- nokia TextField render/editor ----------------*/
 			nTextFieldCellRenderer: function( row, column, value ) {
 				return '<input class="n-inputfield n-inputfield-small" value="' + value + '" />';
 			},
 
-			nCreateTextFieldEditor: function( row, cellValue, editor, cellText, width, height ) {
+			nCreateTextFieldEditor: function( row, cellValue, editor ) {
 				// construct the editor.
 				var element = $( '<input class="n-inputfield n-inputfield-small" />' );
 				editor.append( element );
 			},
 
-			nInitTextFieldEditor: function( row, cellValue, editor, cellText, width, height ) {
+			nInitTextFieldEditor: function( row, cellValue, editor ) {
 				// set the editor's current value. The callback is called each time the editor is displayed.
 				var inputHTMLElement = editor.find( "input" );
 				inputHTMLElement.val( cellValue );
@@ -909,7 +1334,7 @@
 
 			/*---------------- nokia Indicator textField render/editor ----------------*/
 			nIndicatorTextFieldCellRenderer: function( gridId ) {
-				return function( row, columnfield, value, defaulthtml, columnproperties ) {
+				return function( row, columnfield, value ) {
 					var edited = '';
 					$( gridId + " .n-grid-inputfield-indicated" ).each( function() {
 						var idMatched = false;
@@ -927,15 +1352,14 @@
 						}
 					} );
 
-					var element = '<div class="n-grid-inputfield-indicated">' +
+					return '<div class="n-grid-inputfield-indicated">' +
 						'<input class="n-inputfield n-inputfield-small" value="' + value + '">' +
 						'<a class="form-control-feedback"><span class="icon ' + edited + '"></span></a>' +
 						'</div>';
-					return element;
 				};
 			},
 
-			nCreateIndicatorTextFieldEditor: function( row, cellValue, editor, cellText, width, height ) {
+			nCreateIndicatorTextFieldEditor: function( row, cellValue, editor ) {
 				// construct the editor.
 				var gridId = editor.parent().attr( "id" ).replace( "contenttable", "" );
 				var isIndicatedByCell = checkIndicatedByCell( editor );
@@ -960,7 +1384,7 @@
 				} );
 			},
 
-			nInitIndicatorTextFieldEditor: function( row, cellValue, editor, cellText, width, height ) {
+			nInitIndicatorTextFieldEditor: function( row, cellValue, editor ) {
 				// set the editor's current value. The callback is called each time the editor is displayed.
 				var inputHTMLElement = editor.find( "input" );
 				inputHTMLElement.val( cellValue );
@@ -996,7 +1420,7 @@
 			/*---------------- nokia Checkbox render/editor ----------------*/
 			nCheckboxCellsrenderer: function( checkLabel ) {
 				var _checkLabel = checkLabel;
-				return function( row, column, value, editor ) {
+				return function( row, column, value ) {
 					return '<div class="checkbox checkbox-small">' +
 						'<input id="cb' + row + Date.now() + '" type="checkbox" ' + ( value ? ' checked="true"' : '' ) + '/>' +
 						'<label for="cb' + row + Date.now() + '">' + _checkLabel + '</label>' +
@@ -1005,7 +1429,7 @@
 			},
 			nCreateCheckboxEditor: function( checkLabel ) {
 				var _checkLabel = checkLabel;
-				return function( row, value, editor, cellText, width, height ) {
+				return function( row, value, editor ) {
 					// construct the editor.
 					var target = ( value ) ? ' checked="true"' : '';
 					var element = '<div class="checkbox checkbox-small margin-add-one">' +
@@ -1015,7 +1439,7 @@
 				};
 			},
 
-			nInitCheckboxEditor: function( row, cellValue, editor, cellText, width, height ) {
+			nInitCheckboxEditor: function( row, cellValue, editor ) {
 				// set the editor's current value. The callback is called each time the editor is displayed.
 				var inputHTMLElement = editor.find( "input" );
 				var current = inputHTMLElement.prop( "checked" );
@@ -1032,7 +1456,7 @@
 			/*---------------- nokia Indicator Checkbox render/editor ----------------*/
 			nIndicatorCheckboxCellsrenderer: function( gridId, checkLabel ) {
 				var _checkLabel = checkLabel;
-				return function( row, column, value, editor ) {
+				return function( row, column, value ) {
 					var edited = '';
 					var orignalValue = '';
 					$( gridId + " .grid-checkbox-indicated" ).each( function() {
@@ -1064,7 +1488,7 @@
 			},
 			nCreateIndicatorCheckboxEditor: function( checkLabel ) {
 				var _checkLabel = checkLabel;
-				return function( row, value, editor, cellText, width, height ) {
+				return function( row, value, editor ) {
 					// construct the editor.
 					var target = ( value ) ? ' checked="true"' : '';
 					var element = '<div id="indicator-checkbox-' + row + '" class="checkbox checkbox-small margin-add-one grid-checkbox-indicated">' +
@@ -1075,7 +1499,7 @@
 				};
 			},
 
-			nInitIndicatorCheckboxEditor: function( row, cellValue, editor, cellText, width, height ) {
+			nInitIndicatorCheckboxEditor: function( row, cellValue, editor ) {
 				// set the editor's current value. The callback is called each time the editor is displayed.
 				var gridId = editor.parent().attr( "id" ).replace( "contenttable", "" );
 				var isIndicatedByCell = checkIndicatedByCell( editor );
@@ -1128,7 +1552,7 @@
 
 			dropdownlistEditor: function( dropdownlists ) {
 				var _dropdownlists = dropdownlists;
-				return function( row, cellValue, editor, cellText, width, height ) {
+				return function( row, cellValue, editor, cellText, width ) {
 					editor.jqxDropDownList( {
 						autoDropDownHeight: false,
 						itemHeight: 27,
@@ -1143,7 +1567,7 @@
 				};
 			},
 
-			dropdownlistInitEditor: function( row, cellValue, editor, cellText, width, height ) {
+			dropdownlistInitEditor: function( row, cellValue, editor ) {
 				editor.jqxDropDownList( 'selectItem', '<span>' + cellValue + '</span>' );
 				editor.jqxDropDownList( 'focus' );
 				editor.jqxDropDownList( 'open' );
@@ -1188,7 +1612,7 @@
 
 			indicatorDropdownlistEditor: function( dropdownlists ) {
 				var _dropdownlists = dropdownlists;
-				return function( row, cellValue, editor, cellText, width, height ) {
+				return function( row, cellValue, editor, cellText, width ) {
 					var gridId = editor.parent().attr( "id" ).replace( "contenttable", "" );
 					var isIndicatedByCell = checkIndicatedByCell( editor );
 					var editorId = editor.attr( "id" );
@@ -1223,7 +1647,7 @@
 				};
 			},
 
-			indicatorDropdownlistInitEditor: function( row, cellValue, editor, cellText, width, height ) {
+			indicatorDropdownlistInitEditor: function( row, cellValue, editor ) {
 				editor.jqxDropDownList( 'selectItem', '<span>' + cellValue + '</span>' );
 				editor.jqxDropDownList( 'focus' );
 				editor.jqxDropDownList( 'open' );
@@ -1235,16 +1659,15 @@
 
 			/*---------------- nokia indicator ----------------*/
 			indicatorRenderer: function( gridId ) {
-				return function( row, datafield, value, defaulthtml, columnproperties ) {
+				return function( row ) {
 					var edited = '';
-					var changedCol = '';
 					if ( $( gridId + " #n-row-indicated-" + row + " > span" ).hasClass( "icon-edited" ) ) {
 						edited = "icon-edited";
 					}
 					if ( $( gridId + " #n-row-indicated-" + row + " > span" ).hasClass( "icon-edited-white" ) ) {
 						edited = "icon-edited-white";
 					}
-					changedCol = $( gridId + " #n-row-indicated-" + row ).attr( "changed-col" );
+					var changedCol = $( gridId + " #n-row-indicated-" + row ).attr( "changed-col" );
 					if ( changedCol === undefined ) {
 						changedCol = '';
 					}
@@ -1292,7 +1715,7 @@
 				widget.jqxDropDownList( {
 					scrollBarSize: 8,
 					placeHolder: "Filter...",
-					renderer: function( index, label, value ) {
+					renderer: function( index, label ) {
 						return "<span>" + label + "</span>";
 					}
 				} );
@@ -1303,7 +1726,7 @@
 			},
 
 			/*---------------- nokia paging render ----------------*/
-			pagerrenderer: function( gridId, showPageAndFilter ) {
+			pagerrenderer: function( gridId, showPageAndFilter, pagesizeSource ) {
 				var $grid = $( gridId );
 				var element = $( "<div class=\"page-container\"></div>" );
 				var datainfo = $grid.jqxGrid( 'getdatainformation' );
@@ -1314,7 +1737,7 @@
 					appendFilterPageLeft();
 					addFilterEvent();
 					appendMiddle();
-					appendRight();
+					appendRight( pagesizeSource );
 				} else {
 					var filterable = $grid.jqxGrid( 'filterable' );
 					if ( filterable ) {
@@ -1323,12 +1746,12 @@
 					} else {
 						appendLeft();
 						appendMiddle();
-						appendRight();
+						appendRight( pagesizeSource );
 					}
 				}
 
 				function addFilterEvent() {
-					$grid.on( "filter", function( event ) {
+					$grid.on( "filter", function() {
 						var filterRows = $grid.jqxGrid( 'getrows' );
 						var dataRows = $grid.jqxGrid( 'getboundrows' );
 						var filterPageLeft = $grid.find( ".n-table-paging-left" );
@@ -1341,6 +1764,7 @@
 							filterPageLeft.addClass( "has-filter" );
 							$( filterPageLeft ).find( ".n-table-filter-result span" ).html( filterRows.length );
 						}
+						setTimeout( recalculateScrollbars, 50 );
 					} );
 				}
 
@@ -1357,8 +1781,8 @@
 				function appendMiddle() {
 					var centerField = $( "<div class=\"n-table-paging-middle\"></div>" );
 
-					var firstButton = $( "<button class=\"btn btn-icon page-first\"><span class=\"icon icon-first\"></span></button>" );
-					var prevButton = $( "<button class=\"btn btn-icon page-prev\"><span class=\"icon icon-back\"></span></button>" );
+					var firstButton = $( "<button class=\"btn btn-icon page-first\" ><span class=\"icon icon-first\"></span></button>" );
+					var prevButton = $( "<button class=\"btn btn-icon page-prev\" ><span class=\"icon icon-back\"></span></button>" );
 
 					var pageField = $( "<div class='pageField'></div>" );
 					var pageInput = $( "<input type=\"text\" class=\"n-inputfield n-inputfield-small\" />" );
@@ -1367,8 +1791,8 @@
 					$( "<span>\/ " + pagescount + "</span>" ).appendTo( pageField );
 
 
-					var nextButton = $( "<button class=\"btn btn-icon page-next\"><span class=\"icon icon-next\"></span></button>" );
-					var lastButton = $( "<button class=\"btn btn-icon page-last\"><span class=\"icon icon-last\"></span></button>" );
+					var nextButton = $( "<button class=\"btn btn-icon page-next\" ><span class=\"icon icon-next\"></span></button>" );
+					var lastButton = $( "<button class=\"btn btn-icon page-last\" ><span class=\"icon icon-last\"></span></button>" );
 
 					firstButton.appendTo( centerField );
 					prevButton.appendTo( centerField );
@@ -1381,34 +1805,35 @@
 
 					firstButton.on( 'click', function() {
 						$grid.jqxGrid( 'gotopage', 0 );
-						setTimeout( function() {
-							firstButton.focus();
-						}, 50 );
+						setTimeout( recalculateScrollbars, 50 );
+					} );
+
+					firstButton.off( 'keydown' ).on( 'keydown', function( e ) {
+						if ( e.which === 9 && e.shiftKey ) {
+							e.preventDefault();
+							var id = $( this ).closest( '.jqx-widget-content' ).attr( 'id' );
+							$( '#wrapper' + id ).trigger( 'focus' );
+						}
 					} );
 
 					prevButton.off( 'click' ).on( 'click', function() {
 						$grid.jqxGrid( 'gotoprevpage' );
-						setTimeout( function() {
-							prevButton.focus();
-						}, 50 );
+						setTimeout( recalculateScrollbars, 50 );
 					} );
 
 					nextButton.off( 'click' ).on( 'click', function() {
 						$grid.jqxGrid( 'gotonextpage' );
-						setTimeout( function() {
-							nextButton.focus();
-						}, 50 );
+						setTimeout( recalculateScrollbars, 50 );
 					} );
 
 					lastButton.off( 'click' ).on( 'click', function() {
 						$grid.jqxGrid( 'gotopage', pagescount );
-						setTimeout( function() {
-							lastButton.focus();
-						}, 50 );
+						setTimeout( recalculateScrollbars, 50 );
 					} );
 
 					pageInput.off( 'change' ).on( 'change', function() {
 						goToPage( $( this ).val() );
+						setTimeout( recalculateScrollbars, 50 );
 					} );
 
 					pageInput.off( 'keydown' ).on( 'keydown', function( event ) {
@@ -1421,6 +1846,7 @@
 						var datainfo = $grid.jqxGrid( 'getdatainformation' );
 						var paginginfo = datainfo.paginginformation;
 						pageInput.val( parseInt( paginginfo.pagenum ) + 1 );
+						setTimeout( recalculateScrollbars, 50 );
 					} );
 
 					function goToPage( inputVal ) {
@@ -1429,17 +1855,23 @@
 					}
 				}
 
-				function appendRight() {
+				function appendRight( pagesizeSource ) {
 					var perPageField = $( "<div class='n-table-paging-right'></div>" );
 					var perPageCombo = $( "<div id=\"" + gridId + "jqxPerPageCombo" + "\"></div>" );
 					var index = $grid.jqxGrid( 'pagesize' );
-					var selectedIndex = [ 10, 20, 30 ].indexOf( index );
+					var pSource = new Array( 10, 20, 30 );
+					if ( pagesizeSource !== undefined ) {
+						pSource = pagesizeSource;
+					}
+					var selectedIndex = pSource.indexOf( index );
 					perPageCombo.jqxComboBox( {
-						source: [ 10, 20, 30 ],
+						source: pSource,
 						width: 60,
 						height: 24,
 						selectedIndex: selectedIndex,
-						renderer: function( index, label, value ) {
+						autoDropDownHeight: true,
+						enableBrowserBoundsDetection: true,
+						renderer: function( index, label ) {
 							return "<span>" + label + "</span>";
 						}
 					} );
@@ -1449,7 +1881,7 @@
 
 					perPageField.appendTo( element );
 
-					perPageCombo.on( 'open', function( event ) {
+					perPageCombo.on( 'open', function() {
 						$( "div[id^='dropdownlistContent'] > input" ).attr( "readonly", "readonly" );
 					} );
 					perPageCombo.off( 'change' ).on( 'change', function( event ) {
@@ -1457,10 +1889,29 @@
 						if ( args ) {
 							$grid.jqxGrid( 'pagesize', args.item.originalItem );
 						}
+						setTimeout( recalculateScrollbars, 50 );
 					} );
 				}
 
 				return element;
+			},
+
+			handlekeyboardnavigation: function( event, gridId ) {
+				var key = event.charCode ? event.charCode : event.keyCode ? event.keyCode : 0;
+				var $grid = $( gridId );
+				if ( key === 9 ) {
+					var id = $( event.target ).attr( 'id' );
+					if ( id !== undefined && ( id.indexOf( 'wrapper' ) === 0 || id.indexOf( 'content' ) === 0 ) ) {
+						$grid.jqxGrid( 'clearselection' );
+						var gridPager = $grid.find( '.jqx-grid-pager' );
+						if ( gridPager.length > 0 && gridPager.height() > 0 ) {
+							gridPager.find( '.page-first' ).trigger( 'focus' );
+						}
+						return true;
+					} else {
+						return false;
+					}
+				}
 			},
 
 			enableErrorHeaderRow: function( gridId ) {
@@ -1484,8 +1935,8 @@
 						'</div>' );
 					gridHeader.css( 'height', '50px' );
 					gridHeader.children().css( 'height', '50%' );
-					gridHeader.after( '<div class="grid-error-header-icon"><span class="icon icon-close-rounded"></span></div>' );
-					$( '.icon-close-rounded' ).on( 'click', function() {
+					gridHeader.after( '<div class="grid-error-header-icon"><a href="#"><span class="icon icon-close-rounded"></span></a></div>' );
+					$( '.icon-close-rounded' ).parent( 'a' ).on( 'click', function() {
 						var gridHeader = $( $gridId ).find( '.jqx-grid-header' );
 						gridHeader.css( 'height', '25px' );
 						gridHeader.children().css( 'height', '100%' );
@@ -1525,15 +1976,79 @@
 						}
 					}
 				}, 50 );
+			},
+
+			/*-------------- nokia Add/Delete Rows implementation*/
+			nAttachAddRowButton: function( grid, button, row ) {
+				$( button ).on( 'click', function() {
+					var data = row();
+					grid.jqxGrid( 'addrow', null, data );
+					setTimeout( recalculateScrollbars, 50 );
+				} );
+			},
+
+			nAttachDelRowButton: function( grid, button ) {
+				$( button ).on( 'click', function() {
+					var selectedrowindex = grid.jqxGrid( 'getselectedrowindex' );
+					var rowscount = grid.jqxGrid( 'getdatainformation' ).rowscount;
+					if ( selectedrowindex >= 0 && selectedrowindex < rowscount ) {
+						var id = grid.jqxGrid( 'getrowid', selectedrowindex );
+						grid.jqxGrid( 'deleterow', id );
+					}
+					setTimeout( recalculateScrollbars, 10 );
+				} );
 			}
 		};
 
-		$( document ).ready( function() {
-			var headerColumns = $( ".jqx-grid-column-header" );
-			for ( var i = 0; i < headerColumns.length; i++ ) {
-				headerColumns[ i ].onclick = handleColumnHeadSort;
-			}
 
+		$( '.n-jqxgrid-table' ).on( 'bindingcomplete', function( event ) {
+			$( this ).find( 'div[id^=verticalScrollBar]' ).first().before( '<div class="n-extra-scrollbar-div"></div>' );
+			$( this ).jqxGrid( {
+				rendered: function() {
+					setTimeout( recalculateScrollbars, 50 );
+				}
+			} );
+			var height = $( this ).find( '.jqx-scrollbar' ).first().jqxScrollBar( 'height' );
+			$( this ).find( '.jqx-scrollbar' ).first().jqxScrollBar( {
+				thumbMinSize: 50
+			} );
+			if ( $.browser.mozilla ) {
+				var contentTable = $( this ).find( 'div[id^=contenttable].jqx-overflow-hidden' );
+				contentTable.css( 'max-height', 'none' );
+				contentTable.css( 'max-height', contentTable.height() - 1 + 'px' );
+			}
+			setTimeout( recalculateScrollbars, 50 );
+		} );
+
+		$( '.n-jqxgrid-table' ).on( "filter", function() {
+			setTimeout( recalculateScrollbars, 50 );
+		} );
+
+		function recalculateScrollbars() {
+			$( '.n-jqxgrid-table' ).each( function() {
+				var verticalScrollbar = $( this ).find( 'div[id^=verticalScrollBar]' ).first();
+				var horizontalScrollbar = $( this ).find( 'div[id^=horizontalScrollBar]' ).first();
+
+				verticalScrollbar.css( 'max-height', 'none' );
+				if ( horizontalScrollbar.length > 0 ) {
+					verticalScrollbar.css( 'max-height', verticalScrollbar.outerHeight() - 39 + 'px' ); //26 - height of extraScrollbarDiv, 12-height of horizontal scrollbar
+				} else {
+					verticalScrollbar.css( 'max-height', verticalScrollbar.outerHeight() - 26 + 'px' );
+				}
+
+				var verticalThumbScrollbar = $( this ).find( 'div[id^=jqxScrollThumbverticalScrollBar]' ).first();
+				verticalThumbScrollbar.css( 'max-height', 'none' );
+				verticalThumbScrollbar.css( 'max-height', verticalThumbScrollbar.height() - 26 + 'px' );
+			} );
+		}
+
+		$( document ).ready( function() {
+			setTimeout( function() {
+				var headerColumns = $( ".jqx-grid-column-header" );
+				for ( var i = 0; i < headerColumns.length; i++ ) {
+					headerColumns[ i ].onclick = handleColumnHeadSort;
+				}
+			}, 50 );
 		} );
 
 		function handleColumnHeadSort() {
@@ -1555,24 +2070,26 @@
 		}
 
 		function addChangedCol( row, editorId, gridId ) {
-			var changedCol = $( "#" + gridId + " #n-row-indicated-" + row ).attr( "changed-col" );
+			var $targetCol = $( "#" + gridId + " #n-row-indicated-" + row );
+			var changedCol = $targetCol.attr( "changed-col" );
 			if ( changedCol === undefined ) {
 				changedCol = '';
 			}
 			if ( changedCol.indexOf( editorId ) === -1 ) {
 				changedCol = changedCol + editorId;
-				$( "#" + gridId + " #n-row-indicated-" + row ).attr( "changed-col", changedCol );
+				$targetCol.attr( "changed-col", changedCol );
 			}
 		}
 
 		function removeChangedCol( row, editorId, gridId ) {
-			var changedCol = $( "#" + gridId + " #n-row-indicated-" + row ).attr( "changed-col" );
+			var $targetCol = $( "#" + gridId + " #n-row-indicated-" + row );
+			var changedCol = $targetCol.attr( "changed-col" );
 			if ( changedCol === undefined ) {
 				changedCol = '';
 			}
 			changedCol = changedCol.replace( editorId, '' );
-			$( "#" + gridId + " #n-row-indicated-" + row ).attr( "changed-col", changedCol );
-			var currentChangedCol = $( "#" + gridId + " #n-row-indicated-" + row ).attr( "changed-col" );
+			$targetCol.attr( "changed-col", changedCol );
+			var currentChangedCol = $targetCol.attr( "changed-col" );
 			if ( currentChangedCol !== undefined ) {
 				if ( currentChangedCol.replace( 'editorId', '' ) === '' ) {
 					$( "#" + gridId + " #n-row-indicated-" + row + " > span" ).removeClass( "icon-edited-white" );
@@ -1616,12 +2133,33 @@
 				}
 			} );
 
-			$( ".n-inputfield-control-icon" ).on( "click", function( event ) {
+
+			$( ".n-inputfield-clearable input" ).on( "keyup", function( event ) {
+				var inputValue = event.target.value;
+				var controlIcon = $( event.target ).next( '.n-inputfield-control-icon' );
+
+				if ( inputValue.length > 0 ) {
+					controlIcon.show();
+				} else {
+					controlIcon.hide();
+				}
+			} );
+
+			$( ".n-inputfield-control-icon" ).on( "click", function() {
 				var prev = $( this ).prev();
 				if ( prev.hasClass( "n-inputfield" ) ) {
-					prev.attr( "placeholder", "" );
+					$( this ).hide();
 					prev.val( "" );
+					prev.attr( "placeholder", "" );
+					prev.focus();
 				}
+			} );
+
+			$( ".n-inputfield-clearable input" ).each( function() {
+				var placeholderText = $( this ).attr( "placeholder" );
+				$( this ).on( "blur", function( event ) {
+					$( this ).attr( "placeholder", placeholderText );
+				} );
 			} );
 		} );
 
@@ -2151,9 +2689,8 @@
 
 		/** add keyboard event for tabbed pane */
 		$( document ).on( 'keydown', '.nav-tabs li', tabPaneKeyboardHandler );
-
 		/** add keyboard event for table **/
-		$( document ).on( 'keydown.wf.keyboard', '.n-table tbody', tableKeyboardHandler );
+		$( document ).on( 'keydown.wf.table.keyboard', '.n-table:not(.n-keyboard-off) tbody', tableKeyboardHandler );
 
 		/** add keyboard event for calendar **/
 		$( document ).on( 'keydown.wf.keyboard', '.datepicker-calendar-days', calendarDatePickerKeyboardHandler )
@@ -2166,6 +2703,9 @@
 
 		/** keyboard support for combobox with filter **/
 		$( document ).on( 'keydown.wf.keyboard', '.combobox', comboboxKeyboardHandler );
+
+		/** keyboard support for table with error **/
+		$( document ).on( 'keydown', '.grid-error-header-icon', keyboardHandler );
 
 		function spinnerKeyboardHandler( e ) {
 			var supportKeys = [ SPACE_BAR_KEY, UP_KEY, DOWN_KEY ];
@@ -2288,50 +2828,6 @@
 					e.preventDefault();
 					current.find( 'span' ).trigger( 'click' );
 				}
-			}
-		}
-
-		function jqTableFocusinHandler( e ) {
-			var current = $( e.target );
-			// For tree table grid
-			if ( current.hasClass( 'jqx-widget-content' ) ) {
-				treeJQTableFocusinHandler( current );
-			}
-			// For standard grid
-			//if (current.attr('id') !== undefined && current.attr('id').indexOf('wrapper') >= 0) {
-			//    standardJqTableFocusinHandler(current);
-			//}
-		}
-
-		function treeJQTableFocusinHandler( current ) {
-			var keyIndex = current.find( 'tr:first' ).data( 'key' );
-			var isFocused = false;
-			var isTreeGrid = false;
-			current.find( 'td' ).each( function() {
-				if ( $( this ).hasClass( 'jqx-grid-cell-selected' ) && $( this ).hasClass( 'jqx-fill-state-pressed' ) ) {
-					isFocused = true;
-				}
-				if ( $( this ).find( 'span:first' ).hasClass( 'jqx-tree-grid-collapse-button' ) ) {
-					isTreeGrid = true;
-				}
-			} );
-			if ( !isFocused && isTreeGrid ) {
-				current.jqxTreeGrid( 'selectRow', keyIndex );
-			}
-		}
-
-		function standardJqTableFocusinHandler( current ) {
-			var isFocused = false;
-			current.find( '.jqx-grid-cell' ).each( function() {
-				if ( $( this ).hasClass( 'jqx-grid-cell-selected' ) && $( this ).hasClass( 'jqx-fill-state-pressed' ) ) {
-					isFocused = true;
-					return false;
-				}
-			} );
-			if ( !isFocused ) {
-				var p = current.parent();
-				var pp = p.parent();
-				pp.jqxGrid( 'selectcell', 0, pp.jqxGrid( 'columns' ).records[ 0 ].datafield );
 			}
 		}
 
@@ -2593,7 +3089,7 @@
 		}
 
 		function keyboardHandler( e ) {
-			var supportKeys = [ TAB_KEY, SPACE_BAR_KEY, UP_KEY, DOWN_KEY ];
+			var supportKeys = [ TAB_KEY, SPACE_BAR_KEY, UP_KEY, DOWN_KEY, ESC_KEY ];
 
 			if ( supportKeys.indexOf( e.which ) === -1 ) {
 				return;
@@ -2609,7 +3105,37 @@
 				}
 			}
 
+			if ( e.which === TAB_KEY ) {
+				if ( $( e.target ).get( 0 ).tagName === "A" && $( e.target ).closest( "ul" ).closest( "div" ).hasClass( "selectlist-multiple" ) ) {
+					$( e.target ).find( "input[type='checkbox']" ).focus();
+					return;
+				}
+			}
+
+			if ( e.which === ESC_KEY ) {
+				if ( $( e.target ).get( 0 ).tagName === "A" && $( e.target ).closest( "ul" ).closest( "div" ).hasClass( "selectlist-multiple" ) ) {
+					$( e.target ).closest( ".dropdown-menu" ).prev().trigger( 'click' );
+					return;
+				}
+				if ( $( e.target ).get( 0 ).tagName === "INPUT" && $( e.target ).closest( "ul" ).closest( "div" ).hasClass( "selectlist-multiple" ) ) {
+					//target is input, somewhere call this section again, so need stop event propagation
+					$( e.target ).closest( ".dropdown-menu" ).prev().trigger( 'click' );
+					e.stopPropagation();
+					return;
+				}
+			}
+
 			if ( e.which === SPACE_BAR_KEY ) {
+				if ( $( e.target ).get( 0 ).tagName === "A" && $( e.target ).closest( "ul" ).closest( "div" ).hasClass( "selectlist-multiple" ) ) {
+					$( e.target ).find( "input[type='checkbox']" ).trigger( 'click' );
+					return;
+				}
+				if ( $( e.target ).get( 0 ).tagName === "INPUT" && $( e.target ).closest( "ul" ).closest( "div" ).hasClass( "selectlist-multiple" ) ) {
+					//target is input, somewhere call this section again, so need stop event propagation
+					$( e.target ).trigger( 'click' );
+					e.stopPropagation();
+					return;
+				}
 				$( e.target ).trigger( 'click' );
 				return;
 			}
@@ -2789,6 +3315,114 @@
 			} );
 		}
 
+		// JqWidget table functions
+		function jqTableFocusinHandler( e ) {
+			var current = $( e.target );
+			var id = current.attr( 'id' );
+			if ( id !== undefined && ( id.indexOf( 'wrapper' ) === 0 || id.indexOf( 'content' ) === 0 || id.indexOf( 'tree' ) === 0 ) ) {
+				if ( isTreeGrid( current ) ) {
+					// For tree table grid
+					treeJQTableFocusinHandler( current );
+				} else {
+					var grid = current.closest( '.jqx-grid' );
+					if ( grid.length > 0 ) {
+						//if (isFilterGrid(current)) {
+						//    if (!isFilterGridHeader(current)) {
+						//        standardJqTableFocusinHandler(grid);
+						//    }
+						//} else if (isPagingGrid(current)) {
+						//    if (!isPagingGridPager(current)) {
+						//        standardJqTableFocusinHandler(grid);
+						//    }
+						//}
+						if ( isPagingGrid( current ) ) {
+							if ( !isPagingGridPager( current ) ) {
+								standardJqTableFocusinHandler( grid );
+							}
+						}
+					}
+				}
+			}
+		}
+
+		function treeJQTableFocusinHandler( current ) {
+			var keyIndex = current.find( 'tr:first' ).data( 'key' );
+			var isFocused = false;
+			var isTreeGrid = false;
+			current.find( 'td' ).each( function() {
+				if ( $( this ).hasClass( 'jqx-grid-cell-selected' ) && $( this ).hasClass( 'jqx-fill-state-pressed' ) ) {
+					isFocused = true;
+				}
+				if ( $( this ).find( 'span:first' ).hasClass( 'jqx-tree-grid-collapse-button' ) ) {
+					isTreeGrid = true;
+				}
+			} );
+			if ( !isFocused && isTreeGrid ) {
+				current.jqxTreeGrid( 'selectRow', keyIndex );
+			}
+		}
+
+		function standardJqTableFocusinHandler( current ) {
+			if ( current.jqxGrid( 'getselectedcell' ) === null ) {
+				var selectedMode = current.jqxGrid( 'selectionmode' );
+
+				if ( selectedMode.indexOf( 'cell' ) >= 0 ) {
+					focusOnFirstElementInPage( current );
+				} else if ( selectedMode.indexOf( 'row' ) >= 0 ) {
+					var rowindex = current.jqxGrid( 'getselectedrowindex' );
+					current.jqxGrid( 'clearselection' );
+					current.jqxGrid( 'selectrow', 0 );
+				}
+			}
+		}
+
+		function focusOnFirstElementInPage( current ) {
+			var datainformation = current.jqxGrid( 'getdatainformation' );
+			var paginginformation = datainformation.paginginformation;
+			var pagenum = paginginformation.pagenum;
+			var pagesize = paginginformation.pagesize;
+			current.jqxGrid( 'clearselection' );
+			current.jqxGrid( 'selectcell', pagenum * pagesize, current.jqxGrid( 'columns' ).records[ 0 ].datafield );
+		}
+
+		function isTreeGrid( current ) {
+			var treeGrid = false;
+			current.find( 'td' ).each( function() {
+				if ( $( this ).find( 'span:first' ).hasClass( 'jqx-tree-grid-collapse-button' ) ) {
+					treeGrid = true;
+				}
+			} );
+			return treeGrid;
+		}
+
+		function isFilterGrid( current ) {
+			var grid = current.closest( '.jqx-grid' );
+			return grid.find( '.jqx-grid-cell-filter-row' ).length > 0;
+		}
+
+		function isPagingGrid( current ) {
+			var grid = current.closest( '.jqx-grid' );
+			return grid.find( '.jqx-grid-pager' ).length > 0 && grid.find( '.jqx-grid-pager' ).height() > 0;
+		}
+
+		function isEndOfFilterGridFilter( current ) {
+			var isEndOfFilter = false;
+			if ( current.closest( '.jqx-grid-cell-filter-row' ).length > 0 ) {
+				if ( current.closest( '.jqx-grid-cell-filter-row' ).next().length === 0 ) {
+					isEndOfFilter = true;
+				}
+			}
+			return isEndOfFilter;
+		}
+
+		function isFilterGridHeader( current ) {
+			return current.closest( '.jqx-grid-cell-filter-row' ).length > 0;
+		}
+
+		function isPagingGridPager( current ) {
+			return current.closest( '.jqx-grid-pager' ).length !== 0;
+		}
+
 	} )( $ );
 
 
@@ -2796,8 +3430,11 @@
 	( function( $ ) {
 
 		$( document ).on( "click", ".n-list-group-item", function() {
-			$( this ).parents( ".n-list-group" ).find( ".n-list-group-item" ).removeClass( "selected" );
-			$( this ).addClass( "selected" );
+			var listGroupParent = $( this ).parents( ".n-list-group" );
+			if ( !listGroupParent.hasClass( 'disabled' ) ) {
+				listGroupParent.find( ".n-list-group-item" ).removeClass( "selected" );
+				$( this ).addClass( "selected" );
+			}
 		} );
 
 		$( document ).ready( function() {
@@ -2827,7 +3464,6 @@
 			$.each( listScrollGroup, function() {
 
 				if ( $( this ).hasClass( "disabled" ) ) {
-
 					$( this ).nScrollbar( {
 						alwaysShowScrollbar: 2,
 						theme: "disabled",
@@ -2860,7 +3496,83 @@
 					$( this ).nScrollbar();
 				}
 			} );
+
+			/**---multicolumn list functions-----**/
+
+			$( ".n-multicolumn-list" ).each( function() {
+				var lastSubheader = $( this ).find( ".subheader:last" );
+				var lastSubheaderItem = $( this ).find( ".subheader-item:last" );
+				if ( lastSubheaderItem.next().length === 0 ) {
+					lastSubheader.addClass( "last" );
+				}
+			} );
+
+
+			$( ".n-multicolumn-list tbody:not(.group) td, th, .n-multicolumn-list tbody.group" )
+				.prop( "tabIndex", 0 )
+				.mouseup( function() {
+					$( this ).closest( ".n-multicolumn-list" ).find( '.selected' ).removeClass( 'selected' );
+					$( this ).addClass( 'selected' );
+				} )
+				.off( 'keydown' ).on( 'keydown', function( event ) {
+					if ( event.keyCode === 13 || event.keyCode === 32 ) {
+						event.preventDefault();
+						$( this ).closest( ".n-multicolumn-list" ).find( '.selected' ).removeClass( 'selected' );
+						$( this ).toggleClass( 'selected' );
+					}
+				} );
+
+			$( ".n-multicolumn-list .subheader" ).mousedown( function() {
+				$( this ).toggleClass( 'open' );
+				$( this ).find( 'span.icon' ).toggleClass( 'icon-next' );
+				$( this ).find( 'span.icon' ).toggleClass( 'icon-arrow' );
+				$( this ).nextUntil( 'tr:not(.subheader-item)' ).toggleClass( 'open' );
+
+
+				if ( $( this ).parent().find( ".subheader:last" ).is( $( this ) ) && $( this ).parent().children( 'tr:last' ).hasClass( 'subheader-item' ) ) {
+					$( this ).toggleClass( "last" );
+				}
+			} );
+
+
 		} );
+
+
+	} )( $ );
+
+
+	//localized-navigation.js
+	( function( $ ) {
+
+		$( document ).ready( function() {
+			/* Adds buffer width for bold style to prevent unnecessary movement of items*/
+			$( '.nav-local-menu li' ).each( function() {
+				addBoldBufferWidth( $( this ) );
+			} );
+
+			$( '.nav-local-menu-divided li' ).each( function() {
+				addBoldBufferWidth( $( this ) );
+			} );
+		} );
+
+		$( '.nav-local' ).on( 'click', 'li', function() {
+			$( this ).siblings( 'li' ).removeClass( 'selected' );
+			$( this ).addClass( 'selected' );
+		} );
+
+		function addBoldBufferWidth( element ) {
+			var wid = element.width();
+			var normalBuffer = 3;
+			var selectedBuffer = 1;
+
+			if ( element.hasClass( 'selected' ) ) {
+				wid += selectedBuffer;
+			} else {
+				wid += normalBuffer;
+			}
+
+			element.css( 'width', wid + 'px' );
+		}
 
 	} )( $ );
 
@@ -2872,21 +3584,21 @@
 			$password = $( '#applicationLoginPassword' ),
 			$login = $( '#applicationLoginButton' );
 
-		$( '#applicationLoginUsername,#applicationLoginPassword' ).on( 'keyup change', function( e ) {
+		$( '#applicationLoginUsername,#applicationLoginPassword' ).on( 'keyup change', function() {
 			if ( $username.val() && $password.val() ) {
 				$login.prop( 'disabled', false );
 			} else {
 				$login.prop( 'disabled', true );
 			}
 		} );
-		$username.on( 'keyup change', function( e ) {
+		$username.on( 'keyup change', function() {
 			if ( $username.val() ) {
 				$username.next().children( 'span' ).removeClass( 'icon-mandatory' );
 			} else {
 				$username.next().children( 'span' ).addClass( 'icon-mandatory' );
 			}
 		} );
-		$password.on( 'keyup change', function( e ) {
+		$password.on( 'keyup change', function() {
 			if ( $password.val() ) {
 				$password.next().children( 'span' ).removeClass( 'icon-mandatory' );
 			} else {
@@ -2946,6 +3658,8 @@
 		} );
 
 		nBannerTabs.on( "click", ".dropdown-menu>li", function() {
+			$( this ).parent().find( "li" ).removeClass( "active" );
+			$( this ).addClass( "active" );
 			if ( !$( this ).parent().hasClass( "open" ) ) {
 				$( this ).closest( ".dropdown" ).find( "a" ).first().focus();
 			}
@@ -2994,6 +3708,33 @@
 			}
 		} );
 
+		/*---------------------- Secondary Navigation Horizontal ----------------------*/
+		$( document ).on( 'click', '.nav-secondary-horizontal li', function( e ) {
+			var $this = $( this );
+			$( '.nav-secondary-horizontal li' ).removeClass( 'selected' );
+			if ( !$this.hasClass( 'selected' ) ) {
+				$this.addClass( 'selected' );
+			}
+			e.preventDefault();
+		} );
+
+		$( document ).on( 'scroll', function() {
+			if ( $( this ).scrollTop() ) {
+				$( '.n-banner-secondary-row' ).addClass( 'n-banner-secondary-row-scrolled' );
+			} else {
+				$( '.n-banner-secondary-row' ).removeClass( 'n-banner-secondary-row-scrolled' );
+			}
+		} );
+
+		/*---------------------- Adjust Banner menu item alignment ----------------------*/
+		$( document ).on( 'show.bs.dropdown', '.n-banner-links .dropdown', function() {
+			if ( $( this ).offset().left + $( this ).children( "ul" ).eq( 0 ).width() > $( window ).width() ) {
+				$( this ).addClass( "pull-right" );
+			} else {
+				$( this ).removeClass( "pull-right" );
+			}
+		} );
+
 		/*---------------------- functions ----------------------*/
 
 		var showSubMenu = function( $parent ) {
@@ -3029,7 +3770,7 @@
 			if ( e.keyCode === KEY.space || e.keyCode === KEY.enter ) {
 				e.preventDefault();
 				e.stopPropagation();
-				$( e.target ).trigger( 'click' );
+				$( e.target )[ 0 ].click(); //$(e.target).trigger('click');
 				bannerThirdLevelControl.call( this );
 			}
 		} );
@@ -3101,10 +3842,9 @@
 				var $slideBar = $( this );
 				var currentImg = $slideBar.find( ".icon" );
 				var speed = 500;
-				var isOpen = true;
+				var isOpen = options && options.isOpen;
 				var panelBody = $slideBar.parent().find( ".panel-body" );
 				speed = options && options.speed;
-				isOpen = options && options.isOpen;
 				if ( isOpen ) {
 					$( panelBody ).css( "display", "block" );
 					currentImg.removeClass( 'icon-right' ).addClass( "icon-down" );
@@ -3223,6 +3963,12 @@
 	//radiogroup.js
 	( function( $ ) {
 
+		var ENTER_KEY = 13;
+		var LEFT_KEY = 37;
+		var RIGHT_KEY = 39;
+		var UP_KEY = 38;
+		var DOWN_KEY = 40;
+
 		$.fn.radioButtonFocus = function() {
 			var groups = [];
 
@@ -3234,20 +3980,48 @@
 			} );
 
 			$( this ).on( 'keydown', function( e ) {
+				var isCtrlKey = ( window.event && window.event.ctrlKey ) || e.ctrlKey;
+				if ( isCtrlKey && ( e.keyCode === LEFT_KEY || e.keyCode === UP_KEY || e.keyCode === RIGHT_KEY || e.keyCode === DOWN_KEY ) ) {
+					e.preventDefault();
+				}
+
 				setTimeout( function() {
 					var el = e.target;
 					var thisGroup = groups[ el.name ] = ( groups[ el.name ] || [] );
 					var indexOfTarget = thisGroup.indexOf( e.target );
-					var isShiftKey = ( window.event && window.event.shiftKey ) || e.shiftKey;
+					var nextIndex = 0;
 
-					if ( e.keyCode === 9 ) {
-						if ( indexOfTarget < ( thisGroup.length - 1 ) && !isShiftKey ) {
-							thisGroup[ indexOfTarget + 1 ].focus();
-						} else if ( indexOfTarget > 0 && isShiftKey ) {
-							thisGroup[ indexOfTarget - 1 ].focus();
+					if ( ( e.keyCode === LEFT_KEY || e.keyCode === UP_KEY ) && isCtrlKey ) {
+						if ( indexOfTarget > 0 ) {
+							nextIndex = indexOfTarget - 1;
+						} else {
+							nextIndex = thisGroup.length - 1;
 						}
+						while ( $( thisGroup[ nextIndex ] ).is( ':disabled' ) ) {
+							if ( nextIndex > 0 ) {
+								nextIndex = nextIndex - 1;
+							} else {
+								nextIndex = thisGroup.length - 1;
+							}
+						}
+						thisGroup[ nextIndex ].focus();
 					}
-					if ( e.keyCode === 13 ) {
+					if ( ( e.keyCode === RIGHT_KEY || e.keyCode === DOWN_KEY ) && isCtrlKey ) {
+						if ( indexOfTarget < ( thisGroup.length - 1 ) ) {
+							nextIndex = indexOfTarget + 1;
+						} else {
+							nextIndex = 0;
+						}
+						while ( $( thisGroup[ nextIndex ] ).is( ':disabled' ) ) {
+							if ( nextIndex < ( thisGroup.length - 1 ) ) {
+								nextIndex = nextIndex + 1;
+							} else {
+								nextIndex = 0;
+							}
+						}
+						thisGroup[ nextIndex ].focus();
+					}
+					if ( e.keyCode === ENTER_KEY ) {
 						el.checked = true;
 					}
 				} );
@@ -3300,7 +4074,7 @@
 					e.preventDefault();
 				}
 
-				function stopResize( e ) {
+				function stopResize() {
 					document.documentElement.removeEventListener( 'mousemove', doResize, false );
 					document.documentElement.removeEventListener( 'mouseup', stopResize, false );
 				}
@@ -3330,8 +4104,7 @@
 
 		var old = $.fn.resizeable;
 
-		$.fn.resizeable = function( options ) {
-			options = options || {};
+		$.fn.resizeable = function() {
 			var resizeFunction = function() {
 				return $( this ).data( 'wf.resizable', new Resizable( this ) );
 
@@ -3356,9 +4129,21 @@
 	//scroll.js
 	( function( $ ) {
 
+		function showDropdownScrollbar( obj ) {
+			return function() {
+				$( obj ).parent().find( '.n-dropdown-menu-scroll' ).mCustomScrollbar( "update" );
+			};
+		}
+
 		$.fn.extend( {
 			nScrollbar: function( options ) {
 				var $select = $( this );
+
+				if ( typeof options === "string" ) {
+					$select.mCustomScrollbar( options );
+					return;
+				}
+
 				if ( $select.hasClass( "n-dropdown-menu-scroll" ) || $select.hasClass( "tree-scroll" ) || $select.hasClass( "n-table-scrollbar" ) ||
 					( $select.hasClass( "n-list-group-scroll" ) && ( $select.find( "li.n-list-group-item" ).length > 0 || $select.find( "dd.n-list-group-item" ).length > 0 ) ) ) {
 					options = $.extend( {}, options, {
@@ -3374,6 +4159,34 @@
 						}
 					} );
 				}
+
+				if ( ( options !== undefined && options.notAutoUpdate ) || $select.hasClass( "scrollbar-not-autoupdate" ) ) {
+					if ( $select.hasClass( "n-table-scrollbar" ) && $select.find( ".datepicker-calendar" ).length > 0 ) {
+						options = $.extend( {}, options, {
+							advanced: {
+								autoScrollOnFocus: false,
+								updateOnContentResize: false,
+								updateOnImageLoad: false,
+								autoUpdateTimeout: 100
+							}
+						} );
+					} else {
+						options = $.extend( {}, options, {
+							advanced: {
+								updateOnContentResize: false,
+								updateOnImageLoad: false,
+								autoUpdateTimeout: 100
+							}
+						} );
+					}
+
+					if ( $select.hasClass( "n-dropdown-menu-scroll" ) ) {
+						$( ".dropdown-toggle" ).on( "click", function() {
+							setTimeout( showDropdownScrollbar( this ), 10 );
+						} );
+					}
+				}
+
 				options = $.extend( {}, options, {
 					callbacks: {
 						whileScrolling: function() {
@@ -3399,6 +4212,358 @@
 				} );
 				$select.mCustomScrollbar( options );
 			}
+		} );
+
+	} )( $ );
+
+
+	//scrollbar.js
+	( function( $ ) {
+
+		var createE = function() {
+			var e = jQuery( document.createElement( arguments[ 0 ] ) );
+
+			if ( arguments.length > 1 ) {
+				var args = Array.prototype.slice.call( arguments, 0 );
+				args.shift();
+
+				if ( typeof args[ 0 ] === 'string' ) {
+					e.addClass( args.shift() );
+				}
+
+				for ( var i = 0; i < args.length; i++ ) {
+					if ( args[ i ] ) {
+						//if (!args[i].jquery && typeof args[i].length !== "undefined") {
+						//    args[i].forEach(function (_e) {
+						//        e.append(_e);
+						//    });
+						//}
+						//else {
+						//    e.append(args[i]);
+						//}
+						e.append( args[ i ] );
+					}
+				}
+			}
+
+			return e;
+		};
+
+		var fonts_done = false;
+		var font_ready_listeners = [];
+
+		var Scrollbar = function( $container, axis ) {
+			this.$container = $container;
+			this.$content_container = $container.find( '.scrolling-content-container' );
+			this.$content = $container.find( '.scrolling-content' );
+
+			// Create the track and thumb
+			this.$scrollbar = createE( 'div', 'scrollbar-container ' + axis,
+				createE( 'div', 'track', createE( 'div' ) ),
+				createE( 'div', 'thumb' )
+			).appendTo( $container );
+			this.$track = this.$scrollbar.find( '.track' );
+			this.$thumb = this.$scrollbar.find( '.thumb' );
+			this.$document = $( document );
+
+			this.axis = this.axes[ axis ];
+
+			this.content_offset = 0;
+			this.max_content_offset = 0;
+			this.max_thumb_offset = 0;
+			this.thumb_size = ( this.container_size() / this.content_size() ) * this.container_size();
+			this.$thumb.css( this.axis.track_size_property, this.thumb_size );
+			//this.thumb_size = this.$thumb[this.axis.track_size_property]();
+			this.drag_position = {
+				thumb_start: null,
+				mouse_start: null
+			};
+
+			this._drag_start = this.drag_start.bind( this );
+			this._drag_move = this.drag_move.bind( this );
+			this._drag_end = this.drag_end.bind( this );
+
+			// Scroll when the thumb is dragged
+			this.$thumb
+				.bind( 'mousedown', this._drag_start )
+				.bind( 'touchstart', this._drag_start );
+
+			// Jump scroll position when the track is clicked
+			this.$track
+				.click( this.jump_to.bind( this ) );
+
+			// Respond to mousewheel events
+			this._mousewheel = this.mousewheel.bind( this );
+
+			var container_elm = this.$container.get( 0 );
+
+			if ( container_elm.addEventListener ) {
+				container_elm.addEventListener( 'DOMMouseScroll', this._mousewheel, false );
+				container_elm.addEventListener( 'mousewheel', this._mousewheel, false );
+			} else {
+				container_elm.onmousewheel = this._mousewheel;
+			}
+
+			// We set up the sizes twice. Once when fonts may not be ready and once after
+			// to avoid a flash of the scollable content outside it's scrolling container
+			this.size_changed();
+
+			// Watch for changes in content size
+			this.$content.bind( 'resize', this.size_changed.bind( this ) );
+			// Watch for changes in container size
+			this.$container.bind( 'resize', this.size_changed.bind( this ) );
+		};
+
+		Scrollbar.prototype = {
+			// Functionality for a scrollbar is pretty much the same
+			// whether it's vertical or horizontal but the way we
+			// get some properties is different.
+			axes: {
+				'horizontal': {
+					name: 'horizontal',
+					dimension: 'x',
+					container_size: function() {
+						return this.$container.innerWidth();
+					},
+					content_container_size: function() {
+						return this.$container.width();
+					},
+					content_size: function() {
+						return this.$content.outerWidth();
+					},
+					track_margin: function() {
+						return ( parseInt( this.$scrollbar.css( 'margin-left' ) ) || 0 ) +
+							( parseInt( this.$scrollbar.css( 'margin-right' ) ) || 0 );
+					},
+					track_size_property: 'width',
+					position_property: 'left',
+					page_position: 'pageX',
+					wheel_delta: 'wheelDeltaX'
+				},
+				'vertical': {
+					name: 'vertical',
+					dimension: 'y',
+					container_size: function() {
+						return this.$container.innerHeight();
+					},
+					content_container_size: function() {
+						return this.$container.height();
+					},
+					content_size: function() {
+						return this.$content_container.get( 0 ).scrollHeight;
+					},
+					track_margin: function() {
+						return ( parseInt( this.$scrollbar.css( 'margin-top' ) ) || 0 ) +
+							( parseInt( this.$scrollbar.css( 'margin-bottom' ) ) || 0 );
+					},
+					track_size_property: 'height',
+					position_property: 'top',
+					page_position: 'pageY',
+					wheel_delta: 'wheelDeltaY'
+				}
+			},
+
+			animation_duration: 250,
+
+			container_size: function() {
+				return this.axis.container_size.call( this );
+			},
+
+			content_container_size: function() {
+				return this.axis.content_container_size.call( this );
+			},
+
+			content_size: function() {
+				return this.axis.content_size.call( this );
+			},
+
+			track_margin: function() {
+				return this.axis.track_margin.call( this );
+			},
+
+			size_changed: function() {
+				if ( this.$container.is( ':visible' ) ) {
+					this.$content_container.css( {
+						width: this.$container.width(),
+						height: this.$container.height()
+					} );
+				}
+
+				var container_size = this.container_size();
+				var content_container_size = this.content_container_size();
+				var content_size = this.content_size();
+				var track_margin = this.track_margin();
+
+				if ( !container_size || !content_size || !content_container_size ) {
+					return;
+				}
+
+				if ( content_size <= content_container_size ) {
+					this.$container.removeClass( 'scrollbars-' + this.axis.name + '-visible' );
+					this.set_position( 0 );
+				} else {
+					this.$container.addClass( 'scrollbars-' + this.axis.name + '-visible' );
+					this.$scrollbar.css( this.axis.track_size_property, container_size - track_margin + 'px' );
+					this.max_content_offset = -1 * ( content_size - content_container_size );
+					this.max_thumb_offset = container_size - this.thumb_size - track_margin;
+
+					// If we're scrolled and the size changes we need to change our offset
+					if ( this.content_offset < this.max_content_offset ) {
+						this.set_position( this.max_content_offset );
+					}
+				}
+
+				this.onsizechange();
+			},
+
+			onsizechange: function() {
+
+			},
+
+			set_position: function( new_offset, animated ) {
+				new_offset = parseInt( new_offset );
+
+				if ( this.content_offset === new_offset ) {
+					return;
+				}
+
+				this.content_offset = parseInt( Math.max( this.max_content_offset, Math.min( new_offset, 0 ) ) );
+				var ratio = this.content_offset / this.max_content_offset;
+
+				if ( animated ) {
+					var options = {};
+					options[ this.axis.position_property ] = this.content_offset;
+					this.$content.animate( options, 250 );
+
+					options = {};
+					options[ this.axis.position_property ] = parseInt( this.max_thumb_offset * ratio );
+					this.$thumb.animate( options, 250 );
+				} else {
+					this.$content.css( this.axis.position_property, this.content_offset );
+					this.$thumb.css( this.axis.position_property, parseInt( this.max_thumb_offset * ratio ) );
+				}
+
+				this.onpositionchange( this.content_offset, animated );
+				this.$container.trigger( 'scroll-position-changed' );
+				$( document ).trigger( 'nsnscroll', this.$container.get( 0 ) );
+			},
+
+			// A hook for scroll changes
+			onpositionchange: function( content_offset, animated ) {},
+
+			drag_start: function( e ) {
+				e.preventDefault();
+				e.stopPropagation();
+
+				if ( !this.$scrollbar.is( ':visible' ) ) {
+					return;
+				}
+
+				this.drag_position.mouse_start = e[ this.axis.page_position ];
+				this.drag_position.thumb_start = parseInt( this.$thumb.css( this.axis.position_property ) );
+
+				this.$document.bind( 'mousemove', this._drag_move );
+				this.$document.bind( 'mouseup', this._drag_end );
+				this.$document.bind( 'touchmove', this._drag_move );
+				this.$document.bind( 'touchend', this._drag_end );
+
+				this.$container.trigger( 'scroll-start' );
+			},
+
+			drag_move: function( e ) {
+				e.preventDefault();
+				e.stopPropagation();
+				var thumb_offset = this.drag_position.thumb_start + ( e[ this.axis.page_position ] - this.drag_position.mouse_start );
+				var new_content_offset = Math.min( this.max_thumb_offset, thumb_offset ) / this.max_thumb_offset * this.max_content_offset;
+				this.set_position( new_content_offset );
+
+				this.$container.trigger( 'scroll-move' );
+			},
+
+			drag_end: function( e ) {
+				this.$document.unbind( 'mousemove', this._drag_move );
+				this.$document.unbind( 'mouseup', this._drag_end );
+				this.$document.unbind( 'touchmove', this._drag_move );
+				this.$document.unbind( 'touchend', this._drag_end );
+
+				this.drag_position.thumb_start = null;
+				this.drag_position.mouse_start = null;
+
+				this.$container.trigger( 'scroll-end' );
+			},
+
+			jump_to: function( e ) {
+				var thumb_offset = e[ this.axis.page_position ] - this.$track.offset()[ this.axis.position_property ] - this.thumb_size / 2;
+				var new_content_offset = parseInt( Math.min( this.max_thumb_offset, thumb_offset ) / this.max_thumb_offset * this.max_content_offset );
+				this.set_position( new_content_offset );
+			},
+
+			smooth_to: function( pos ) {
+				var new_offset = Math.min( Math.max( pos, this.max_content_offset ), 0 );
+				this.set_position( pos, true );
+			},
+
+			mousewheel: function( event ) {
+				if ( !this.$scrollbar.is( ':visible' ) ) {
+					return;
+				}
+
+				var delta = 0,
+					e = event || window.event;
+
+				if ( typeof e.wheelDeltaX === 'undefined' && typeof e.wheelDelta !== "undefined" ) {
+					e.wheelDeltaX = e.wheelDeltaY = e.wheelDelta;
+				}
+
+				if ( typeof e.wheelDelta !== "undefined" ) {
+					delta = e[ this.axis.wheel_delta ] / 120;
+				} else if ( e.detail ) {
+					delta = -e.detail / 3;
+				}
+
+				this.set_position( this.content_offset + delta * 40 );
+
+				e = $.event.fix( e );
+				e.preventDefault();
+
+				this.$container.trigger( 'scroll-move' );
+			}
+		};
+
+		var old = $.fn.scrollbars;
+
+		function Plugin() {
+			return $( this ).each( function() {
+				var $container = $( this );
+
+				var options = {
+					horizontal: $container.is( '.horizontal' ),
+					vertical: $container.is( '.vertical' )
+				};
+
+				$container.wrapInner( createE( 'div', 'scrolling-content-container', createE( 'div', 'scrolling-content' ) ) );
+				var scrollbars = [];
+
+				[ 'horizontal', 'vertical' ].forEach( function( axis ) {
+					if ( options[ axis ] && typeof $container.data( 'scrollbar-' + axis ) === "undefined" ) {
+						var scrollbar = new Scrollbar( $container, axis );
+						scrollbars.push( scrollbar );
+						$container.data( 'scrollbar-' + axis, scrollbar );
+					}
+				} );
+			} );
+		}
+
+		$.fn.scrollbars = Plugin;
+		$.fn.scrollbars.Constructor = Scrollbar;
+
+		$.fn.scrollbars.noConflict = function() {
+			$.fn.scrollbars = old;
+			return this;
+		};
+
+		$( document ).ready( function() {
+			//$('.scrollbars').scrollbars();
 		} );
 
 	} )( $ );
@@ -3441,7 +4606,7 @@
 			initTableScrollbar();
 
 			//Cell selection
-			$( '.n-table-cell-hover' ).on( 'click', 'td', function( e ) {
+			$( '.n-table-cell-hover' ).on( 'click', 'td', function() {
 				$( this ).closest( 'table' ).find( 'td' ).removeClass( 'n-cell-selected' );
 				$( this ).closest( 'table' ).find( 'td' ).removeAttr( 'tabindex' );
 				// Do not add selected class to td in tfoot.
@@ -3449,6 +4614,12 @@
 					$( this ).addClass( 'n-cell-selected' );
 					$( this ).attr( 'tabindex', 0 );
 					$( this ).trigger( 'focus' );
+					// Cell with input field
+					$( this ).children().each( function() {
+						if ( $( this ).is( 'input' ) && $( this ).attr( 'type' ) === 'text' ) {
+							$( this ).trigger( 'focus' );
+						}
+					} );
 				}
 			} );
 
@@ -3470,9 +4641,7 @@
 					$( this ).closest( "tr" ).children( "td" ).addClass( "n-cell-selected" );
 				} else if ( ctrlKeyPressed && !shiftKeyPressed ) {
 					selectionPivot = $( this ).closest( "tr" );
-					if ( isHighLighted ) {
-						return;
-					} else {
+					if ( !isHighLighted ) {
 						$( this ).closest( "tr" ).children( "td" ).addClass( "n-cell-selected" );
 					}
 				} else {
@@ -3492,7 +4661,7 @@
 				}
 			} );
 
-			$( '.n-sortable' ).on( 'click', function( e ) {
+			$( '.n-sortable' ).on( 'click', function() {
 				var arrow = $( this ).find( '> span' );
 				if ( arrow.is( '.icon-arrow' ) ) {
 					arrow.removeClass( 'icon-arrow' );
@@ -3503,6 +4672,10 @@
 					arrow.addClass( "icon-arrow" );
 				}
 			} );
+
+			$( '.n-table-scrollbar' ).on( 'hidden.bs.dropdown', '.selectlist', function() {
+				synchronizeTableColumnWidth();
+			} );
 		} );
 
 		$( window ).resize( function() {
@@ -3512,6 +4685,7 @@
 
 		function initTableScrollbar() {
 			adjustScrollTable();
+			hideInvisibleHead();
 			setTimeout( synchronizeTableColumnWidth, 50 );
 		}
 
@@ -3526,28 +4700,53 @@
 
 				$( this ).html( scrollTablePrefx + scrollTableHtml + scrollTableSuffix );
 				$( this ).removeClass( "n-table-scrollbar" );
-			} );
 
-			$( ".n-table-scrollbar" ).nScrollbar();
-
-			$( ".n-table-scrollbar" ).each( function() {
-				var tableWidth = $( this ).closest( "table.n-table" ).width();
-				var container = $( this ).find( ".mCSB_container" );
-				var containerPrefix = "<table style='width: " + tableWidth + "px;'>";
-				var containerSuffix = "</table>";
-				container.html( containerPrefix + container.html() + containerSuffix );
+				var scrollBody = $( this ).find( '.n-table-scrollbar' );
+				var option = {};
+				if ( $( this ).hasClass( 'scrollbar-not-autoupdate' ) ) {
+					option = {
+						notAutoUpdate: true
+					};
+				}
+				packageScrollTable( scrollBody, option );
 			} );
+		}
+
+		function packageScrollTable( scrollBody, option ) {
+			scrollBody.nScrollbar( option );
+
+			var tableWidth = scrollBody.closest( "table.n-table" ).width();
+			var container = scrollBody.find( ".mCSB_container" );
+			var containerPrefix = "<table style='width: " + tableWidth + "px;'>";
+			var containerSuffix = "</table>";
+			container.html( containerPrefix + container.html() + containerSuffix );
+
+			/** Temproary solution -- Remove the border-radius for mCustomScrollBox because of IE' bug.
+			 *
+			 * Refer to: https://connect.microsoft.com/IE/feedback/details/809779/ie9-ie10-position-fixed-child-disappears-when-inside-a-parent-with-position-border-radius-and-overflow-hidden
+			 * Refer to: http://stackoverflow.com/questions/20213286/ie10-border-radius-overflow-position-and-hidden-positionfixed-child
+			 * **/
+			var ua = navigator.userAgent;
+			var M = ua.match( /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i ) || [];
+			if ( /trident/i.test( M[ 1 ] ) ) {
+				scrollBody.find( '.mCustomScrollBox' ).css( 'border-radius', '0' );
+			}
 		}
 
 		function updateScrollTableWidth() {
 			$( ".n-table-scrollbar" ).each( function() {
 				var tableWidth = $( this ).closest( "table.n-table" ).width();
 				var table = $( this ).find( ".mCSB_container table" );
-				table.width( tableWidth );
+
+				$( this ).find( ".mCSB_container table" ).each( function() {
+					if ( !$( this ).hasClass( 'datepicker-calendar-days' ) ) {
+						$( this ).width( tableWidth );
+					}
+				} );
 			} );
 		}
 
-		function synchronizeTableColumnWidth() {
+		function hideInvisibleHead() {
 			$( ".n-table-scrollbar" ).each( function() {
 				var theadRowCount = $( this ).closest( "table.n-table" ).find( "thead" ).children().length;
 				// Hide the thead in scroll content
@@ -3556,6 +4755,7 @@
 					$( this ).closest( "table.n-table" ).find( ".mCSB_container" ).find( 'tr' ).eq( j ).find( 'th' ).each( function() {
 						$( this ).css( 'visibility', 'hidden' ).css( 'height', '0' ).css( 'line-height', '0' ).css( 'border-bottom', '0' );
 						$( this ).find( 'span' ).css( 'display', 'none' );
+						// For filter header in scroll content.
 						$( this ).find( 'div' ).css( 'visibility', 'hidden' ).css( 'height', '0' )
 							.css( 'padding-top', '0' ).css( 'padding-bottom', '0' ).css( 'margin-top', '0' ).css( 'margin-bottom', '0' )
 							.css( 'border-top', '0' ).css( 'border-bottom', '0' );
@@ -3567,7 +4767,11 @@
 							.css( 'border-top', '0' ).css( 'border-bottom', '0' );
 					} );
 				}
+			} );
+		}
 
+		function synchronizeTableColumnWidth() {
+			$( ".n-table-scrollbar" ).each( function() {
 				// reset the widht of thead to fit tbody
 				var theadCols = $( this ).closest( "table.n-table" ).find( "thead" ).eq( 0 ).find( "th" );
 				var tbodyCols = $( this ).find( "tr" ).eq( 0 ).children();
@@ -3587,12 +4791,13 @@
 
 		$( document ).ready( function() {
 			var textArea = $( ".content-scroll .n-textarea" );
-			var textAreaHeight = parseInt( $( ".content-scroll" ).css( "height" ) ) - 17;
+			var $contentScroll = $( ".content-scroll" );
+			var textAreaHeight = parseInt( $contentScroll.css( "height" ) ) - 17;
 			textArea.css( "height", textAreaHeight );
 			textArea.wrap( "<div class='textarea-wrapper' />" );
 
 			var textAreaWrapper = textArea.parent( ".textarea-wrapper" );
-			textAreaWrapper.css( "height", $( ".content-scroll" ).css( "height" ) );
+			textAreaWrapper.css( "height", $contentScroll.css( "height" ) );
 			textAreaWrapper.addClass( "textarea-wrapper-normal" );
 			textAreaWrapper.mCustomScrollbar( {
 				scrollInertia: 0,
@@ -3640,9 +4845,8 @@
 				var hiddenDivSpan = hiddenDiv.children( "span" ),
 					hiddenDivSpanOffset = 0,
 					viewLimitBottom = ( parseInt( hiddenDiv.css( "min-height" ) ) ) - hiddenDivSpanOffset,
-					viewLimitTop = hiddenDivSpanOffset,
 					viewRatio = Math.round( hiddenDivSpan.height() + localContainer.position().top );
-				if ( viewRatio > viewLimitBottom || viewRatio < viewLimitTop ) {
+				if ( viewRatio > viewLimitBottom || viewRatio < hiddenDivSpanOffset ) {
 					if ( ( hiddenDivSpan.height() - hiddenDivSpanOffset ) > 0 ) {
 						localWrapper.mCustomScrollbar( "scrollTo", hiddenDivSpan.height() - hiddenDivSpanOffset );
 					} else {
@@ -3653,7 +4857,7 @@
 
 			if ( textArea.length > 0 ) {
 				updateScrollbar( textArea );
-				textArea.bind( "keyup keydown", function( e ) {
+				textArea.bind( "keyup keydown", function() {
 					updateScrollbar( $( this ) );
 				} );
 				textArea.bind( "focus", function() {
@@ -3710,8 +4914,9 @@
 
 		/** For tree with checkbox */
 		// process the leaf check box click events
-		$( '.tree-has-checkbox' ).on( "keydown", "li.tree-item .checkbox[name='file']", trigerTreeItem );
-		$( '.tree-has-checkbox' ).on( "click", "li.tree-item .checkbox[name='file']", trigerTreeItem );
+		var $treeCheckBox = $( '.tree-has-checkbox' );
+		$treeCheckBox.on( "keydown", "li.tree-item .checkbox[name='file']", trigerTreeItem );
+		$treeCheckBox.on( "click", "li.tree-item .checkbox[name='file']", trigerTreeItem );
 
 		function trigerTreeItem( ev ) {
 			if ( ev.which !== 32 && ev.which !== 1 ) {
@@ -3730,8 +4935,8 @@
 		}
 
 		// process the folder check box click events
-		$( '.tree-has-checkbox' ).on( "keydown", "li.tree-branch .checkbox[name='folder']", trigerTreeFolder );
-		$( '.tree-has-checkbox' ).on( "click", "li.tree-branch .checkbox[name='folder']", trigerTreeFolder );
+		$treeCheckBox.on( "keydown", "li.tree-branch .checkbox[name='folder']", trigerTreeFolder );
+		$treeCheckBox.on( "click", "li.tree-branch .checkbox[name='folder']", trigerTreeFolder );
 
 		function trigerTreeFolder( ev ) {
 			if ( ev.which !== 32 && ev.which !== 1 ) {
@@ -3758,11 +4963,11 @@
 			updateTree();
 		}
 
-		$( '.tree' ).on( 'click.fu.tree', '.icon-caret', function( e ) {
+		var $tree = $( '.tree' );
+		$tree.on( 'click.fu.tree', '.icon-caret', function( e ) {
 			scrollTree( e );
 		} );
-
-		$( '.tree' ).on( 'click.fu.tree', '.tree-label', function( e ) {
+		$tree.on( 'click.fu.tree', '.tree-label', function( e ) {
 			scrollTree( e );
 		} );
 
@@ -4006,8 +5211,11 @@
 						var self = this;
 						self.$element.addClass( 'disabled-tree' );
 						self.$element.find( 'a' ).each( function() {
+							$( this ).removeAttr( "href" );
 							$( this ).attr( 'disabled', 'disabled' );
 						} );
+						self.$element.find( 'input' ).attr( 'disabled', 'disabled' );
+
 						// Disable scroll bar if exists
 						if ( self.$element.find( ".mCSB_scrollTools" ).length > 0 ) {
 							self.$element.mCustomScrollbar( 'destroy' );

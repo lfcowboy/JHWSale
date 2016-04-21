@@ -135,18 +135,18 @@ $("#roleListMenu").click(function(){
 $("#setSectionUserMenu").click(function(){
     $(".content-panel").hide();
     var actionId = $(this).data("actionId");
-    var data = {"actionId": actionId};
-    showContentPanel('showPanel_setSectionUser', data, function(){
-        initSetSectionUserPanel(actionId);
+    var data = {"actionId": actionId, "panelName": "部门组员"};
+    showContentPanel('showPanel_setSectionFrame', data, function(){
+        showSetSectionFrame(actionId,showSetSectionUserDiv);
     });
 });
 
 $("#setSectionRoleMenu").click(function(){
     $(".content-panel").hide();
     var actionId = $(this).data("actionId");
-    var data = {"actionId": actionId};
-    showContentPanel('showPanel_setSectionRole', data, function(){
-        initSetSectionRolePanel(actionId);
+    var data = {"actionId": actionId, "panelName": "部门角色"};
+    showContentPanel('showPanel_setSectionFrame', data, function(){
+        showSetSectionFrame(actionId,showSetSectionRoleDiv);
     });
 });
 
@@ -154,18 +154,10 @@ $("#setSectionRoleUserMenu").click(function(){
     $(".content-panel").hide();
     var actionId = $(this).data("actionId");
     var data = {"actionId": actionId};
-    showContentPanel('showPanel_setSectionRoleUser', data, function(){
-        initSetSectionRoleUserPanel(actionId);
+    showContentPanel('showPanel_setSectionFrame', data, function(){
+        showSetSectionFrame(actionId,showSectionRoles);
     });
 });
-
-//$("li[name='setSectionRoleUserMenu']").click(function(){
-//    $(".content-panel").hide();
-//    var data = {"sectionId": $(this).data("sectionId")};
-//    showContentPanel('showPanel_setSectionRoleUser', data, function(){
-//        initSectionRoleUserPanel();
-//    });
-//});
 
 $("#editRoleMenu").click(function(){
     $(".content-panel").hide();

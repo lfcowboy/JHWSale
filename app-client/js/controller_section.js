@@ -51,59 +51,84 @@ var initSectionListTable = function () {
     $('#sectionListTable').jqxGrid({rowsheight: 28});
 }
 
-var initSetSectionUserPanel = function (actionId) {
-    initSectionListWULF(actionId, 'setSectionUser');
-    $('#setSectionUser_section').on('changed.fu.selectlist', function () {
-        var sectionId = $("#setSectionUser_section").selectlist('selectedItem').value;
-        initUserListTable(sectionId);
-    });
-}
-
-var initSetSectionRolePanel = function (actionId) {
-    initSectionListWULF(actionId, 'setSectionRole');
-    $('#setSectionRole_section').on('changed.fu.selectlist', function () {
-        var sectionId = $("#setSectionRole_section").selectlist('selectedItem').value;
-        showSectionRole(sectionId);
-    });
-
-    $('#setSectionRole_sectionRoleSearch').click(function () {
-        var paras = {'sectionId': $("#commonDropdown_userActionSection").jqxDropDownList('getSelectedItem').value};
-
-        function addSectionRole(roleId) {
-            var params = {
-                sectionId: $('#commonDropdown_userActionSection').jqxDropDownList('getSelectedItem').value,
-                roleId: roleId
-            };
-            $.ajax({
-                data: params,
-                url: '/addSectionRole',
-                type: 'post',
-                dataType: 'json',
-                cache: false,
-                timeout: 5000,
-                success: function (data) {
-                    if (data.success) {
-                        showSuccess(data.confirmMsg);
-                        showSectionRole(params.sectionId);
-                    } else {
-                        showError(data.errorMsg);
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    showErrorMsgDefault();
-                }
-            });
+var showSetSectionFrame = function(actionId, showSetSectionPanelSectionFunc){
+    initSectionListWULF(actionId, 'setSection');
+    $("#" + COMP_SECTION_SELECT_LIST_ID).on('changed.fu.selectlist', function () {
+        var sectionId = $("#" + COMP_SECTION_SELECT_LIST_ID).selectlist('selectedItem').value;
+        if(sectionId === undefined){
+            $("#setSection_panelSection").html("");
+        }else{
+            showSetSectionPanelSectionFunc(sectionId);
         }
-
-        searchDropdown('setSectionRole_sectionRoleList', 'setSectionRole_sectionRoleName', paras, '/getRoles', addSectionRole);
     });
 }
 
-var initSetSectionRoleUserPanel = function (actionId) {
-    initSectionListWULF(actionId, 'setSectionRoleUser');
-    $('#setSectionRoleUser_section').on('changed.fu.selectlist', function () {
-        var sectionId = $("#setSectionRoleUser_section").selectlist('selectedItem').value;
-        showSectionRoles(sectionId);
+var showSetSectionUserDiv = function (sectionId) {
+    var params = {'sectionId': sectionId};
+    $.ajax({
+        data: params,
+        url: '/getSetSectionUserDiv',
+        type: 'get',
+        dataType: 'json',
+        cache: false,
+        timeout: 5000,
+        success: function (data) {
+            $("#" + COMP_SETSECTION_PANELSECTION_ID).html(data.htmlContent);
+            initSectionUserListTable(sectionId);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            showErrorMsgDefault();
+        }
+    });
+}
+
+var showSetSectionRoleDiv = function (sectionId) {
+    var params = {'sectionId': sectionId};
+    $.ajax({
+        data: params,
+        url: '/getSetSectionRoleDiv',
+        type: 'get',
+        dataType: 'json',
+        cache: false,
+        timeout: 5000,
+        success: function (data) {
+            $("#" + COMP_SETSECTION_PANELSECTION_ID).html(data.htmlContent);
+            $('#setSectionRole_sectionRoleSearch').click(function () {
+                var paras = {'sectionId': $("#" + COMP_SECTION_SELECT_LIST_ID).selectlist('selectedItem').value};
+
+                function addSectionRole(roleId) {
+                    var params = {
+                        sectionId: $("#" + COMP_SECTION_SELECT_LIST_ID).selectlist('selectedItem').value,
+                        roleId: roleId
+                    };
+                    $.ajax({
+                        data: params,
+                        url: '/addSectionRole',
+                        type: 'post',
+                        dataType: 'json',
+                        cache: false,
+                        timeout: 5000,
+                        success: function (data) {
+                            if (data.success) {
+                                showSuccess(data.confirmMsg);
+                                showSectionRole(params.sectionId);
+                            } else {
+                                showError(data.errorMsg);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            showErrorMsgDefault();
+                        }
+                    });
+                }
+
+                searchDropdown('setSectionRole_sectionRoleList', 'setSectionRole_sectionRoleName', paras, '/getRoles', addSectionRole);
+            });
+            showSectionRole(sectionId);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            showErrorMsgDefault();
+        }
     });
 }
 
@@ -152,7 +177,7 @@ var showSectionRole = function (sectionId) {
     });
 }
 
-var initUserListTable = function (sectionId) {
+var initSectionUserListTable = function (sectionId) {
     var data = {
         "sectionId": sectionId
     };
@@ -265,11 +290,11 @@ var initUserListTable = function (sectionId) {
     $('#userListTable').jqxGrid({rowsheight: 28});
 
     $('#setSectionUser_sectionUserSearch').click(function () {
-        var paras = {'sectionId': $("#commonDropdown_userActionSection").jqxDropDownList('getSelectedItem').value};
+        var paras = {'sectionId': sectionId};
 
         function addSectionUser(userId) {
             var params = {
-                sectionId: $('#commonDropdown_userActionSection').jqxDropDownList('getSelectedItem').value,
+                sectionId: sectionId,
                 userId: userId
             };
             $.ajax({
@@ -301,14 +326,14 @@ var showSectionRoles = function (sectionId) {
     var params = {'sectionId': sectionId};
     $.ajax({
         data: params,
-        url: '/getSectionRolesDiv',
+        url: '/getSectionRoleUserDiv',
         type: 'get',
         dataType: 'json',
         cache: false,
         timeout: 5000,
         success: function (data) {
             if (data.success) {
-                $("#setSectionRoleUser_sectionRolesDiv").html(data.htmlContent);
+                $("#" + COMP_SETSECTION_PANELSECTION_ID).html(data.htmlContent);
                 $("button[name='showSectionRoleUserButton']").click(function () {
                     var roleId = $(this).data("roleId");
                     if ($("#sectionRoleUserDiv" + roleId).is(":visible")) {

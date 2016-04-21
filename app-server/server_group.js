@@ -13,33 +13,24 @@ exports.showSetGroupPanel = function (req, res) {
     });
 }
 
-exports.showSetSectionUserPanel = function (req, res) {
-    var sql = 'select role.id as id, role.name as name from section_role, role where section_role.sectionId = "' + req.body.sectionId + '" and section_role.roleId = role.id';
-    pool.query(sql, function (qerr, rows, fields) {
-        var data = {"sectionRoles": rows, "sectionId": req.body.sectionId};
-        app.render('section/setSectionUser', data, function (err, html) {
-            res.json({success: true, htmlContent: html});
-        });
+exports.showSetSectionFramePanel = function (req, res) {
+    var data = {"panelName": req.query.panelName};
+    app.render('section/setSectionFrame', data, function (err, html) {
+        res.json({success: true, htmlContent: html});
     });
 }
 
-exports.showSetSectionRolePanel = function (req, res) {
-    var sql = 'select role.id as id, role.name as name from section_role, role where section_role.sectionId = "' + req.body.sectionId + '" and section_role.roleId = role.id';
-    pool.query(sql, function (qerr, rows, fields) {
-        var data = {"sectionRoles": rows, "sectionId": req.body.sectionId};
-        app.render('section/setSectionRole', data, function (err, html) {
-            res.json({success: true, htmlContent: html});
-        });
+exports.getSetSectionUserDiv = function (req, res) {
+    var data = {"sectionId": req.body.sectionId};
+    app.render('section/setSectionUser', data, function (err, html) {
+        res.json({success: true, htmlContent: html});
     });
 }
 
-exports.showSetSectionRoleUserPanel = function (req, res) {
-    var sql = 'select role.id as id, role.name as name from section_role, role where section_role.sectionId = "' + req.body.sectionId + '" and section_role.roleId = role.id';
-    pool.query(sql, function (qerr, rows, fields) {
-        var data = {"sectionRoles": rows, "sectionId": req.body.sectionId};
-        app.render('section/setSectionRoleUser', data, function (err, html) {
-            res.json({success: true, htmlContent: html});
-        });
+exports.getSetSectionRoleDiv = function (req, res) {
+    var data = {"sectionId": req.query.sectionId};
+    app.render('section/setSectionRole', data, function (err, html) {
+        res.json({success: true, htmlContent: html});
     });
 }
 
@@ -80,7 +71,7 @@ exports.getSections = function (req, res) {
 
 exports.getSectionUsers = function (req, res) {
     var selectSQL = 'select user.id as id, user.name as name, user.account as account, user.tel as tel, user.email as email ' +
-        'from section_user,user where section_user.sectionId = "' + req.query.sectionId + '" and section_user.userId = user.id';
+        'from section_user,user where section_user.sectionId = ' + req.query.sectionId + ' and section_user.userId = user.id';
     pool.query(selectSQL, function (err, rows, fields) {
         res.json(rows);
     });
@@ -113,11 +104,11 @@ exports.getSectionRoleDiv = function (req, res) {
     });
 }
 
-exports.getSectionRolesDiv = function (req, res) {
+exports.getSectionRoleUserDiv = function (req, res) {
     var sql = 'select role.id as id, role.name as name from section_role, role where section_role.sectionId = "' + req.query.sectionId + '" and section_role.roleId = role.id';
     pool.query(sql, function (qerr, rows, fields) {
         var data = {"sectionRoles": rows, "sectionId": req.query.sectionId};
-        app.render('section/sectionRolesDiv', data, function (err, html) {
+        app.render('section/setSectionRoleUser', data, function (err, html) {
             res.json({success: true, htmlContent: html});
         });
     });

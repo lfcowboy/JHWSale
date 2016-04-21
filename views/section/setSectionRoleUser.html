@@ -1,29 +1,34 @@
-<div id="setSectionRoleUserPanel" class="panel panel-shadow content-panel">
-    <div class="panel-heading">
-        <h1>部门权限</h1>
+<%
+sectionRoles.forEach(function(role,index){
+%>
+<div class="panel-section">
+    <h2><%= role.name %>
+        <button name="showSectionRoleUserButton" class="btn btn-icon n-toggle-button" data-toggle="button"
+                data-section-id="<%=sectionId%>"
+                data-role-id="<%= role.id %>">
+            <span class="icon icon-profile"></span>
+        </button>
+    </h2>
+    <div>
+        <dd>
+            <div class="n-search n-search-clearable">
+                <a class="n-search-icon dropdown-toggle" id="setGroup_userSearch<%=role.id%>" name="setGroup_userSearch"
+                   data-section-id="<%=sectionId%>" data-role-id="<%=role.id%>" data-toggle="dropdown"
+                   aria-expanded="false" href="javascript:void(0)">
+                    <span class="icon icon-search"></span>
+                    <span class="icon icon-arrow"></span></a>
+                <input id="setGroup_userName<%=role.id%>" type="text" class="n-inputfield n-search-input" placeholder="添加">
+                <a class="n-search-control-icon" href="javascript:void(0)">
+                    <span class="icon icon-close"></span></a>
+                <ul class="dropdown-menu" id="setGroup_userList<%=role.id%>" role="menu"
+                    aria-labelledby="setGroup_userSearch">
+                </ul>
+            </div>
+        </dd>
     </div>
-    <div class="panel-body">
-        <div class="panel-section">
-            <form class="form-horizontal" action="/addQuote" method="post">
-                <div class="form-group">
-                    <label for="setSectionRoleUser_sectionDiv" class="col-sm-1 control-label">部门:</label>
-
-                    <div id="setSectionRoleUser_sectionDiv" class="col-sm-8">
-                        <div class="btn-group selectlist" data-resize="auto" data-initialize="selectlist" id="setSectionRoleUser_section">
-                            <button class="btn btn-default dropdown-toggle disabled" data-toggle="dropdown" type="button">
-                                <span class="selected-label"></span>
-                                <span class="selected-caret"><span class="caret"></span></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul id="setSectionRoleUser_sectionList" class="dropdown-menu" role="menu">
-                                <li data-value="1"><a href="#"><span>无数据</span></a></li>
-                            </ul>
-                            <input class="hidden hidden-field" id="setSectionRoleUser_sectionValue" readonly="readonly" aria-hidden="true" type="text"/>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div id="setSectionRoleUser_sectionRolesDiv"></div>
+    <div id="sectionRoleUserDiv<%=role.id%>" style="height: auto; overflow:hidden" hidden>
     </div>
 </div>
+<%
+})
+%>

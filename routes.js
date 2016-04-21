@@ -21,9 +21,7 @@ module.exports = function (app) {
     app.get('/showPanel_sectionList', section.showSectionListPanel);
     app.get('/showPanel_roleList', role.showRoleListPanel);
     app.get('/showPanel_roleActions', role.showRoleActionsPanel);
-    app.get('/showPanel_setSectionUser', section.showSetSectionUserPanel);
-    app.get('/showPanel_setSectionRole', section.showSetSectionRolePanel);
-    app.get('/showPanel_setSectionRoleUser', section.showSetSectionRoleUserPanel);
+    app.get('/showPanel_setSectionFrame', section.showSetSectionFramePanel);
     app.get('/showPanel_companyList', customer.showCompanyListPanel);
     app.get('/showPanel_customerList', customer.showCustomerListPanel);
     app.get('/showPanel_addQuote', quote.showAddQuotePanel);
@@ -40,9 +38,11 @@ module.exports = function (app) {
     app.get('/getSections', section.getSections);
     app.get('/getSectionUsers', section.getSectionUsers);
     app.get('/getSectionRoleUsers', section.getSectionUsers);
-    app.get('/getSectionRoleUsersDiv', section.getSectionRoleUsersDiv);
+    app.get('/getSetSectionUserDiv', section.getSetSectionUserDiv);
+    app.get('/getSetSectionRoleDiv', section.getSetSectionRoleDiv);
     app.get('/getSectionRoleDiv', section.getSectionRoleDiv);
-    app.get('/getSectionRolesDiv', section.getSectionRolesDiv);
+    app.get('/getSectionRoleUserDiv', section.getSectionRoleUserDiv);
+    app.get('/getSectionRoleUsersDiv', section.getSectionRoleUsersDiv);
     app.post('/addSectionRoleUser', section.addSectionRoleUser);
     app.post('/deleteSectionRoleUser', section.deleteSectionRoleUser);
     app.post('/addSectionUser', section.addSectionUser);

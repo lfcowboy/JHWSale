@@ -1,6 +1,8 @@
 /**
  * Created by fenglv on 2016/3/10.
  */
+
+
 var initAddUserDialog = function(userId){
     addInputValidation();
     var isAdd = !userId && userId != 0;
