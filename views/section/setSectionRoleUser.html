@@ -9,6 +9,7 @@ sectionRoles.forEach(function(role,index){
             <span class="icon icon-profile"></span>
         </button>
     </h2>
+    <% if(!role.setBySys){ %>
     <div>
         <dd>
             <div class="n-search n-search-clearable">
@@ -26,6 +27,7 @@ sectionRoles.forEach(function(role,index){
             </div>
         </dd>
     </div>
+    <%}%>
     <div id="sectionRoleUserDiv<%=role.id%>" style="height: auto; overflow:hidden" hidden>
     </div>
 </div>

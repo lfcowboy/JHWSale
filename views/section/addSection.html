@@ -1,4 +1,4 @@
-<div class="modal" id="addSectionDialog" role="dialog" aria-hidden="true" tabindex='-1'>
+<div class="modal" id="addSectionDialog" role="dialog" aria-hidden="true" tabindex='-1' data-section-id="<%=section.id%>">
     <form class="form-horizontal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -21,7 +21,7 @@
 
                         <div class="col-sm-8">
                             <input type="text" class="form-control n-inputfield" id="addSection_name"
-                                   value="" placeholder="<输入部门名字>">
+                                   value="<%=section.name%>" placeholder="<输入部门名字>">
                             <a class="form-control-feedback form-control-feedback"><span class="icon"></span></a>
                         </div>
                     </div>
@@ -34,8 +34,8 @@
                                     <span class="icon icon-search"></span>
                                     <span class="icon icon-arrow"></span></a>
                                 <input id="addSection_ownerName" type="text" class="n-inputfield n-search-input"
-                                       placeholder="<管理员>">
-                                <input id="addSection_ownerId" hidden/>
+                                       placeholder="<管理员>" value="<%=section.ownerName%>">
+                                <input id="addSection_ownerId" value="<%=section.ownerId%>" hidden/>
                                 <a class="n-search-control-icon" id="addSection_ownerClearButton"
                                    href="javascript:clearCompany()">
                                     <span class="icon icon-close"></span></a>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="addSectionButton" type="button" class="btn btn btn-standard ">保存</button>
+                    <button id="addSectionButton" type="button" class="btn btn btn-standard" data-section-id="<%=section.id%>">保存</button>
                     <button class="btn btn btn-standard" data-dismiss="modal">取消</button>
                 </div>
             </div>

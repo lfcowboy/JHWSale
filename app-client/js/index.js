@@ -75,12 +75,17 @@ $("#addCustomerMenu").click(function(){
 });
 
 $("#addSectionMenu").click(function(){
+    editSectionMenuClick();
+});
+
+var editSectionMenuClick = function(sectionId){
     $(".content-panel").hide();
-    showContentPanel('showPanel_addSection', null, function(){
+    var data = {"sectionId":sectionId};
+    showContentPanel('showPanel_addSection', data, function(){
         showNewSectionDialog();
         $('#addSectionDialog').modal('show');
     });
-});
+}
 
 $("#userListMenu").click(function(){
     $(".content-panel").hide();

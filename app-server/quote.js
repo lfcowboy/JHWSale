@@ -4,7 +4,7 @@
 var pool = require("./app-pooling");
 var customer = require("./customer");
 var chip = require("./chip");
-var constants = require("./constants");
+var constants = require("./server_constants");
 
 exports.addQuote = function (req, res) {
     customer.getCompanyByName(req, res, function (err, rows, fields) {

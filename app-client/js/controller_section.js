@@ -46,7 +46,24 @@ var initSectionListTable = function () {
             showfilterrow: true,
             altRows: true,
             columns: columns,
-            scrollBarSize: 8
+            scrollBarSize: 8,
+            showtoolbar: true,
+            rendertoolbar: function (toolbar) {
+                var me = this;
+                var container = $("<div class='btn-group' style='margin: 5px;'></div>");
+                toolbar.append(container);
+                container.append('<button id="editSectionbutton" class="btn btn-small">编辑</button>');
+                $("#editSectionbutton").jqxButton();
+                // delete row.
+                $("#editSectionbutton").on('click', function () {
+                    var selectedrowindex = $("#sectionListTable").jqxGrid('getselectedrowindex');
+                    var rowscount = $("#sectionListTable").jqxGrid('getdatainformation').rowscount;
+                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                        var sectionId = $("#sectionListTable").jqxGrid('getrowid', selectedrowindex);
+                        editSectionMenuClick(sectionId);
+                    }
+                });
+            }
         });
     $('#sectionListTable').jqxGrid({rowsheight: 28});
 }
@@ -461,13 +478,20 @@ var showNewSectionDialog = function () {
     });
 
     $("#addSectionButton").click(function () {
+        var url = '/addSection';
         var params = {
             name: $('#addSection_name').val(),
             owner: $('#addSection_ownerId').val()
         };
+        var sectionId = $(this).data('sectionId');
+        if(sectionId !== undefined && sectionId != null){
+            url = '/updateSection';
+            params.sectionId = sectionId;
+        }
+
         $.ajax({
             data: params,
-            url: '/addSection',
+            url: url,
             type: 'post',
             dataType: 'json',
             cache: false,

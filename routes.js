@@ -80,7 +80,8 @@ module.exports = function (app) {
     app.get("/getNewQuoteNum", quote.getNewQuoteNum);
     app.post("/addUser", user.addUser);
     app.post('/updateUser', user.updateUser);
-    app.post("/addSection", section.addDepart);
+    app.post("/addSection", section.addSection);
+    app.post('/updateSection', section.updateSection)
 
     //customer
     app.post('/addCustomer',customer.addCustomer);

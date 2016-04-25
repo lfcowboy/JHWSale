@@ -28,25 +28,4 @@ app.use(session({
 }));
 
 pool.iniPool();
-
-/**
-var User = user.User;
-var Quotation = quotation.Quotation;
-mongoose.connect('mongodb://localhost/JHWSale');
-// init data. Use "get" to simplify
-app.get('/init', function (req, res) {
-    var user = new User({
-        email: 'nowind_lee@qq.com',
-        name: 'Freewind'
-    });
-    user.save();
-
-    var quotation = new Quotation({
-        email: 'nowind_lee@qq.com',
-        name: 'Freewind'
-    });
-    quotation.save();
-    res.send('Data inited');
-});
- */
 routes(app);

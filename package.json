@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "bearcat-dao": "^0.2.13",
     "body-parser": "^1.13.2",
     "ejs": "^2.3.3",
     "express": "^4.13.1",
