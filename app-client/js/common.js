@@ -2,6 +2,7 @@
  * Search
  */
 var searchDropdown = function (searchList, searchField, params, url, callback) {
+    $('#' + searchList).nScrollbar("destroy");
     $('#' + searchList).empty();
     $.ajax({
         data: params,
@@ -13,9 +14,11 @@ var searchDropdown = function (searchList, searchField, params, url, callback) {
         success: function (data) {
             var lis = '';
             for (var i in data) {
-                lis = lis + '<li role="presentation"><a name="searchListItemName" role="menuitem" tabindex="-1" data-id="' + data[i].id + '" data-name="' + data[i].name + '"><span>' + data[i].name + '</span></a></li>';
+                lis = lis + '<li role="presentation"><a name="searchListItemName" href="#" role="menuitem" tabindex="-1" data-id="' + data[i].id + '" data-name="' + data[i].name + '"><span>' + data[i].name + '</span></a></li>';
             }
             $('#' + searchList).append(lis);
+
+            $('#' + searchList).nScrollbar();
             $("a[name='searchListItemName']").click(function () {
                 var id = $(this).data("id");
                 var name = $(this).data("name");
@@ -50,6 +53,7 @@ var clearList = function(selectlist,menu){
 };
 
 var initList = function(selectlist, menu, data, callback){
+    $('#' + menu).nScrollbar("destroy");
     $('#' + menu).empty();
     var lis = '<li><a href="#">请选择==></a></li>';
     if(data.length > 0 ){
@@ -59,6 +63,7 @@ var initList = function(selectlist, menu, data, callback){
         $('#' + menu).append(lis);
         $('#' + selectlist).selectlist('enable');
         $('#' + selectlist).selectlist('selectByIndex', 0);
+        $('#' + menu).nScrollbar();
     }else{
         clearList(selectlist,menu);
     }

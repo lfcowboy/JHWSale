@@ -1,5 +1,5 @@
 /*!
- * WULF v1.1.0 (http://wulf-demo.dynamic.nsn-net.net/)
+ * WULF v1.2.0 (http://wulf-demo.dynamic.nsn-net.net/)
  * Copyright 2016 Nokia Solutions and Networks. All rights Reserved.
  */
 
@@ -141,16 +141,16 @@ html.wf-loading:not(.wf-active) body {
  * Copyright (C) 2015 Nokia Solutions and Networks. All rights Reserved.
  */
 /*
- * WULF (http://networks.nokia.com/)
- * Copyright (C) 2015 Nokia Solutions and Networks. All rights Reserved.
- */
-/*
  * Used to generate 2 color curve style in banner dialog
  * @height: height of the banner
  * @color-x-name:  color name for left part in the curve, e.g. gray
  * @color-y-name:  color name for right part in the curve, e.g. dark, red, orange
  *
  * color names should be explicitly defined as n-banner-dlg-gradient-@{color-x-name}-start in variables.less
+ */
+/*
+ * WULF (http://networks.nokia.com/)
+ * Copyright (C) 2015 Nokia Solutions and Networks. All rights Reserved.
  */
 /*
  * WULF (http://networks.nokia.com/)
@@ -2653,7 +2653,6 @@ label {
 .radio label,
 .checkbox label {
   min-height: 22px;
-  padding-left: 28px;
   margin-bottom: 0;
   font-weight: 400;
   color: #1b1b1b;
@@ -2663,6 +2662,7 @@ label {
   margin-top: 0;
 }
 .checkbox label {
+  padding-left: 28px;
   -webkit-user-select: none;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -2859,6 +2859,7 @@ label {
 }
 .radio label {
   position: relative;
+  padding-left: 30px;
   -webkit-user-select: none;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -2940,6 +2941,7 @@ label {
 }
 .radio-small label {
   min-height: 20px;
+  padding-left: 24px;
   margin-bottom: 0;
   font-size: .786em;
   font-weight: 400;
@@ -4095,7 +4097,6 @@ th.n-row-indicated {
   padding-right: 0;
 }
 .n-table-scrollbar .mCustomScrollBox {
-  width: 100%;
   height: 150px;
   padding: 0;
   border-radius: 0 0 7px 7px;
@@ -4973,25 +4974,21 @@ input[type="button"].btn-block {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff565656', endColorstr='#ff2c2c2c', GradientType=0);
   background-repeat: repeat-x;
   border-color: #323232;
-  border-right: 1px dotted #323232;
-  border-bottom: none;
-  border-left: 1px dotted #323232;
   -webkit-box-shadow: 0 1px 3px 0 #4d4d4d;
           box-shadow: 0 1px 3px 0 #4d4d4d;
 }
 .btn-action:hover:not(:focus) {
-  color: #fff;
-  text-shadow: none;
-  background-image: -webkit-linear-gradient(top, #2794cc 0%, #092454 100%);
-  background-image:      -o-linear-gradient(top, #2794cc 0%, #092454 100%);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#2794cc), to(#092454));
-  background-image:         linear-gradient(to bottom, #2794cc 0%, #092454 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2794cc', endColorstr='#ff092454', GradientType=0);
+  color: #1b1b1b;
+  text-shadow: 0 1px 0 #fff;
+  background-image: -webkit-linear-gradient(top, #f9f9f9 0%, #ebebeb 100%);
+  background-image:      -o-linear-gradient(top, #f9f9f9 0%, #ebebeb 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f9f9f9), to(#ebebeb));
+  background-image:         linear-gradient(to bottom, #f9f9f9 0%, #ebebeb 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff9f9f9', endColorstr='#ffebebeb', GradientType=0);
   background-repeat: repeat-x;
-  border: 1px solid #00a1cc;
   border-color: #00a1cc;
-  -webkit-box-shadow: 0 1px 3px 0 #4d4d4d;
-          box-shadow: 0 1px 3px 0 #4d4d4d;
+  -webkit-box-shadow: 0 1px 3px 0 #aaa, inset 0 0 0 1px #66dfff;
+          box-shadow: 0 1px 3px 0 #aaa, inset 0 0 0 1px #66dfff;
 }
 .btn-action:active {
   color: #fff;
@@ -6016,7 +6013,7 @@ tbody.collapse.in {
   border-bottom: 1px solid #00a1cc;
 }
 .n-dropdown-menu-scroll {
-  max-height: 150px;
+  height: 150px;
 }
 .n-dropdown-menu-scroll li > a,
 .n-dropdown-menu-scroll li > .n-link {
@@ -6037,7 +6034,6 @@ tbody.collapse.in {
   background-color: #f5f5f5;
 }
 .n-dropdown-menu-scroll > .mCustomScrollBox {
-  width: 100%;
   padding: 0;
   background-color: transparent;
   border-radius: 0;
@@ -8230,7 +8226,6 @@ dl.n-list-group-small dd {
   height: 100px;
 }
 .n-list-group-scroll > .mCustomScrollBox {
-  width: 100%;
   padding: 0;
   border-radius: 5px;
 }
@@ -8443,7 +8438,7 @@ dl.disabled:focus {
 .n-multicolumn-list > thead > tr td,
 .n-multicolumn-list tbody > tr td {
   position: relative;
-  padding: 0 6px 0 10px;
+  padding: 0 0 0 10px;
   font-weight: normal;
   border-color: #b2b2b2;
   border-style: solid;
@@ -8452,11 +8447,11 @@ dl.disabled:focus {
 .n-multicolumn-list tbody > tr th,
 .n-multicolumn-list > thead > tr td:first-child,
 .n-multicolumn-list tbody > tr td:first-child {
-  padding: 0 6px 0 9px;
+  padding: 0 0 0 9px;
 }
 .n-multicolumn-list > thead > tr th:last-child,
 .n-multicolumn-list tbody > tr th:last-child {
-  padding-right: 5px;
+  padding-right: 1px;
 }
 .n-multicolumn-list > thead > tr > th {
   line-height: 30px;
@@ -8481,7 +8476,6 @@ dl.disabled:focus {
   visibility: hidden;
 }
 .n-multicolumn-list > thead > tr > th:hover {
-  cursor: pointer;
   cursor: hand;
 }
 .n-multicolumn-list > thead > tr > th:hover:not(.selected):not(:focus) {
@@ -8717,7 +8711,6 @@ dl.disabled:focus {
   border: none !important;
 }
 .n-multicolumn-list > tbody :hover {
-  cursor: pointer;
   cursor: hand;
 }
 /*
@@ -12395,6 +12388,10 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   font-weight: normal;
   color: #1b1b1b;
 }
+.panel.nav-secondary-vertical .navbar-nav li span a:focus,
+.panel.nav-secondary-vertical .navbar-nav li span .n-link:focus {
+  outline: none;
+}
 .panel.nav-secondary-vertical .navbar-nav li span.icon {
   width: auto;
   height: 14px;
@@ -12402,18 +12399,20 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   margin-left: 6px;
 }
 .panel.nav-secondary-vertical .navbar-nav li:hover,
-.panel.nav-secondary-vertical .navbar-nav li:focus {
+.panel.nav-secondary-vertical .navbar-nav li:focus,
+.panel.nav-secondary-vertical .navbar-nav li.focused {
   color: black;
   background-color: white;
   outline: none;
 }
 .panel.nav-secondary-vertical .navbar-nav li:hover span a span,
 .panel.nav-secondary-vertical .navbar-nav li:focus span a span,
+.panel.nav-secondary-vertical .navbar-nav li.focused span a span,
 .panel.nav-secondary-vertical .navbar-nav li:hover span .n-link span,
-.panel.nav-secondary-vertical .navbar-nav li:focus span .n-link span {
+.panel.nav-secondary-vertical .navbar-nav li:focus span .n-link span,
+.panel.nav-secondary-vertical .navbar-nav li.focused span .n-link span {
   color: black;
   border-bottom: 1px solid #00a1cc;
-  outline: none;
 }
 .panel.nav-secondary-vertical .navbar-nav li.active {
   color: white;
@@ -12424,14 +12423,9 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .panel.nav-secondary-vertical .navbar-nav li.active span .n-link span {
   color: white;
 }
-.panel.nav-secondary-vertical .navbar-nav li.active:hover span a span,
-.panel.nav-secondary-vertical .navbar-nav li.active:focus span a span,
-.panel.nav-secondary-vertical .navbar-nav li.active:hover span .n-link span,
-.panel.nav-secondary-vertical .navbar-nav li.active:focus span .n-link span {
-  border-bottom: 1px solid #00a1cc;
-}
 .panel.nav-secondary-vertical .navbar-nav li:first-child:hover,
 .panel.nav-secondary-vertical .navbar-nav li:first-child:focus,
+.panel.nav-secondary-vertical .navbar-nav li:first-child.focused,
 .panel.nav-secondary-vertical .navbar-nav li:first-child:active,
 .panel.nav-secondary-vertical .navbar-nav li:first-child.active {
   border-top-left-radius: 10px;
@@ -12439,6 +12433,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 }
 .panel.nav-secondary-vertical .navbar-nav li:last-child:hover,
 .panel.nav-secondary-vertical .navbar-nav li:last-child:focus,
+.panel.nav-secondary-vertical .navbar-nav li:last-child.focused,
 .panel.nav-secondary-vertical .navbar-nav li:last-child:active,
 .panel.nav-secondary-vertical .navbar-nav li:last-child.active {
   border-bottom-right-radius: 10px;
@@ -12670,6 +12665,9 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   margin: 0;
   line-height: 15px;
 }
+.spinner-container .spinbox .spinbox-buttons .btn .icon:before {
+  color: #666;
+}
 .spinner-container .spinbox .spinbox-buttons .btn:focus .icon:before {
   color: #fff;
 }
@@ -12677,7 +12675,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #000;
 }
 .spinner-container .spinbox .spinbox-buttons .btn:disabled span:before {
-  color: #474747 !important;
+  color: #aaa !important;
 }
 .spinner-container .spinbox .spinbox-buttons .spinbox-up {
   border-top-left-radius: 0 !important;
@@ -12688,6 +12686,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .spinner-container .spinbox .spinbox-buttons .spinbox-up:focus {
   color: #fff;
   text-shadow: 0 -1px 0 #1a1a1a;
+  background-color: #2c2c2c;
   background-image: -webkit-linear-gradient(top, #565656 0%, #2c2c2c 100%);
   background-image:      -o-linear-gradient(top, #565656 0%, #2c2c2c 100%);
   background-image: -webkit-gradient(linear, left top, left bottom, from(#565656), to(#2c2c2c));
@@ -12763,6 +12762,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .spinner-container .spinbox .spinbox-buttons .spinbox-down:focus {
   color: #fff;
   text-shadow: 0 -1px 0 #1a1a1a;
+  background-color: #2c2c2c;
   background-image: -webkit-linear-gradient(top, #565656 0%, #2c2c2c 100%);
   background-image:      -o-linear-gradient(top, #565656 0%, #2c2c2c 100%);
   background-image: -webkit-gradient(linear, left top, left bottom, from(#565656), to(#2c2c2c));
@@ -12889,6 +12889,9 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .n-search .dropdown-toggle:hover {
   border: 1px solid #00a1cc;
 }
+.n-search .dropdown-toggle:hover .icon:before {
+  color: #666;
+}
 .n-search .dropdown-toggle:focus:not(:hover) {
   background-image: none !important;
   border: 1px solid #666;
@@ -12964,6 +12967,9 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .n-search-clearable .n-search-control-icon:hover .icon-close {
   top: -1px;
   left: 1px;
+}
+.n-search-clearable .n-search-control-icon:hover .icon-close:before {
+  color: #666;
 }
 .n-search-disable .n-search-icon {
   position: absolute;
@@ -13963,7 +13969,6 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   padding: 0 4px;
   margin: 0 -4px;
   list-style: none;
-  background: #fff;
   background: transparent url(../img/drawer.png) no-repeat -24px -24px;
   -webkit-box-shadow: 0 -3px 3px -3px rgba(0, 0, 0, .3);
           box-shadow: 0 -3px 3px -3px rgba(0, 0, 0, .3);
@@ -15775,7 +15780,6 @@ li.nav-local-menu-item.selected .n-link {
   padding-bottom: 4px !important;
   color: #474747;
   white-space: nowrap;
-  border-bottom: 1px inset #f9f9f9;
   -webkit-box-shadow: inset 0 -1px 0 0 #d4d4d4;
           box-shadow: inset 0 -1px 0 0 #d4d4d4;
 }
@@ -17334,6 +17338,7 @@ Plugin URI: http://manos.malihu.gr/jquery-custom-content-scroller
 .mCustomScrollBox {
   position: relative;
   float: left;
+  width: 100%;
   max-width: 100%;
   height: 100%;
   padding: 3px 2px;
@@ -18088,13 +18093,12 @@ yx-axis
   margin-right: 0;
 }
 .content-scroll .mCustomScrollBox > .mCSB_scrollTools {
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
-  padding: 5px 0;
-}
-.content-scroll .mCustomScrollBox > .mCSB_scrollTools > .mCSB_draggerContainer {
-  margin: 5px 0;
 }
 /*
  * WULF (http://networks.nokia.com/)

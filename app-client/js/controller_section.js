@@ -68,13 +68,13 @@ var initSectionListTable = function () {
     $('#sectionListTable').jqxGrid({rowsheight: 28});
 }
 
-var showSetSectionFrame = function(actionId, showSetSectionPanelSectionFunc){
+var showSetSectionFrame = function (actionId, showSetSectionPanelSectionFunc) {
     initSectionListWULF(actionId, 'setSection');
     $("#" + COMP_SECTION_SELECT_LIST_ID).on('changed.fu.selectlist', function () {
         var sectionId = $("#" + COMP_SECTION_SELECT_LIST_ID).selectlist('selectedItem').value;
-        if(sectionId === undefined){
+        if (sectionId === undefined) {
             $("#setSection_panelSection").html("");
-        }else{
+        } else {
             showSetSectionPanelSectionFunc(sectionId);
         }
     });
@@ -111,7 +111,7 @@ var showSetSectionRoleDiv = function (sectionId) {
         success: function (data) {
             $("#" + COMP_SETSECTION_PANELSECTION_ID).html(data.htmlContent);
             $('#setSectionRole_sectionRoleSearch').click(function () {
-                var paras = {'sectionId': $("#" + COMP_SECTION_SELECT_LIST_ID).selectlist('selectedItem').value};
+                var paras = {'sectionId': $("#" + COMP_SECTION_SELECT_LIST_ID).selectlist('selectedItem').value, roleName: $('#setSectionRole_sectionRoleName').val()};
 
                 function addSectionRole(roleId) {
                     var params = {
@@ -286,28 +286,26 @@ var initSectionUserListTable = function (sectionId) {
             altRows: true,
             columns: columns,
             scrollBarSize: 8,
-            showtoolbar: true,
-            rendertoolbar: function (toolbar) {
-                var me = this;
-                var container = $("<div class='btn-group' style='margin: 5px;'></div>");
-                toolbar.append(container);
-                container.append('<button id="deleterowbutton" class="btn btn-small">删除</button>');
-                $("#deleterowbutton").jqxButton();
-                // delete row.
-                $("#deleterowbutton").on('click', function () {
-                    var selectedrowindex = $("#userListTable").jqxGrid('getselectedrowindex');
-                    var rowscount = $("#userListTable").jqxGrid('getdatainformation').rowscount;
-                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
-                        var id = $("#userListTable").jqxGrid('getrowid', selectedrowindex);
-                        var commit = $("#userListTable").jqxGrid('deleterow', id);
-                    }
-                });
+            pagerrenderer: $.grid.pagerrenderer.bind(null, "#userListTable", true, [10, 30, 50]),
+
+            handlekeyboardnavigation: function (e) {
+                return $.grid.handlekeyboardnavigation(e, "#userListTable");
             }
         });
-    $('#userListTable').jqxGrid({rowsheight: 28});
 
+    // delete row.
+    $("#deleterowbutton").on('click', function () {
+        var selectedrowindex = $("#userListTable").jqxGrid('getselectedrowindex');
+        var rowscount = $("#userListTable").jqxGrid('getdatainformation').rowscount;
+        if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+            var id = $("#userListTable").jqxGrid('getrowid', selectedrowindex);
+            var commit = $("#userListTable").jqxGrid('deleterow', id);
+        }
+    });
+
+    $('#userListTable').jqxGrid({rowsheight: 28});
     $('#setSectionUser_sectionUserSearch').click(function () {
-        var paras = {'sectionId': sectionId};
+        var paras = {'sectionId': sectionId, "userName": $('#setGroup_userName1').val()};
 
         function addSectionUser(userId) {
             var params = {
@@ -471,7 +469,7 @@ var showNewSectionDialog = function () {
     });
 
     $('#addSection_ownerSearch').click(function () {
-        var params = {"ownerName": $('#addSection_ownerName').val()};
+        var params = {"userName": $('#addSection_ownerName').val()};
         searchDropdown('addSection_ownerList', 'addSection_ownerName', params, '/getUsers', function (userId) {
             $('#addSection_ownerId').val(userId);
         });
@@ -484,7 +482,7 @@ var showNewSectionDialog = function () {
             owner: $('#addSection_ownerId').val()
         };
         var sectionId = $(this).data('sectionId');
-        if(sectionId !== undefined && sectionId != null){
+        if (sectionId !== undefined && sectionId != null) {
             url = '/updateSection';
             params.sectionId = sectionId;
         }

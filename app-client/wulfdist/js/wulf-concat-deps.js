@@ -1,5 +1,5 @@
 /*!
- * WULF v1.1.0 (http://wulf-demo.dynamic.nsn-net.net/)
+ * WULF v1.2.0 (http://wulf-demo.dynamic.nsn-net.net/)
  * Copyright 2016 Nokia Solutions and Networks. All rights Reserved.
  */
 //bootstrap.js
@@ -4961,7 +4961,7 @@ and dependencies (minified).
 }))}));
 //wulf.js
 /*!
- * WULF v1.1.0 (http://wulf-demo.dynamic.nsn-net.net/)
+ * WULF v1.2.0 (http://wulf-demo.dynamic.nsn-net.net/)
  * Copyright 2016 Nokia Solutions and Networks. All rights Reserved.
  */
 
@@ -6189,78 +6189,6 @@ and dependencies (minified).
 	} )( $ );
 
 
-	//flyoutmenu.js
-	( function( $ ) {
-
-		$.fn.extend( {
-			initFlyout: function() {
-				var $flyout = $( this );
-				// set flyout container left position
-				var $menuContainer = $flyout.find( ".n-flyout-container" );
-				var menuWidth = $menuContainer.outerWidth();
-				var menuHeight = $menuContainer.outerHeight();
-				$flyout.css( "left", ( -menuWidth ) + "px" );
-				// set flyout open top position
-				var $openAnchor = $flyout.find( ".n-flyout-open" );
-				var openHeight = $openAnchor.outerHeight();
-				$openAnchor.css( "left", ( menuWidth + 1 ) + "px" );
-				$openAnchor.css( "top", Math.ceil( ( menuHeight - openHeight ) / 2 ) + "px" );
-				// hide container
-				$menuContainer.hide();
-			}
-		} );
-
-		//TODO Jonathan: The following code should be wrapped in ready() method. Code refinement is needed for this JS file.
-
-		$( ".n-flyout" ).on( "click", ".n-flyout-open", function( event ) {
-			event.preventDefault();
-			var $flyoutContainer = $( this ).prev( ".n-flyout-container" );
-			if ( $flyoutContainer.is( ":visible" ) ) {
-				hideFlyout( $flyoutContainer );
-			} else {
-				showFlyout( $flyoutContainer );
-			}
-		} );
-
-		$( document ).keydown( function( e ) {
-			// click esc to hide flyout menu if it is open
-			var $flyoutContainer = $( ".n-flyout>.n-flyout-container" );
-			var $flyoutOpen = $( ".n-flyout-open" );
-			if ( e.keyCode === 27 && $flyoutContainer.is( ":visible" ) && ( $( ".n-flyout" ).find( ":focus" ).length > 0 ) ) {
-				hideFlyout( $flyoutContainer );
-			}
-			if ( e.keyCode === 32 && $flyoutContainer.is( ":visible" ) && $flyoutOpen.is( ":focus" ) ) {
-				hideFlyout( $flyoutContainer );
-				return false;
-			}
-
-			if ( e.keyCode === 32 && !$flyoutContainer.is( ":visible" ) && $flyoutOpen.is( ":focus" ) ) {
-				showFlyout( $flyoutContainer );
-				return false;
-			}
-
-		} );
-
-		function hideFlyout( $flyoutContainer ) {
-			var menuWidth = $flyoutContainer.outerWidth();
-			$flyoutContainer.parent( ".n-flyout" ).animate( {
-				left: -menuWidth
-			}, 400, function() {
-				$flyoutContainer.hide();
-			} );
-		}
-
-		function showFlyout( $flyoutContainer ) {
-			$flyoutContainer.show();
-			$flyoutContainer.parent( ".n-flyout" ).animate( {
-				left: 0
-			}, 400 );
-			$flyoutContainer.find( "a:first" ).focus();
-		}
-
-	} )( $ );
-
-
 	//grid.js
 	( function( $ ) {
 
@@ -6975,7 +6903,7 @@ and dependencies (minified).
 				thumbMinSize: 50
 			} );
 			if ( $.browser.mozilla ) {
-				var contentTable = $( this ).find( 'div[id^=contenttable].jqx-overflow-hidden' );
+				var contentTable = $( this ).find( 'div[id^=content].jqx-overflow-hidden' );
 				contentTable.css( 'max-height', 'none' );
 				contentTable.css( 'max-height', contentTable.height() - 1 + 'px' );
 			}
@@ -8469,35 +8397,49 @@ and dependencies (minified).
 				}
 			} );
 
+			$( ".n-multicolumn-list th" ).each( function() {
+				addBoldBufferWidth( $( this ) );
+			} );
+
 
 			$( ".n-multicolumn-list tbody:not(.group) td, th, .n-multicolumn-list tbody.group" )
 				.prop( "tabIndex", 0 )
-				.mouseup( function() {
-					$( this ).closest( ".n-multicolumn-list" ).find( '.selected' ).removeClass( 'selected' );
-					$( this ).addClass( 'selected' );
-				} )
-				.off( 'keydown' ).on( 'keydown', function( event ) {
-					if ( event.keyCode === 13 || event.keyCode === 32 ) {
+				.off( 'keydown mouseup' ).on( 'keydown mouseup', function( event ) {
+					if ( event.type === 'mouseup' || event.keyCode === 13 || event.keyCode === 32 ) {
 						event.preventDefault();
 						$( this ).closest( ".n-multicolumn-list" ).find( '.selected' ).removeClass( 'selected' );
 						$( this ).toggleClass( 'selected' );
 					}
 				} );
 
-			$( ".n-multicolumn-list .subheader" ).mousedown( function() {
-				$( this ).toggleClass( 'open' );
-				$( this ).find( 'span.icon' ).toggleClass( 'icon-next' );
-				$( this ).find( 'span.icon' ).toggleClass( 'icon-arrow' );
-				$( this ).nextUntil( 'tr:not(.subheader-item)' ).toggleClass( 'open' );
+			$( ".n-multicolumn-list .subheader" ).off( 'keydown mouseup' ).on( 'keydown mouseup', function( event ) {
+				if ( event.type === 'mouseup' || event.keyCode === 13 || event.keyCode === 32 ) {
+					$( this ).toggleClass( 'open' );
+					$( this ).find( 'span.icon' ).toggleClass( 'icon-next' );
+					$( this ).find( 'span.icon' ).toggleClass( 'icon-arrow' );
+					$( this ).nextUntil( 'tr:not(.subheader-item)' ).toggleClass( 'open' );
 
-
-				if ( $( this ).parent().find( ".subheader:last" ).is( $( this ) ) && $( this ).parent().children( 'tr:last' ).hasClass( 'subheader-item' ) ) {
-					$( this ).toggleClass( "last" );
+					if ( $( this ).parent().find( ".subheader:last" ).is( $( this ) ) && $( this ).parent().children( 'tr:last' ).hasClass( 'subheader-item' ) ) {
+						$( this ).toggleClass( "last" );
+					}
 				}
 			} );
 
 
 		} );
+
+		function addBoldBufferWidth( element ) {
+			var wid = element.width();
+			var normalBuffer = 16;
+			var selectedBuffer = 14;
+
+			if ( element.hasClass( 'selected' ) ) {
+				wid += selectedBuffer;
+			} else {
+				wid += normalBuffer;
+			}
+			element.css( 'width', wid + 'px' );
+		}
 
 
 	} )( $ );
@@ -9648,7 +9590,7 @@ and dependencies (minified).
 		function initTableScrollbar() {
 			adjustScrollTable();
 			hideInvisibleHead();
-			setTimeout( synchronizeTableColumnWidth, 50 );
+			setTimeout( synchronizeTableColumnWidth, 0 );
 		}
 
 		//insert and update some html code for every scroll table
@@ -9734,13 +9676,24 @@ and dependencies (minified).
 
 		function synchronizeTableColumnWidth() {
 			$( ".n-table-scrollbar" ).each( function() {
+				var tableWidth = $( this ).closest( "table.n-table" ).width();
 				// reset the widht of thead to fit tbody
 				var theadCols = $( this ).closest( "table.n-table" ).find( "thead" ).eq( 0 ).find( "th" );
 				var tbodyCols = $( this ).find( "tr" ).eq( 0 ).children();
-				for ( var i = 0; i < tbodyCols.length; i++ ) {
-					var paddLeftDiff = parseFloat( $( tbodyCols[ i ] ).css( "padding-left" ) ) - parseFloat( $( theadCols[ i ] ).css( "padding-left" ) );
-					var paddRightDiff = parseFloat( $( tbodyCols[ i ] ).css( "padding-right" ) ) - parseFloat( $( theadCols[ i ] ).css( "padding-right" ) );
-					$( theadCols[ i ] ).width( parseFloat( $( tbodyCols[ i ] ).width() ) + paddLeftDiff + paddRightDiff + 0.5 );
+				var sumColWidth = 0;
+				var targetWidths = [];
+				var i;
+				for ( i = 0; i < tbodyCols.length; i++ ) {
+					sumColWidth += parseFloat( $( tbodyCols[ i ] ).outerWidth() );
+					var targetWidth = parseFloat( $( tbodyCols[ i ] ).width() );
+					if ( i === tbodyCols.length - 1 && sumColWidth !== tableWidth ) {
+						targetWidth = targetWidth + ( tableWidth - sumColWidth );
+					}
+					targetWidths.push( targetWidth );
+				}
+				for ( i = 0; i < tbodyCols.length; i++ ) {
+					$( theadCols[ i ] ).width( targetWidths[ i ] );
+					$( tbodyCols[ i ] ).width( targetWidths[ i ] );
 				}
 			} );
 		}

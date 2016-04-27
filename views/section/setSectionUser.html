@@ -1,9 +1,10 @@
-<h2>组员
-    <!--<button class="btn btn-icon" data-toggle="modal" data-target="#addAccountDialog" data-backdrop="true">-->
-    <!--<span class="icon icon-add"></span>-->
-    <!--</button>-->
-</h2>
-
+<div>
+    <h2>组员
+        <!--<button class="btn btn-icon" data-toggle="modal" data-target="#addAccountDialog" data-backdrop="true">-->
+        <!--<span class="icon icon-add"></span>-->
+        <!--</button>-->
+    </h2>
+</div>
 <div>
     <dd>
         <div class="n-search n-search-clearable">
@@ -15,11 +16,14 @@
             <input id="setGroup_userName1" type="text" class="n-inputfield n-search-input" placeholder="添加">
             <a class="n-search-control-icon" href="javascript:void(0)">
                 <span class="icon icon-close"></span></a>
-            <ul class="dropdown-menu" id="setGroup_userList1" role="menu"
+            <ul class="dropdown-menu n-dropdown-menu-scroll" id="setGroup_userList1" role="menu"
                 aria-labelledby="setGroup_userSearch">
             </ul>
         </div>
     </dd>
 </div>
-<div id="userListTable">
+<div id="userListTable" class="n-grid-paging n-jqxgrid-table">
+</div>
+<div class="grid-button-container">
+    <button id="deleterowbutton" class="btn btn-small" id="del-row">删除</button>
 </div>

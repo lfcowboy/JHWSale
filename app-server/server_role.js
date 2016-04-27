@@ -27,7 +27,11 @@ exports.showAddRoleDialog = function (req, res) {
 }
 
 exports.getRoles = function (req, res){
+    var name = req.query.roleName;
     var sql = "select id, name, setBySys from role";
+    if(name !== undefined && name !== null){
+        sql += ' where name like "%' + name + '%"';
+    }
     pool.query(sql, function (qerr, rows, fields) {
         res.json(rows);
     })

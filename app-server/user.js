@@ -51,6 +51,9 @@ exports.showUserListPanel = function (req, res) {
 
 exports.getUsers = function (req, res) {
     var selectSQL = 'select user.id as id, user.name as name, user.account as account, user.tel as tel, user.email as email from user';
+    if(req.query.userName !== undefined && req.query.userName !== null){
+        selectSQL += ' where name like "%' + req.query.userName + '%"';
+    }
     pool.query(selectSQL, function (err, rows, fields) {
         res.json(rows);
     });
